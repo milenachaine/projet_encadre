@@ -8,6 +8,10 @@ end
 # Layouts
 # https://middlemanapp.com/basics/layouts/
 
+["tom", "dick", "harry"].each do |name|
+  proxy "/about/#{name}/index.html", "/about/template.html", :locals => { :person_name => name }, :ignore => true
+end
+
 # Per-page layout changes
 page '/*.xml', layout: false
 page '/*.json', layout: false

@@ -1,5 +1,19 @@
 ---
-title: Welcome to Middleman
+site:
+  title: Projet BAO
+  categorie: Accueil
+  description: Projet de traitement automatique des langues, utilisant Perl et XSLT
+
+author:
+  all: Milena Chaîne, Margaux Duhayon, Ferial Yahiaoui
+  milena: Milena Chaîne
+  margaux: Margaux Duhayon
+  ferial: Ferial Yahiaoui
+  school: Inalco
+
+master:
+  site: "http://www.tal.univ-paris3.fr/plurital/"
+  logo: /images/computer.jpg
 ---
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" class="middleman-logo" aria-labelledby="middleman-logo__title" role="img">
@@ -13,11 +27,35 @@ title: Welcome to Middleman
 </svg>
 
 <h1>
-  PROJET ?
+  <%= current_page.data.site.title %>
 </h1>
 
 <%= link_to(
-  "Read Documentation",
-  "https://middlemanapp.com/basics/templating_language/",
+  "PluriTal",
+  "http://www.tal.univ-paris3.fr/plurital/master.html",
   target: "_blank"
 ) %>
+<%= link_to(
+  current_page.data.author.milena,
+  "http://www.tal.univ-paris3.fr/plurital/master.html",
+  target: "_blank"
+) %>
+<%= link_to(
+  current_page.data.author.margaux,
+  "http://www.tal.univ-paris3.fr/plurital/master.html",
+  target: "_blank"
+) %>
+<%= link_to(
+  current_page.data.author.ferial,
+  "http://www.tal.univ-paris3.fr/plurital/master.html",
+  target: "_blank"
+) %>
+<%= link_to(
+  "Bouton utile",
+  "http://www.nooooooooooooooo.com/",
+  target: "_blank"
+) %>
+
+<h2>
+  <%= current_page.data.site.categorie %>
+</h2>
