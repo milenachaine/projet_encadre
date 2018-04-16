@@ -1,0 +1,60 @@
+site:
+  title: Boîte à outils 1
+  categorie: Ferah Yahiaoui
+  prog1: BAO1
+  prog2: BAO2
+  prog3: BAO3
+  prog4: BAO4
+  description: Projet de traitement automatique des langues, utilisant Perl et XSLT
+
+author:
+  all: Milena Chaîne, Margaux Duhayon, Ferial Yahiaoui
+  milena: Milena Chaîne
+  margaux: Margaux Duhayon
+  ferial: Ferial Yahiaoui
+  school: Inalco
+
+master:
+  site: "http://www.tal.univ-paris3.fr/plurital/"
+
+---
+
+<% link_to current_page.data.master.site do %>
+  <%= image_tag 'logo.jpg' %>
+<% end %>
+
+<h1>
+  <%= current_page.data.site.title %>
+</h1>
+
+
+<%= link_to(
+  current_page.data.author.milena,
+  "milena.html",
+  target: "_blank"
+) %>
+<%= link_to(
+  current_page.data.author.margaux,
+  "margaux.html",
+  target: "_blank"
+) %>
+<%= link_to(
+  current_page.data.author.ferial,
+  "ferial.html",
+  target: "_blank"
+) %>
+
+<h2>
+  <%= current_page.data.site.prog1 %>
+</h2>
+
+) %>
+<%= link_to(
+  current_page.data.author.prog1,
+  "parcours-arborescence-fichiers-2018maj.pl"
+    target: "_blank"
+) %>
+
+
+
+<p>blablabla.</p>
