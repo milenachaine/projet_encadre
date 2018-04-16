@@ -1,0 +1,19 @@
+<!-- Logo -->
+<% link_to current_page.data.master.site do %>
+<%= image_tag 'logo.jpg' %>
+<% end %>
+
+<h1><%= current_page.data.site.title %></h1>
+
+<!-- Navigation -->
+<header class="site-header">
+  <% if content_for?(:header) %>
+  <div class="site-header__content">
+    <%= yield_content :header %>
+  </div>
+  <% end %>
+</header>
+
+
+
+      
