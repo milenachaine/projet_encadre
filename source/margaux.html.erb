@@ -18,6 +18,7 @@ bao:
   bao1 : Boîte à outils n°1
   bao2 : Boîte à outils n°2
   bao3: Boîte à outils n°3
+  bao4: Boîte à outils n°4
 
 ---
 
@@ -76,3 +77,11 @@ bao:
 ) %>
 
 <p> Explication bao3 </p>
+
+<%= link_to(
+  current_page.data.bao.bao4,
+  "margaux_bao4.html",
+  target: "_blank"
+) %>
+
+<p> Explication bao4 </p>
