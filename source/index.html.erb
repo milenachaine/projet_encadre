@@ -13,8 +13,10 @@ author:
 
 master:
   site: "http://www.tal.univ-paris3.fr/plurital/"
-
 ---
+
+<%= partial "onglets" %>
+
 
 <% link_to current_page.data.master.site do %>
   <%= image_tag 'logo.jpg' %>
@@ -23,23 +25,6 @@ master:
 <h1>
   <%= current_page.data.site.title %>
 </h1>
-
-
-<%= link_to(
-  current_page.data.author.milena,
-  "milena.html",
-  target: "_blank"
-) %>
-<%= link_to(
-  current_page.data.author.margaux,
-  "margaux.html",
-  target: "_blank"
-) %>
-<%= link_to(
-  current_page.data.author.ferial,
-  "ferial.html",
-  target: "_blank"
-) %>
 
 <h2>
   <%= current_page.data.site.categorie %>
