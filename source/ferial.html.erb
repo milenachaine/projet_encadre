@@ -16,8 +16,8 @@ master:
 
 ---
 
-<% link_to current_page.data.master.site do %>
-  <%= image_tag 'logo.jpg' %>
+<% content_for :logo do %>
+<%= image_tag "logo.jpg" %>
 <% end %>
 
 <h1>
