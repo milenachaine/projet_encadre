@@ -20,7 +20,8 @@ bao:
   bao3: Boîte à outils n°3
   bao4: Boîte à outils n°4
 
-un:
+corps:
+  script: Script
   expl: blablabla
 ---
 
@@ -29,17 +30,20 @@ un:
 <% end %>
 
 <h1>
-  <%= current_page.data.site.title %>
+  <%= current_page.data.bao.bao4 %>
 </h1>
 
 
 <h2>
-  <%= current_page.data.un.expl %>
+  <%= current_page.data.corps.expl %>
 </h2>
 
+<h2>
+  <%= current_page.data.corps.script %>
+</h2>
 
-<p>Mise en oeuvre d'une chaîne de traitement textuel semi-automatique, depuis la récupération des données jusqu'à leur présentation. Ce cours posera d'abord la question des objectifs linguistiques à atteindre (lexicologie, recherche d'information, traduction...) et fera appel aux méthodes et outils informatiques nécessaires à leur réalisation (récupération de corpus, normalisation des textes, segmentation, étiquetage, extraction, structuration et présentation des résultats...). Ce cours sera aussi l'occasion d'une évaluation critique des résultats obtenus, d'un point de vue quantitatif et qualitatif.</p>
-
-
+<h2>
+  <%= current_page.data.corps.schema %>
+</h2>
 
 <p> EXPLICATION BAO4 </p>
