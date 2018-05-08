@@ -8,16 +8,16 @@
   <meta name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <%= stylesheet_link_tag "milena" %>
-  <%= stylesheet_link_tag "highlight" %>
+  <%= stylesheet_link_tag "highlight_milena" %>
 </head>
 
 <body>
-<!-- Header et logo-->
+
+<!-- Header et onglets -->
   <%= partial "partials/logo" %>
-  <%= partial "partials/header" %>
   <%= partial "partials/onglets" %>
 
-<!-- Reste de la page-->
+<!-- Reste de la page -->
   <div id ="content-wrapper">
     <div id ="content">
       <%= yield %>
