@@ -21,6 +21,10 @@ body {
   padding: 10vh 1rem;
 }
 
+p {
+  text-align: justify;
+}
+
 /* Images */
 
 img {
@@ -130,6 +134,7 @@ code {
   border-style: solid;
   border-radius: 25px;
   font-weight: bold;
+  text-align: center;
 }
 
 /* Liens */
@@ -164,9 +169,11 @@ aside {
 /* Pied de page */
 
 footer {
-  text-align: center;
   padding: 5px;
   border-radius: 25px;
-  background-image: url("/images/blue.jpg");
-  background-size: cover;
+  border-style: solid;
+}
+
+p.footer {
+  text-align: center;
 }
