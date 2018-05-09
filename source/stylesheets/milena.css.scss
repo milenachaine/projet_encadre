@@ -34,6 +34,16 @@ img {
   margin-bottom: 25px;
 }
 
+img.icon {
+  border-style: none;
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  border-radius: 1px;
+  padding: 5px;
+  vertical-align: middle;
+}
+
 /* Titres */
 
 h1 {
