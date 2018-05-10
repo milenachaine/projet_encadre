@@ -16,9 +16,10 @@ activate :syntax
 #end
 
 # Per-page layout changes
-page '/*.xml', layout: false
+page '/*.xml', layout: false  #ici c'est une condition d'oû cette syntaxe
 page '/*.json', layout: false
 page '/*.txt', layout: false
+#page "/ferial.html", :layout => "ferial.erb" # ici c'est une instruction 
 
 # With alternative layout
 # page '/path/to/file.html', layout: 'other_layout'
