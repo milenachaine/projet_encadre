@@ -3,13 +3,16 @@
 $bleu: #337aff;
 
 body {
-  background-color: #000000;
+  background-color: #1C1C1C;
   color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", "Avenir",
     "Segoe UI", "Lucida Grande", "Helvetica Neue", "Helvetica", "Fira Sans",
     "Roboto", "Noto", "Droid Sans", "Cantarell", "Oxygen", "Ubuntu",
     "Franklin Gothic Medium", "Century Gothic", "Liberation Sans", sans-serif;
   padding: 10vh 1rem;
+}
+
+p {
   text-align: justify;
 }
 
@@ -18,10 +21,11 @@ body {
 img {
   max-width:50%;
   max-height:50%;
-  border-radius: 25px;
+  border-radius: 20px;
 }
 
 /* Avatar */
+
 img.avatar {
   border-style: none;
   max-width: none;
@@ -30,7 +34,19 @@ img.avatar {
   border-radius: 1px;
   padding: 5px;
   vertical-align: middle;
+  border-radius: 25px;
 }
+
+div.avatar {
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 10px;
+  margin-right: 20%;
+  border-style: inset;
+  border-radius: 10px;
+}
+
 /* Icon */
 
 img.icon {
@@ -73,8 +89,8 @@ h2 {
 h3 {
   font-size: 120%;
   margin: 2em;
-  margin-left: 30%;
-  margin-right: 30%;
+  margin-left: 20em;
+  margin-right: 20em;
   text-align: center;
   padding: 20px;
   border-style: groove;
@@ -180,4 +196,9 @@ footer {
   padding: 5px;
   border-radius: 25px;
   border-style: solid;
+  margin: 10px;
+}
+
+p.footer {
+    text-align: center;
 }

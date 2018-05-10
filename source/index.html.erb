@@ -22,44 +22,40 @@ layout: layout
 <%= image_tag "logo.jpg" %>
 <% end %>
 
-<p> À propos de nous :  </p>
-<p> <%= image_tag 'ferial_av.jpg', :class => "avatar" %>  <b>Ferial Yahiaoui</b> </p>
-<p>Étudiante en Master 1 TAL à l'Inalco.</br>  Après un premier master recherche en Sciences du langage à l'Université Paris III - Sorbonne Nouvelle, </br> elle a décidé de se réorienter vers un parcours professionnalisant en optant pour le traitement automatique des langues.</p>
-<p> <a href="mailto:ferial.yahiaoui13@gmail.com"> Mail </a></p>
+<h3> <%= image_tag 'id_white_32px.png', :class => "icon" %> À propos de nous </h3>
 
-<p> <%= image_tag 'milena_av.jpg', :class => "avatar" %> <b>Milena Chaîne</b></p>
-<p> PRÉSENTATION MILENA </p>
-<p> <a href="mailto:milena.chaine@gmail.com"> Mail </a></p>
+<div class="avatar"><p> <%= image_tag 'milena_av.jpg', :class => "avatar" %> <b>Milena Chaîne</b></p>
+<p>Étudiante en Master 1 TAL à l'Inalco.</p>
+<p> Après des études d'anglais à l'ENS de Lyon, elle a décidé de compléter sa formation en linguistique informatique, en s'intéressant notamment à l'anglais et l'allemand.</p>
+<p> <a href="mailto:milena.chaine@gmail.com"> Mail </a></p></div>
 
-<p> <%= image_tag 'margaux_av.png', :class => "avatar" %> <b>Margaux Duhayon</b></p>
-<p>Étudiante en Master 1 TAL à l'Inalco.</br> Après une licence LLCER Asie et Pacifique Khmer à L'INALCO, </br> elle a décidé de continuer en master dans la langue cambodgienne tout en se spécialisant dans l'informatique. </br>Ce que permettait le master Traitement Automatique des Langues.</p>
+<div class="avatar"><p> <%= image_tag 'margaux_av.png', :class => "avatar" %> <b>Margaux Duhayon</b></p>
+<p>Étudiante en Master 1 TAL à l'Inalco.</p>
+<p>Après une licence LLCER Asie et Pacifique Khmer à L'INALCO, elle a décidé de continuer en master dans la langue cambodgienne tout en se spécialisant dans l'informatique. Ce que permettait le master Traitement Automatique des Langues.</p>
 <p> <%= link_to("Lien Linkedin", "https://www.linkedin.com/in/margaux-duhayon-237390157/",)%>
-<p> <a href="mailto:margaux.duhayon0105@gmail.com"> Mail </a></p>
+<p> <a href="mailto:margaux.duhayon0105@gmail.com"> Mail </a></p></div>
 
-<p> <%= image_tag 'computer_32px.png', :class => "icon" %> À propos du master : </p>
+<div class="avatar"><p> <%= image_tag 'ferial_av.jpg', :class => "avatar" %>  <b>Ferial Yahiaoui</b> </p>
+<p>Étudiante en Master 1 TAL à l'Inalco.</p>
+<p>Après un premier master recherche en Sciences du langage à l'Université Paris III - Sorbonne Nouvelle, elle a décidé de se réorienter vers un parcours professionnalisant en optant pour le traitement automatique des langues.</p>
+<p> <a href="mailto:ferial.yahiaoui13@gmail.com"> Mail </a></p></div>
 
-<p> <%= image_tag 'ruby_32px.png', :class => "icon" %> À propos de Ruby & Women On Rails : </p>
+<h3> <%= image_tag 'computer_32px.png', :class => "icon" %> À propos du master </h3>
+<p> fuuuuuun!</p>
+
+<h3> <%= image_tag 'ruby_32px.png', :class => "icon" %> À propos de Ruby & Women On Rails </h3>
 <p>Après notre expérience avec la création d'un site web au premier semestre, nous souhaitions toutes les trois approfondir nos connaissances en développement web. Nous avons choisi le langage de programmation <%= link_to("Ruby","https://www.ruby-lang.org/fr/",) %> en raison de sa flexibilité. Nous avons également reçu l'aide précieuse de la <%= link_to("section parisienne du groupe Women On Rails", "https://www.meetup.com/fr-FR/Women-On-Rails/",) %>, un groupe de travail qui nous a accompagné au cours du semestre et qui nous a permis de découvrir ce langage dans un environnement bienveillant.</p>
 <p>Nous avons essayé de tirer parti du maximum des outils proposés par Ruby et Middleman pour créer notre site. Ce fut une expérience très enrichissante et une introduction plus formelle à l'univers du développement web qui, nous l'espérons, s'avérera utile tant l'année prochaine qu'à la suite du master.</p>
 <p>La version finale du site se présente sous la forme de pages HTML, mais l'intégralité de notre code Ruby/HTML est disponible sur la page de notre projet <%= link_to("GitHub", "https://github.com/milenachaine/projet_encadre",) %>, qui a été un autre outil essentiel de notre travail de groupe.</p>
 
 
-<p> <%= image_tag 'GitHub-Mark-Light-32px.png', :class => "icon" %> À propos Github : </p>
-<p> Pour notre projet et notre volonté de travailler à trois, nous avons utilisé la plateforme open source <b>Github</b>. </p>
-<p>Github est une plateforme qui permet aux developpeurs de stocker un code source et de suivre l'évolution de ce code.<br/> Il permet d'être à plusieurs sur le même code en le téléchargeant sur sa propre machine pour ensuite le "pusher" sur la plateforme commune.<br/>
-Github possède son propre langage que nous avons appris seules au fur et à mesure que notre projet avancé.<br/> Cela nous a permis de travailler sur le même code sans être réunis dans la même pièce.<br/>
-C'est une plateforme et un langage important dans le monde professionnel dont la maitrise n'est pas évidente et il nous semble qu'il serait pertinent d'encourager son utilisation le plus tôt possible au sein du master.<br/>
-Notre projet se trouve sur la plateforme : <%= link_to("Lien projet Github", "https://github.com/milenachaine/projet_encadre",)%>  </p>
+<h3> <%= image_tag 'GitHub-Mark-Light-32px.png', :class => "icon" %> À propos de GitHub </h3>
+<p> Pour notre projet et notre volonté de travailler à trois, nous avons utilisé la plateforme open source <b>GitHub</b>. </p>
+<p>GitHub est une plateforme qui permet aux developpeurs de stocker un code source et de suivre l'évolution de ce code. Il permet d'être à plusieurs sur le même code en le téléchargeant sur sa propre machine pour ensuite le "pusher" sur la plateforme commune. GitHub possède son propre langage que nous avons appris seules au fur et à mesure que notre projet avancé. Cela nous a permis de travailler sur le même code sans être réunis dans la même pièce.</p>
+<p>C'est une plateforme et un langage important dans le monde professionnel dont la maitrise n'est pas évidente et il nous semble qu'il serait pertinent d'encourager son utilisation le plus tôt possible au sein du master.</p>
+<p>Notre projet se trouve sur la plateforme : <%= link_to("projet GitHub", "https://github.com/milenachaine/projet_encadre",)%>  </p>
 
-<p> <%= image_tag 'GitHub-Mark-Light-32px.png', :class => "icon" %> À propos de Github : </p>
-
-<p> <%= image_tag 'sheet_transparent_white_32px.png', :class => "icon" %> À propos du projet : </p>
-
-
-
-<%= image_tag 'bao_schema_white.png' %>
-
-
+<h3> <%= image_tag 'sheet_transparent_white_32px.png', :class => "icon" %> À propos du projet </h3>
 <p>Mise en oeuvre d'une chaîne de traitement textuel semi-automatique, depuis la récupération des données jusqu'à leur présentation. Ce cours posera d'abord la question des objectifs linguistiques à atteindre (lexicologie, recherche d'information, traduction...) et fera appel aux méthodes et outils informatiques nécessaires à leur réalisation (récupération de corpus, normalisation des textes, segmentation, étiquetage, extraction, structuration et présentation des résultats...). Ce cours sera aussi l'occasion d'une évaluation critique des résultats obtenus, d'un point de vue quantitatif et qualitatif.</p>
 
-<h3>jdsijfisdkfhneysfhefncidcfniodjfuinedfhcyufbejohfoije </h3>
+<%= image_tag 'bao_schema_white.png' %>
