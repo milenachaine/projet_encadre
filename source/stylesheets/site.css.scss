@@ -10,6 +10,7 @@ body {
     "Roboto", "Noto", "Droid Sans", "Cantarell", "Oxygen", "Ubuntu",
     "Franklin Gothic Medium", "Century Gothic", "Liberation Sans", sans-serif;
   padding: 10vh 1rem;
+  text-align: justify;
 }
 
 /* Images */
@@ -174,8 +175,9 @@ aside {
 /* Pied de page */
 
 footer {
-  background-color: $bleu;
+  color: $bleu;
   text-align: center;
-  padding: 10px;
+  padding: 5px;
   border-radius: 25px;
+  border-style: solid;
 }
