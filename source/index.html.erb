@@ -21,11 +21,12 @@ layout: layout
 ---
 
 <% content_for :logo do %>
-<%= image_tag "logo.jpg" %>      
+<%= image_tag "logo.jpg" %>
 <% end %>
 
 
 
+<<<<<<< HEAD
 <p><B><%= link_to("Le Master pluriTal","http://www.tal.univ-paris3.fr/plurital/",) %></B>, dans le cadre duquel nous avons réalisé ce projet, est cohabilité entre trois établissements : Inalco (Institut national des langues et civilisations orientales), Université Paris III - Sorbonne Nouvelle, Université Paris X - Nanterre. </p> </br>
 
 <p>Pour le projet encadré du second semestre, il nous a aussi été demandé de réaliser un site pour présenter nos travaux respectifs. Mais à la différence du premier semestre où nous débutions et où nous avons dû utiliser des templates de sites, celui-ci a été entièrement créé par nos soins en langage <B><%= link_to("Ruby", "https://www.ruby-lang.org/fr",) %></B> .</P> 
@@ -33,6 +34,16 @@ layout: layout
 <p>Bien que la création des sites en <%= link_to("Ruby", "https://www.ruby-lang.org/fr",) %> se fasse souvent sur le framework <B><%= link_to("Rails", "https://fr.wikipedia.org/wiki/Ruby_on_Rails",) %></B> et étant donné que notre contenu ne nécessite pas un site dynamique avec une base de données, nous avons opté pour le framework <B><%= link_to("Middleman", "https://middlemanapp.com",) %></B>, un générateur de sites statiques.</P> 
 
 <%= image_tag 'bao_schema_white.png' %>
+=======
+<p><b><%= link_to("Le Master pluriTal","http://www.tal.univ-paris3.fr/plurital/",) %></b>, dans le cadre duquel nous avons réalisé ce projet, est cohabilité entre trois établissements : Inalco (Institut national des langues et civilisations orientales), Université Paris III - Sorbonne Nouvelle, Université Paris X - Nanterre. <p> </br>
+</br>
+
+<p>Pour le projet encadré du second semestre, il nous a aussi été demandé de réaliser un site pour présenter nos travaux respectifs. Mais à la différence du premier semestre où nous débutions et où nous avons dû utiliser des templates de sites, celui-ci a été entièrement créé par nos soins en langage <b><%= link_to("Ruby", "https://www.ruby-lang.org/fr",) %></b> .</p>
+</br>
+
+<p>Bien que la création des sites en <b><%= link_to("Ruby", "https://www.ruby-lang.org/fr",) %></b> se fasse souvent sur le framework <b><%= link_to("Rails", "https://fr.wikipedia.org/wiki/Ruby_on_Rails",) %></b> et étant donné que notre contenu ne nécessite pas un site dynamique avec une base de données, nous avons opté pour le framework <b><%= link_to("Middleman", "https://middlemanapp.com",) %></b>, un générateur de sites statiques.</p>
+
+>>>>>>> 6b82dccaaeceab854cffb42018cfff393da880ac
 
 <p> À propos de nous :  </p>
 <p> <%= image_tag 'ferial_av.jpg', :class => "avatar" %>  <b>Ferial Yahiaoui</b> </p>
@@ -49,6 +60,8 @@ layout: layout
 <p> <a href="mailto:margaux.duhayon0105@gmail.com"> Mail </a></p>
 
 <p> <%= image_tag 'computer_32px.png', :class => "icon" %> À propos du master : </p>
+<p>Le master Traitement automatique des langues est un master cohabilité par les universités Paris III, Paris X et l'Inalco. Il propose une formation de 3ème cycle en ingénierie linguistique avec, en M1, un tronc commun aux étudiants des trois universités partenaires comprenant, entre autres, des cours de linguistique, programmation, codages des écritures, sémantique, etc. En deuxième année (M2), 3 parcours sont possibles : soit recherche et développement, soit Ingénierie multilingue, pour les étudiants ayant de bonnes connaissances en programmation, soit Traductique et gestion de l'information, pour les étudiants ayant de bonnes connaissances en langues et traduction. </p>
+<p><%= link_to("Source de la description", "http://www.inalco.fr/formations/formations-diplomes/accueil-formations-diplomes/masters/master-tal",) %></p>
 
 <p> <%= image_tag 'ruby_32px.png', :class => "icon" %> À propos de Ruby & Women On Rails : </p>
 <p>Après notre expérience avec la création d'un site web au premier semestre, nous souhaitions toutes les trois approfondir nos connaissances en développement web. Nous avons choisi le langage de programmation <%= link_to("Ruby","https://www.ruby-lang.org/fr/",) %> en raison de sa flexibilité. Nous avons également reçu l'aide précieuse de la <%= link_to("section parisienne du groupe Women On Rails", "https://www.meetup.com/fr-FR/Women-On-Rails/",) %>, un groupe de travail qui nous a accompagné au cours du semestre et qui nous a permis de découvrir ce langage dans un environnement bienveillant.</p>
@@ -68,6 +81,7 @@ Notre projet se trouve sur la plateforme : <%= link_to("Lien projet Github", "ht
 
 <p> <%= image_tag 'sheet_transparent_white_32px.png', :class => "icon" %> À propos du projet : </p>
 <p>Mise en oeuvre d'une chaîne de traitement textuel semi-automatique, depuis la récupération des données jusqu'à leur présentation. Ce cours posera d'abord la question des objectifs linguistiques à atteindre (lexicologie, recherche d'information, traduction...) et fera appel aux méthodes et outils informatiques nécessaires à leur réalisation (récupération de corpus, normalisation des textes, segmentation, étiquetage, extraction, structuration et présentation des résultats...). Ce cours sera aussi l'occasion d'une évaluation critique des résultats obtenus, d'un point de vue quantitatif et qualitatif.</p>
+<p>Quatre Boîtes à Outils ont été créées afin de répondre au besoin du projet qui sont illustré avec le schéma ci-dessous.</p>
 
 
 <%= image_tag 'bao_schema_white.png' %>
