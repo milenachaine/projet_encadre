@@ -20,6 +20,28 @@ img {
   border-radius: 25px;
 }
 
+/* Avatar */
+img.avatar {
+  border-style: none;
+  max-width: none;
+  max-height: 100px;
+  margin: auto;
+  border-radius: 1px;
+  padding: 5px;
+  vertical-align: middle;
+}
+/* Icon */
+
+img.icon {
+  border-style: none;
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  border-radius: 1px;
+  padding: 5px;
+  vertical-align: middle;
+}
+
 /* Titres */
 
 h1 {
