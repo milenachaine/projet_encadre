@@ -53,20 +53,27 @@ layout: margaux
 <p>INTRODUCTION</p>
 
 <h3>BAO 1 </h3>
-<p> explication </p>
+<p> La Boîte à outil n°1 permet de parcourir les rubriques des chacunes des archives du <em>Monde</em> afin de récupérer les titres et les descriptions de chaque article et les mettre dans 2 fichiers :
+un fichier texte et un fichier xml. <br/>Les données récupérées sont également nettoyer dans cette boîte à outil. <br/>Nous observerons les résultats dans la boîte à outil n°2 qui possède seulement un sous-programme d'étiquetage supplémentaire. </p>
 
+<label>
+
+<%= partial "partials/code", :locals => { :code_file => "assets/BAO1_margaux.pl"} %>
 <% code("perl") do %>
 #/usr/bin/perl
 <<DOC;
-JANVIER 2018
- usage : perl parcours-arborescence-fichiers repertoire-a-parcourir rubrique
- Par exemple : perl parcours-arborescence-fichiers-2018.pl 2017 3208
- Le programme prend en entrée le nom du répertoire contenant les fichiers à traiter et le "nom" de la rubrique à traiter
-DOC
+BAO 1 Margaux Duhayon
+Commande : perl BAO1.pl repertoire-a-parcourir rubrique
+
+
 #------------------------ BAO1 ----------------------------------
+
+#--------- Définition des variables et entête du fichier xml-------------------------------
+
 my $rep="$ARGV[0]";
 my $rubrique="$ARGV[1]";
 my %dico= ();
+
 $rep=~ s/[\/]$//; # le nom du répertoire ne doit pas se termine pas par un "/"
 
 open my $sortie_txt,">:encoding(utf8)", "$rubrique.txt"; #sortie qui sera un fichier txt
@@ -86,7 +93,9 @@ close $sortie_txt;
 close $sortie_xml;
 
 exit;
-#----------------------------------------------
+
+#----------------Ouverture des fichier ------------------------------
+
 sub parcoursarborescencefichiers {
     my $path = shift(@_);
     opendir(DIR, $path) or die "can't open $path: $!\n";
@@ -100,6 +109,9 @@ sub parcoursarborescencefichiers {
 			&parcoursarborescencefichiers($file);	#recurse!
 			print "<FIN REPERTOIRE> ==> ",$file,"\n";
 		}
+
+#---------------- Si c'est un fichier xml : récuperer le texte ------------------------------
+
 		if (-f $file) {
             if($file =~ m/$rubrique.+\.xml$/) {
 
@@ -113,6 +125,9 @@ sub parcoursarborescencefichiers {
                     $ligne =~ s/\r//g;
                     $ensemble = $ensemble . $ligne ;
                 }
+
+#----------------Chercher les balises titre et description ------------------------------
+
                 while ($ensemble =~ m/<item>.*?<title>(.+?)<\/title>.*?<description>(.+?)<\/description>.*?<\/item>/g){
                     my $title = $1;
                     my $description = $2;
@@ -121,21 +136,21 @@ sub parcoursarborescencefichiers {
                         $dico{$title} = 1;
                         my ($titre_propre, $description_propre) = &nettoyage($title, $description);
 
+#---------------- Impression du contenu dans des balises ------------------------------
+
                         print $sortie_txt "$titre_propre.\n";
                         print $sortie_txt "$description_propre\n\n";
 
                         print $sortie_xml "<item><titre>$titre_propre</titre><description>$description_propre</description></item>\n";
 
-                        }
-
-                }
-
-            }
-
+          }
+        }
+      }
 		}
-    }
+  }
 }
-#--------------------------------
+
+#------------ Sous-programme de nettoyage -------------------
 
 sub nettoyage {
     my $var1 = shift(@_); # @_: liste des arguemnts d'une procédure
@@ -156,4 +171,188 @@ sub nettoyage {
     return $var1,$var2,$var3,$var4,$var5,$var6,$var7;
 }
 <% end %>
+</label>
+
+<h3>BAO 2 </h3>
+<p> La Boîte à outil n°2 effectue la même action que la Boîte à outil n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
+</p>
+
+<label>
+
+<%= partial "partials/code", :locals => { :code_file => "assets/BAO2_margaux.pl"} %>
+<% code("perl") do %>
+
+
+
+<% end %>
+</label>
+
+<h3>BAO 3 </h3>
+
+<p>La Boîte à outil n°3 permet d'extraire des patrons morphosyntaxiques dans les étiquetages produits avec Cordial. </p>
+<p> Plusieurs possibilités seront présentées :
+<br/><br/> 1) une solution perl d'extraction de patron.
+<br/> 2) une solution perl qui prend en argument le fichier texte des patrons
+<br/> 3) une solution avec l'aide de recommandation XSLT
+
+</p>
+
+<h4> 1 ère solution :</h4>
+<p>Pour cette solution, il faut dans un premier temps, passer les fichiers étiquetés obtenus dans la BAO 2 dans le logiciel <em>Cordial</em>.
+<br/> Le programme va parcourir le fichier ligne par ligne et va mettre dans 3 listes différentes le contenu de chacune des colonnes du fichier Cordial.
+<br/>On a également besoin d'un fichier texte avec les patrons morphosyntaxiques comme ci-dessous.</p>
+
+<br/>
+
+<%= image_tag "patron.jpg" %>
+
+
+<p><br/> La commande est donc : <b>perl BAO3.pl fichier_cordial fichier_txt_patrons</b>.</p>
+
+
+
+
+<label>
+
+<%= partial "partials/code", :locals => { :code_file => "assets/BAO3_1_margaux.pl"} %>
+<% code("perl") do %>
+#!/usr/bin/perl
+# Extraction des patrons morphosyntaxiques dans les étiquetages produits avec Cordial
+# Données : fichier d'entrée passé dans le logiciel cordial.
+#  commande : perl BAO3 new_3208.cnr
+
+
+use utf8;
+binmode STDOUT, ":utf8";
+
+#---------LECTURE DU FICHIER -------------------------------
+
+open (FICHIER, "<:encoding(utf8)", $ARGV[0]);
+my $chaine="";
+
+# Boucle principale
+while (my $ligne=<FICHIER>)
+{
+
+    $ligne=~s/\r//g;
+    chomp $ligne;
+
+#---------Récupération du POS et du TOKEN -------------------------------
+
+    if (($ligne=~/^([^\t]+)\t[^\t]+\t([^\t]+)$/) and ($ligne!~/PONCT_FORT/))
+    {
+
+
+        my $f=$1;
+        my $c=$2;
+        $f=~s/ /%/g;
+
+
+        $chaine = $chaine . $c ."_".$f." ";
+    }
+
+    else
+    {
+        open (TERM, "<:encoding(utf8)", $ARGV[1]);
+        while ($terme=<TERM>)
+        {
+            chomp($terme);
+            $terme=~s/([^ ]+)/$1_\[\^ \]+/g;
+
+        while ($chaine=~/($terme)/g)
+        {
+
+            my $correspondance=$1;
+            $correspondance=~s/[A-Z]+_//g;
+            $correspondance=~s/%/ /g;
+            print $correspondance,"\n";
+
+        }
+
+
+        }
+        close(TERM);
+        $chaine="";
+    }
+
+}
+
+close FICHIER;
+# sort | uniq -c | sort -r"
+
+
+
+<% end %>
+</label>
+
+<h4> 2 ème solution :</h4>
+
+<p> La deuxième solution était un exercice effectué dans une autre matière qui se nomme <em>Document Structuré</em>.
+<br/> Cette solution est effectué avec le langage XML et des recommandations XSLT et XPATH.
+
+<p> Nous avons trois feuilles de style xslt :</p>
+<p> La première permet d'extraire le patron morphosyntaxique <b>NOM ADJ</b><p>
+
+<label>
+<%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-1_margaux.xsl"} %>
+<% code("xml") do %>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html" encoding="utf-8"/>
+
+<xsl:template match="/">
+    <html>
+        <body  bgcolor="#81808E">
+            <table align="center" width="50%"  bgcolor="white" bordercolor="#3300FF" border="1">
+                <tr bgcolor="black">
+                    <td width="90%" valign="top"><font color="white"><h1>Extraction de patron <font color="red"><b>NOM</b></font><xsl:text> </xsl:text><font color="blue"><b>ADJ</b></font></h1></font></td>
+                </tr>
+                <tr><td>
+                    <blockquote><xsl:apply-templates select="./parcours/item/title/article"/></blockquote></td></tr>
+            </table>
+        </body>
+    </html>
+<xsl:apply-templates select="//element"/>
+</xsl:template>
+
+<xsl:template match="element">
+<xsl:choose>
+<xsl:when test="(./data[contains(text(),'NOM')]) and (following-sibling::element[1][./data[contains(text(),'ADJ')]])">
+    <font color="red"><xsl:value-of select="./data[3]"/></font><xsl:text> </xsl:text>
+</xsl:when>
+<xsl:when test="(./data[contains(text(),'ADJ')]) and (preceding-sibling::element[1][./data[contains(text(),'NOM')]])">
+    <font color="blue"><xsl:value-of select="./data[3]"/></font>
+    <br/>
+</xsl:when>
+</xsl:choose>
+</xsl:template>
+
+</xsl:stylesheet>
+
+<% end %>
+</label>
+
+<br/>
+<p> La deuxième permet d'extraire le patron morphosyntaxique <b>NUM NOM VER PUN</b><p>
+
+<br/>
+<p> La troisième permet d'extraire le patron morphosyntaxique <b>NOM VER ADJ</b><p>
+
+<h3>BAO 4 </h3>
+<p> La Boîte à outil n°2 effectue la même action que la Boîte à outil n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
+</p>
+
+<label>
+
+<%= partial "partials/code", :locals => { :code_file => "assets/BAO1_margaux.pl"} %>
+<% code("perl") do %>
+
+
+
+<% end %>
+</label>
+
+
+
+
 <p> Explication bao4 </p>
