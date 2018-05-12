@@ -288,7 +288,7 @@ close FICHIER;
 <h4> 2 ème solution :</h4>
 
 <p> La deuxième solution était un exercice effectué dans une autre matière qui se nomme <em>Document Structuré</em>.
-<br/> Cette solution est effectué avec le langage XML et des recommandations XSLT et XPATH.
+<br/> Cette solution est effectuée avec le langage XML et des recommandations XSLT et XPATH.</p>
 
 <p> Nous avons trois feuilles de style xslt :</p>
 <p> La première permet d'extraire le patron morphosyntaxique <b>NOM ADJ</b><p>
@@ -332,11 +332,118 @@ close FICHIER;
 <% end %>
 </label>
 
+
 <br/>
 <p> La deuxième permet d'extraire le patron morphosyntaxique <b>NUM NOM VER PUN</b><p>
 
+  <label>
+
+  <%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-3_margaux.xsl"} %>
+  <% code("xml") do %>
+  <?xml version="1.0" encoding="utf-8"?>
+  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+      <xsl:output method="html" encoding="utf-8"/>
+      <xsl:template match="/">
+          <html>
+              <body  bgcolor="#81808E">
+                  <table align="center" width="50%"  bgcolor="white" bordercolor="#3300FF" border="1">
+                      <tr bgcolor="black">
+                          <td width="90%" valign="top"><font color="white"><h1>Extraction de patron <font color="red"><b>NUM</b></font><xsl:text> </xsl:text><font color="blue"><b>NOM</b></font><xsl:text> </xsl:text><font color="green"><b>VER</b></font><xsl:text> </xsl:text><font color="white"><b>PUN</b></font></h1></font></td>
+                      </tr>
+                      <tr><td>
+                          <blockquote><xsl:apply-templates select="./parcours/item/title/article"/></blockquote></td></tr>
+                  </table>
+              </body>
+          </html>
+          <xsl:apply-templates select=".//article"/>
+      </xsl:template>
+
+
+      <xsl:template match="article">
+          <xsl:for-each select="element">
+              <xsl:if test="(./data[1][contains(text(),'NUM')])">
+                  <xsl:variable name="p1" select="./data[3]/text()"/>
+                  <xsl:if test="following-sibling::element[1][./data[1][contains(text(),'NOM')]]">
+                  <xsl:variable name="p2" select="following-sibling::element[1]/data[3]/text()"/>
+                  <xsl:if test="following-sibling::element[2][./data[1][contains(text(),'VER')]]">
+                  <xsl:variable name="p3" select="following-sibling::element[2]/data[3]/text()"/>
+                  <xsl:if test="following-sibling::element[3][./data[1][contains(text(), 'PUN')]]">
+                  <xsl:variable name="p4" select="following-sibling::element[3]/data[3]/text()"/>
+                    <font color="red"><xsl:value-of select="$p1"/></font>
+                    <xsl:text> </xsl:text>
+                    <font color="blue"><xsl:value-of select="$p2"/></font>
+                    <xsl:text> </xsl:text>
+                    <font color="green"><xsl:value-of select="$p3"/></font>
+                    <xsl:text> </xsl:text>
+                    <font color="white"><xsl:value-of select="$p4"/></font>
+                      <br/>
+
+                      </xsl:if>
+                  </xsl:if>
+              </xsl:if>
+            </xsl:if>
+          </xsl:for-each>
+
+      </xsl:template>
+
+  </xsl:stylesheet>
+
+
+  <% end %>
+  </label>
 <br/>
 <p> La troisième permet d'extraire le patron morphosyntaxique <b>NOM VER ADJ</b><p>
+
+<label>
+<%= partial "partials/code", :locals => { :code_file => "assets/BAO1_margaux.pl"} %>
+<% code("xml") do %>
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+    <xsl:output method="html" encoding="utf-8"/>
+    <xsl:template match="/">
+        <html>
+            <body  bgcolor="#81808E">
+                <table align="center" width="50%"  bgcolor="white" bordercolor="#3300FF" border="1">
+                    <tr bgcolor="black">
+                        <td width="90%" valign="top"><font color="white"><h1>Extraction de patron <font color="red"><b>NOM</b></font><xsl:text> </xsl:text><font color="blue"><b>VER</b></font><xsl:text> </xsl:text><font color="green"><b>ADJ</b></font></h1></font></td>
+                    </tr>
+                    <tr><td>
+                        <blockquote><xsl:apply-templates select="./parcours/item/title/article"/></blockquote></td></tr>
+                </table>
+            </body>
+        </html>
+        <xsl:apply-templates select=".//article"/>
+    </xsl:template>
+
+
+    <xsl:template match="article">
+        <xsl:for-each select="element">
+            <xsl:if test="(./data[1][contains(text(),'NOM')])">
+                <xsl:variable name="p1" select="./data[3]/text()"/>
+                <xsl:if test="following-sibling::element[1][./data[1][contains(text(),'VER')]]">
+                    <xsl:variable name="p2" select="following-sibling::element[1]/data[3]/text()"/>
+                    <xsl:if test="following-sibling::element[2][./data[1][contains(text(),'ADJ')]]">
+                        <xsl:variable name="p3" select="following-sibling::element[2]/data[3]/text()"/>
+                         <font color="red"><xsl:value-of select="$p1"/></font>
+                            <xsl:text> </xsl:text>
+                            <font color="blue"><xsl:value-of select="$p2"/></font>
+                            <xsl:text> </xsl:text>
+                            <font color="green"><xsl:value-of select="$p3"/></font>
+
+                            <br/>
+
+                    </xsl:if>
+                </xsl:if>
+            </xsl:if>
+        </xsl:for-each>
+
+    </xsl:template>
+
+</xsl:stylesheet>
+
+
+  <% end %>
+  </label>
 
 <h3>BAO 4 </h3>
 <p> La Boîte à outil n°2 effectue la même action que la Boîte à outil n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
@@ -344,7 +451,7 @@ close FICHIER;
 
 <label>
 
-<%= partial "partials/code", :locals => { :code_file => "assets/BAO1_margaux.pl"} %>
+<%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-3_margaux.xsl"} %>
 <% code("perl") do %>
 
 
