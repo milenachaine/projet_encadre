@@ -21,24 +21,23 @@ layout: milena
   <%= image_tag 'computer_bao.png' %>
 <% end %>
 
-<%= image_tag 'bao_schema.png' %>
-
-<p>L'objectif de ce projet de boîtes à outils (BAO) est de créer une chaîne de traitement semi-automatique de données textuelles, depuis leur recueil jusqu'à leur analyse.</p>
-<p> bla bla, ceci est un projet </p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Cette page présente mes scripts d'extractions de rubriques, les patrons morpho-syntaxiques que j'ai choisis pour mon analyse, ainsi que les graphes que j'ai pu créer. Mon travail a suivi ce schéma :</p>
+<%= image_tag 'schema/bao_schema.png' %>
+<p>Comme indiqué sur la page d'accueil, j'ai choisi trois rubriques : Europe, International, et Société. Ces rubriques font partie des rubriques les plus générales du journal, et on peut s'attendre à ce que le style journalistique y soit relativement homogène (en comparaison par exemple avec les rubriques d'opinion ou de critique artistique et culturelle).</p>
+<p>Tous les scripts sont visibles sur la page elle-même et téléchargeables. Pour naviguer entre les différentes boîtes à outils, vous pouvez utiliser la barre d'onglets ci-dessous. </p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao1_2", :titre => "Boîtes à outils 1 et 2 : création des fichiers"} %>
 <%= partial "partials/onglets_milena" %>
 
-<%= image_tag 'bao_schema_1_2.png' %>
-
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </p>
+
+<%= image_tag 'schema/bao_schema_1_2.png' %>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <label>
-  <%= partial "partials/code", :locals => { :code_file => "assets/BAO1_2_milena_utf_8.pl"} %>
+  <%= partial "partials/code", :locals => { :code_file => "assets/milena/BAO1_2_milena_utf_8.pl"} %>
   <% code("perl") do %>
   #/usr/bin/perl
 
@@ -229,6 +228,7 @@ layout: milena
   }
   <% end %>
 </label>
+
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -238,7 +238,7 @@ layout: milena
 <%= partial "partials/h3", :locals => { :raccourci => "bao3", :titre => "Boîte à outils 3 : recherche des patrons"} %>
 <%= partial "partials/onglets_milena" %>
 
-<%= image_tag 'bao_schema_3.png' %>
+<%= image_tag 'schema/bao_schema_3.png' %>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
@@ -257,7 +257,7 @@ layout: milena
 <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Boîte à outils 4 : création de graphes"} %>
 <%= partial "partials/onglets_milena" %>
 
-<%= image_tag 'bao_schema_4.png' %>
+<%= image_tag 'schema/bao_schema_4.png' %>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
