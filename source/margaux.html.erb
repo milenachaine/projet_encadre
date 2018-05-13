@@ -191,9 +191,9 @@ sub nettoyage {
 
 <p>La Boîte à outil n°3 permet d'extraire des patrons morphosyntaxiques dans les étiquetages produits avec Cordial. </p>
 <p> Plusieurs possibilités seront présentées :
-<br/><br/> 1) une solution perl d'extraction de patron.
-<br/> 2) une solution perl qui prend en argument le fichier texte des patrons
-<br/> 3) une solution avec l'aide de recommandation XSLT
+<br/><br/> 1) une solution perl qui prend en argument le fichier texte des patrons
+<br/> 2) une solution avec l'aide de recommandation XSLT
+<br/> 3) une solution avec l'aide de recommandation XQUERY
 
 </p>
 
@@ -201,7 +201,9 @@ sub nettoyage {
 <p>Pour cette solution, il faut dans un premier temps, passer les fichiers étiquetés obtenus dans la BAO 2 dans le logiciel <em>Cordial</em>.
 <br/> Le programme va parcourir le fichier ligne par ligne et va mettre dans 3 listes différentes le contenu de chacune des colonnes du fichier Cordial.
 <br/>On a également besoin d'un fichier texte avec les patrons morphosyntaxiques comme ci-dessous.</p>
+<p> Pour passer les fichiers dans <em>Cordial</em>, il faut modiffier l'encodage de nos fichier en <em>ISO-8859-1</em>. <br/>Pour cela, nous utilisons la commande <b>iconv -f UTF-8 -t iso-8859-1 3236.txt > fichier.txt</b>.
 
+<br/>
 <br/>
 
 <%= image_tag "patron.jpg" %>
@@ -285,7 +287,7 @@ close FICHIER;
 <% end %>
 </label>
 
-<h4> 2 ème solution :</h4>
+<h4> 2e solution :</h4>
 
 <p> La deuxième solution était un exercice effectué dans une autre matière qui se nomme <em>Document Structuré</em>.
 <br/> Cette solution est effectuée avec le langage XML et des recommandations XSLT et XPATH.</p>
@@ -332,13 +334,14 @@ close FICHIER;
 <% end %>
 </label>
 
+<h4><a href="assets/exo12/exo12-Q2-1_margaux.html"> Résultat </a></h4>
 
 <br/>
-<p> La deuxième permet d'extraire le patron morphosyntaxique <b>NUM NOM VER PUN</b><p>
+<p> La deuxième permet d'extraire le patron morphosyntaxique <b>NUM NOM VER PUN</b></p>
 
   <label>
 
-  <%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-3_margaux.xsl"} %>
+  <%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-2_margaux.xsl"} %>
   <% code("xml") do %>
   <?xml version="1.0" encoding="utf-8"?>
   <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
@@ -391,11 +394,14 @@ close FICHIER;
 
   <% end %>
   </label>
+
+<h4><a href="assets/exo12/exo12-Q2-2_margaux.html"> Résultat </a></h4>
+
 <br/>
-<p> La troisième permet d'extraire le patron morphosyntaxique <b>NOM VER ADJ</b><p>
+<p> La troisième permet d'extraire le patron morphosyntaxique <b>NOM VER ADJ</b></p>
 
 <label>
-<%= partial "partials/code", :locals => { :code_file => "assets/BAO1_margaux.pl"} %>
+<%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-3_margaux.xsl"} %>
 <% code("xml") do %>
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
@@ -445,21 +451,58 @@ close FICHIER;
   <% end %>
   </label>
 
-<h3>BAO 4 </h3>
-<p> La Boîte à outil n°2 effectue la même action que la Boîte à outil n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
-</p>
+<h4><a href="assets/exo12/exo12-Q2-3_margaux.html"> Résultat </a></h4>
 
+<h4> 3e solution :</h4>
+<p> Cette troisième solution propose des recommandations <b>XQUERY</b> pour extraire les patrons morphosyntaxiques "NOM ADJ" et "NOM PRP NOM".</p>
+<
+<p> Ci-dessous la recommandation pour le patron morphosyntaxique "NOM ADJ"</p>
 <label>
 
-<%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-3_margaux.xsl"} %>
-<% code("perl") do %>
+  <%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q7_margaux.xq"} %>
+
+  <% code("xml") do %>
+for $rss in doc("3244")//article
+for $element in $rss/element
+let $next := $element/following-sibling::element[1]
+where $element/data[1] = "NOM" and $next/data[1] = "ADJ"
+return <PATRON-NOM-ADJ>{$element,$next}</PATRON-NOM-ADJ>
+
+  <% end %>
+  </label>
+
+<h4><a href="assets/exo12/exo12-Q7_margaux.txt"> Résultat </a></h4>
+
+<p> Ci-dessous la recommandation pour le patron morphosyntaxique "NOM PRP NOM"</p>
+<label>
+
+  <%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q8_margaux.xq"} %>
+
+  <% code("xml") do %>
+for $rss in doc("3244")//article
+for $element in $rss/element
+let $next := $element/following-sibling::element[1]
+let $nextN := $next/following-sibling::element[1]
+where $element/data[1]="NOM" and $next/data[1]="PRP" and $nextN//data[1]="NOM"
+return <PATRON-NOM-PRP-NOM>{$element,$next,$nextN}</PATRON-NOM-PRP-NOM>
+
+  <% end %>
+  </label>
+
+<h4><a href="assets/exo12/exo12-Q8_margaux.txt"> Résultat </a></h4>
+
+  <h3>BAO 4 </h3>
+  <p> La Boîte à outil n°2 effectue la même action que la Boîte à outil n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
+  </p>
+
+  <label>
+
+  <%= partial "partials/code", :locals => { :code_file => "assets/exo12/exo12-Q2-3_margaux.xsl"} %>
+  <% code("perl") do %>
 
 
 
-<% end %>
-</label>
-
-
-
+  <% end %>
+  </label>
 
 <p> Explication bao4 </p>

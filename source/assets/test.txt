@@ -1,1 +1,0 @@
-ce dossier sert à ajouter les fichiers de code, pdf etc. Middleman n'essaiera pas de les transformer
