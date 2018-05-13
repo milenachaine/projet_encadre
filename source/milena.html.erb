@@ -29,13 +29,17 @@ layout: milena
 <%= partial "partials/h3", :locals => { :raccourci => "bao1_2", :titre => "Boîtes à outils 1 et 2 : création des fichiers"} %>
 <%= partial "partials/onglets_milena" %>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
-
 <%= image_tag 'schema/bao_schema_1_2.png' %>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>J'ai choisi de regrouper les boîtes à outils 1 et 2 en un seul script qui recueille en même temps les données recherchées dans l'arborescence de fils RSS et les étiquète avec Treetagger (l'étiquetage avec Cordial se fait à la main après avoir converti les fichiers en ISO-8859-1).</p>
+<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend deux arguments : le numéro de la rubrique à traiter dans les fils RSS, et le chemin de l'arborescence contenant ces fils RSS. Il va ensuite
+<ul>
+  <li>créer un fichier XML et un fichier TXT qui récupèreront nos données</li>
+  <li>parcourir l'arborescence de fils RSS <b>(fonction parcoursarborescencefichiers)</b></li>
+  <li>à chaque fois qu'il trouve un fichier XML correspondant à la rubrique recherchée, il en récupère le titre et le résumé et les nettoie <b>(fonction nettoyage)</b></li>
+  <li>envoyer ces données nettoyées directement dans le fichier TXT (qui sera étiqueté par Cordial en dehors du programme)</li>
+  <li>faire étiqueter ces mêmes données par TreeTagger et renvoie ce résultat dans le fichier XML <b>(fonction etiquetage)</b></li>
+</ul></p></div>
 <label>
   <%= partial "partials/code", :locals => { :code_file => "assets/milena/BAO1_2_milena_utf_8.pl"} %>
   <% code("perl") do %>
@@ -229,11 +233,13 @@ layout: milena
   <% end %>
 </label>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Les fichiers que j'ai obtenus après avoir fait fonctionner ce programme pour chacune de mes rubriques et traité mes fichiers TXT avec le logiciel Cordial sont disponibles <b><a href="assets/milena/archives_rss_3214_3210_3224.zip" download>ici</a></b>.</p></div>
+<p>Les fichiers XML étiquetés par TreeTagger se présentent ainsi :</p>
+<%= image_tag 'milena/treetagger_ex.png' %>
+<p>Les fichier TXT étiquetés par Cordial se présentent ainsi :</p>
+<%= image_tag 'milena/cordial_ex.png' %>
+
+<p>On voit bien qu'il va falloir traiter ces fichiers de façon différente pour pouvoir extraire des patrons. Ce travail est l'objet de la BAO 3.</p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao3", :titre => "Boîte à outils 3 : recherche des patrons"} %>
 <%= partial "partials/onglets_milena" %>
@@ -273,7 +279,7 @@ layout: milena
 
 <p><%= image_tag 'ruby_64px.png', :class => "icon" %> Ruby! </p>
 
-<%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion"} %>
+<%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion et analyse"} %>
 <%= partial "partials/onglets_milena" %>
 
 <p>bip bop</p>
