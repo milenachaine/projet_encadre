@@ -1,9 +1,10 @@
-/* Feuille de style générale */
+/* Feuille de style générale (accueil) */
 
 $bleu: #337aff;
+$noir: #1C1C1C;
 
 body {
-  background-color: #1C1C1C;
+  background-color: $noir;
   color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", "Avenir",
     "Segoe UI", "Lucida Grande", "Helvetica Neue", "Helvetica", "Fira Sans",
@@ -12,7 +13,7 @@ body {
   padding: 10vh 1rem;
 }
 
-p {
+p, li {
   text-align: justify;
 }
 
@@ -24,7 +25,7 @@ img {
   border-radius: 20px;
 }
 
-/* Avatar */
+/* Avatars */
 
 img.avatar {
   border-style: none;
@@ -47,7 +48,7 @@ div.avatar {
   border-radius: 10px;
 }
 
-/* Icon */
+/* Icônes */
 
 img.icon {
   border-style: none;

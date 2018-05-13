@@ -25,6 +25,13 @@ p {
   text-align: justify;
 }
 
+div.explication {
+  font-style: italic;
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: justify;
+}
+
 /* Images */
 
 img {
@@ -41,7 +48,7 @@ img.icon {
   margin: auto;
   border-radius: 1px;
   padding: 5px;
-  vertical-align: middle;
+  vertical-align: text-bottom;
 }
 
 /* Titres */

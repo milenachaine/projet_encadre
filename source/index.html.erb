@@ -15,8 +15,6 @@ author:
 master:
   site: "http://www.tal.univ-paris3.fr/plurital/"
 
-
-
 layout: layout
 ---
 
@@ -30,18 +28,18 @@ layout: layout
 
 <h3> <%= image_tag 'id_white_32px.png', :class => "icon" %> À propos de nous </h3>
 
-<div class="avatar"><p> <%= image_tag 'milena_av.jpg', :class => "avatar" %> <b>Milena Chaîne</b></p>
+<div class="avatar"><p> <%= image_tag 'avatars/milena_av.jpg', :class => "avatar" %> <b>Milena Chaîne</b></p>
 <p>Étudiante en Master 1 TAL à l'Inalco.</p>
 <p> Après des études d'anglais à l'ENS de Lyon, elle a décidé de compléter sa formation en linguistique informatique, en s'intéressant notamment à l'anglais et l'allemand.</p>
 <p> <a href="mailto:milena.chaine@gmail.com"> Mail </a></p></div>
 
-<div class="avatar"><p> <%= image_tag 'margaux_av.png', :class => "avatar" %> <b>Margaux Duhayon</b></p>
+<div class="avatar"><p> <%= image_tag 'avatars/margaux_av.png', :class => "avatar" %> <b>Margaux Duhayon</b></p>
 <p>Étudiante en Master 1 TAL à l'Inalco.</p>
 <p>Après une licence LLCER Asie et Pacifique Khmer à L'INALCO, elle a décidé de continuer en master dans la langue cambodgienne tout en se spécialisant dans l'informatique. Ce que permettait le master Traitement Automatique des Langues.</p>
 <p> <%= link_to("Lien Linkedin", "https://www.linkedin.com/in/margaux-duhayon-237390157/",)%>
 <p> <a href="mailto:margaux.duhayon0105@gmail.com"> Mail </a></p></div>
 
-<div class="avatar"><p> <%= image_tag 'ferial_av.jpg', :class => "avatar" %>  <b>Ferial Yahiaoui</b> </p>
+<div class="avatar"><p> <%= image_tag 'avatars/ferial_av.jpg', :class => "avatar" %>  <b>Ferial Yahiaoui</b> </p>
 <p>Étudiante en Master 1 TAL à l'Inalco.</p>
 <p>Après un premier master recherche en Sciences du langage à l'Université Paris III - Sorbonne Nouvelle, elle a décidé de se réorienter vers un parcours professionnalisant en optant pour le traitement automatique des langues.</p>
 <p> <a href="mailto:ferial.yahiaoui13@gmail.com"> Mail </a></p></div>
@@ -56,20 +54,25 @@ layout: layout
 <p>La version finale du site se présente sous la forme de pages HTML, mais l'intégralité de notre code Ruby/HTML est disponible sur la page de notre projet <%= link_to("GitHub", "https://github.com/milenachaine/projet_encadre",) %>, qui a été un autre outil essentiel de notre travail de groupe.</p>
 
 
-<h3> <%= image_tag 'GitHub-Mark-Light-32px.png', :class => "icon" %> À propos de GitHub </h3>
+<h3> <%= image_tag 'github/GitHub-Mark-Light-32px.png', :class => "icon" %> À propos de GitHub </h3>
 <p>Pour notre projet et notre volonté de travailler à trois, nous avons utilisé la plateforme open source <b>GitHub</b>. </p>
 <p>GitHub est une plateforme qui permet aux développeurs de stocker un code source et de suivre l'évolution de ce code. Il permet d'être à plusieurs sur le même code en le téléchargeant sur sa propre machine pour ensuite le "pusher" sur la plateforme commune. GitHub possède son propre langage que nous avons appris seules au fur et à mesure que notre projet avançait. Cela nous a permis de travailler sur le même code sans être réunies dans la même pièce.</p>
 <p>C'est une plateforme et un langage importants dans le monde professionnel, dont la maîtrise n'est pas évidente, et il nous semble qu'il serait pertinent d'encourager son utilisation le plus tôt possible au sein du master.</p>
 <p>Notre projet se trouve sur la plateforme : <%= link_to("projet GitHub", "https://github.com/milenachaine/projet_encadre",)%>  </p>
 
 <h3> <%= image_tag 'sheet_transparent_white_32px.png', :class => "icon" %> À propos du projet </h3>
-<p>Mise en oeuvre d'une chaîne de traitement textuel semi-automatique, depuis la récupération des données jusqu'à leur présentation. Ce cours posera d'abord la question des objectifs linguistiques à atteindre (lexicologie, recherche d'information, traduction...) et fera appel aux méthodes et outils informatiques nécessaires à leur réalisation (récupération de corpus, normalisation des textes, segmentation, étiquetage, extraction, structuration et présentation des résultats...). Ce cours sera aussi l'occasion d'une évaluation critique des résultats obtenus, d'un point de vue quantitatif et qualitatif.</p>
-<p>Quatre Boîtes à Outils ont été créées afin de répondre au besoin du projet qui sont illustré avec le schéma ci-dessous.</p>
+<p>L'objectif de ce projet de boîtes à outils (BAO) est de créer une chaîne de traitement semi-automatique de données textuelles, depuis leur recueil jusqu'à leur analyse. Plus spécifiquement, le corpus analysé cette année est composé de l'ensemble des fils RSS du journal <em>Le Monde</em> au cours de l'année 2017, classés chronologiquement et divisés par rubriques (ex. International, Culture, etc.). On souhaite mettre en place une chaîne de traitement (composée de quatre boîtes à outils successives) pour traiter ce corpus :</p>
+<ol>
+  <li>d'abord, on choisit une rubrique dont on extraira tous les titres et résumés d'articles dans les fils RSS</li>
+  <li>on traitera ensuite ces données avec deux étiqueteurs morpho-syntaxiques, <%= link_to("TreeTagger","http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/",) %>, et <%= link_to("Cordial","https://www.cordial.fr/enligne.php",) %>, qui étiquèteront nos données de façons différentes</li>
+  <li>on extraira ensuite dans ces données des patrons morpho-syntaxiques, qu'on compilera dans des fichiers</li>
+  <li>à partir de ces fichiers, on créera des graphes représentant les co-occurents de ces patrons</li>
+</ol>
+<p>D'un point de vue plus informatique, le schéma ci-dessous illustre les différents outils employés au cours de ces étapes :</p>
+<%= image_tag 'schema/bao_schema_white.png' %>
+<p>L'intérêt du projet est donc double : on va bien sûr essayer d'analyser les données obtenues en fin de chaîne. Mais il s'agit également de comparer différents outils (Cordial et TreeTagger) et méthodes (Perl et XSLT) d'étiquetage.</p>
 
-<%= image_tag 'bao_schema_white.png' %>
-
-
-<p> Nous avons décidés de prendre chacune 3 rubriques différentes mais dans un thème assez similaire.</p>
+<p> Nous avons décidé de prendre chacune 3 rubriques différentes mais dans un thème assez similaire.</p>
 <p><br/> Milena a travaillé sur les rubriques :
 <br/> - La rubrique 3214 qui est la rubrique <em>Europe</em>.
 <br/> - La rubrique 3210 qui est la rubrique <em>International</em>.
