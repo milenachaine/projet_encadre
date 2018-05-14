@@ -24,12 +24,31 @@ body {
 p {
   text-align: justify;
 }
+/* Paragraphes spéciaux */
 
 div.explication {
   font-style: italic;
   padding-left: 5%;
   padding-right: 5%;
   text-align: justify;
+}
+
+/* Tableaux */
+
+table, tr, th, td {
+  border: 1px solid $noir;
+  border-collapse: collapse;
+  padding: 10px;
+  text-align: center;
+}
+
+table {
+  margin: 5%;
+  width: 90%;
+}
+
+th {
+  font-weight: bold;
 }
 
 /* Images */
@@ -181,7 +200,7 @@ header, div {
 
 aside {
   text-align: center;
-  margin: 10px;
+  margin: 15px;
 }
 
 /* Pied de page */
