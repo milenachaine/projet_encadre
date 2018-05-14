@@ -5,7 +5,12 @@ activate :autoprefixer do |prefix|
   prefix.browsers = "last 2 versions"
 end
 
-activate :relative_assets
+configure :build do
+  activate :relative_assets
+end
+
+set :relative_links, true
+
 activate :syntax
 
 # Layouts
@@ -19,7 +24,7 @@ activate :syntax
 page '/*.xml', layout: false  #ici c'est une condition d'oû cette syntaxe
 page '/*.json', layout: false
 page '/*.txt', layout: false
-#page "/ferial.html", :layout => "ferial.erb" # ici c'est une instruction 
+#page "/ferial.html", :layout => "ferial.erb" # ici c'est une instruction
 
 # With alternative layout
 # page '/path/to/file.html', layout: 'other_layout'
