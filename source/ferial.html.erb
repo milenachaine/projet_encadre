@@ -37,20 +37,19 @@ layout: ferial
 
 
 <% code("perl") do %>
-  #/usr/bin/perl
-  #/usr/bin/perl
+
+#!/usr/bin/perl
+
 <<DOC;
-JANVIER 2018
- usage : perl parcours-arborescence-fichiers repertoire-a-parcourir rubrique
+ usage : perl parcours-arborescence-fichiers.pl repertoire-a-parcourir rubrique
  Par exemple : perl parcours-arborescence-fichiers-2018.pl 2017 3208
- Le programme prend en entrée le nom du répertoire contenant les fichiers à traiter et le "nom" de la rubrique à traiter
+ Le programme prend en entrée le nom du répertoire contenant les fichiers à traiter et le nom de la rubrique à traiter
 DOC
 #-----------------------------------------------------------
 my $rep="$ARGV[0]";
 my $rubrique="$ARGV[1]";
 my %redondant= ();
-$rep=~ s/[\/]$//; # on s'assure que le nom du répertoire ne se termine pas par un "/"
-my $DUMPFULL1="";
+$rep=~ s/[\/]$//; # assure que le nom du répertoire ne se termine pas par un "/"
 
 open my $sortie_txt,">:encoding(utf8)", "$rubrique.txt"; 
 open my $sortie_xml,">:encoding(utf8)", "$rubrique.xml";
@@ -60,7 +59,7 @@ print $sortie_xml "<NOM>Ferial YAHIAOUI</NOM>\n";
 print $sortie_xml "<ABSTRACT>\n";
 
 #----------------------------------------
-&parcoursarborescencefichiers($rep);    # on lance la récursion.... et elle se terminera après examen de toute l'arborescence
+&parcoursarborescencefichiers($rep);	# lance la récursion... elle se terminera après examen de toute l'arborescence
 #----------------------------------------
 print $sortie_xml "</ABSTRACT>\n";
 print $sortie_xml "</PARCOURS>\n";
@@ -76,20 +75,20 @@ sub parcoursarborescencefichiers {
     my @files = readdir(DIR);
     closedir(DIR);
     foreach my $file (@files) {
-        next if $file =~ /^\.\.?$/;
-        $file = $path."/".$file;
-        if (-d $file) {
-            print "<NOUVEAU REPERTOIRE> ==> ",$file,"\n";
-            &parcoursarborescencefichiers($file);   #recurse!
-            print "<FIN REPERTOIRE> ==> ",$file,"\n";
-        }
-        if (-f $file) {
+		next if $file =~ /^\.\.?$/;
+		$file = $path."/".$file;
+		if (-d $file) {
+			print "<NOUVEAU REPERTOIRE> ==> ",$file,"\n";
+			&parcoursarborescencefichiers($file);	# récurse!
+			print "<FIN REPERTOIRE> ==> ",$file,"\n";
+		}
+		if (-f $file) {
             if($file =~ m/$rubrique.+\.xml$/) {
 
                 print "<",$i++,"> ==> ",$file,"\n"; 
                
                 open my $FILEIN, "<:encoding(utf-8)", $file;
-                #open(FILEOUT, ">>:encoding(utf8)", "sortie_$rubrique.txt");
+                
                 my $ensemble="";
                 while (my $ligne=<$FILEIN>) {
                     chomp $ligne;
@@ -97,8 +96,8 @@ sub parcoursarborescencefichiers {
                     $ensemble = $ensemble . $ligne ;
                 }
                 while ($ensemble =~ m/<item>.*?<title>(.+?)<\/title>.*?<description>(.+?)<\/description>.*?<\/item>/g){
-                    my $title = $1; #mettre dans un fichier
-                    my $description = $2;#mettre dans un fichier locaux temporaires
+                    my $title = $1; # mettre dans un fichier
+                    my $description = $2; # mettre dans des fichiers locaux temporaires
                     if (!exists $redondant{$title})
                         {
                         $redondant{$title} = 1;
@@ -110,30 +109,23 @@ sub parcoursarborescencefichiers {
                 }
 
             }
-            
-        }
+			
+		}
     }
 }
 #----------------------------------------------
 
 sub nettoyage {
-    my $var1 = shift(@_);
+    my $var1 = shift(@_);   # shift supprime le premier élément et le recupère dans une variable
     my $var2 = shift(@_);
-    my $var3 = shift(@_);
-    my $var4 = shift(@_);
-    my $var5 = shift(@_);
-    my $var6 = shift(@_);
-    my $var7 = shift(@_);
 
-    $var1 =~s/&lt;.+?&gt;//g; # nettoyage à compléter...
-    $var2 =~s/&lt;.+?&gt;//g; # nettoyage à compléter...
-    $var3 =~ s/&#38;#39;/'/g;
-    $var4 =~ s/&#039;/'/g;
-    $var5 =~ s/\t+//gs; 
-    $var6 =~ s/> +</></g;
-    $var7 =~ s/<[^>]+?>//g;
-    return $var1,$var2,$var3,$var4,$var5,$var6,$var7;
-}
+    $var1 =~s/&lt;.+?&gt;//g;
+    $var2 =~s/&lt;.+?&gt;//g;
+    $var1 =~s/&amp;/et/g;
+    $var2 =~s/&amp;/et/g;
+    $var1=~s/\?\.$/\?/;
+    return $var1,$var2; # il y a une accolade fermante ici qui ne s'affiche pas
+} 
   <% end %>
   
   
@@ -141,12 +133,195 @@ sub nettoyage {
  <p>Bullshit</p>
  <p> Bullshit</p>
  <p>Bullshit</p>
+ 
+ <% code("perl") do %>
 
- <%= partial "partials/h3", :locals => { :raccourci => "bao1_2", :titre => "Boîte à outils 3 : Extraction des patrons morphosyntaxiques"} %>
- <%= partial "partials/onglets_bao_ferial" %>
+#!/usr/bin/perl
+
+<<DOC;
+usage : perl BAO2_extrac_etiq.pl Library numéro de la rubrique 
+Par exemple : perl BAO2_extrac_etiq.pl Library 3208
+Le programme prend en entrée le nom du répertoire contenant les fichiers à traiter et le numéro de la rubrique à traiter
+DOC
+
+ #-----------------------------------------------------------
+ my $rep="$ARGV[0]"; # recupère le nom du répertoire racine # assure que le nom du répertoire ne se termine pas par un "/" 
+ my $rubrique = "$ARGV[1]";
+ my %dico=();
+
+ $rep=~ s/[\/]$//; 
+
+ $encodage = "utf-8";
+ my $compteurfile=1;
+ my $compteuritem=0;
+
+ my $output1=$rubrique.".xml";
+ my $output2=$rubrique.".txt";
+
+ if(!open (FILEOUT, ">:encoding($encodage)", $output1)) { die "Pb à l'ouverture du fichier $output1" }; 
+ if(!open (FILEOUT2, ">:encoding($encodage)", $output2)) { die "Pb à l'ouverture du fichier $output2" }; 
+
+ print FILEOUT "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+ print FILEOUT "<PARCOURS>\n";
+ print FILEOUT "<NOM>Ferial Yahiaoui</NOM>\n";
+ print FILEOUT "<FILTRAGE>\n";
+
+
+ #----------------------------------------
+ &parcoursarborescencefichiers($rep);  # lance la récursion...elle se terminera après examen de toute l'arborescence
+ #----------------------------------------
+
+
+ if(!open (FILEOUT, ">>:encoding($encodage)", $output1)) { die "Pb à l'ouverture du fichier $output1" }; 
+
+ print FILEOUT "\n</FILTRAGE>\n";
+ print FILEOUT "</PARCOURS>\n";
+
+ close(FILEOUT); 
+
+ exit;
+ #----------------------------------------------
+ sub parcoursarborescencefichiers {
+     my $path = shift(@_); # récupère le répertoire
+     opendir(DIR, $path) or die "can't open $path: $!\n"; # ouvre le répertorie reçu en argument, donc $path
+     my @files = readdir(DIR); # lit le repertoire, readdir renvoit une liste, celle des documents à l'intérieur de DIR, on les met dans un listes # ne traite pas./ et courant../ précédent sinon, on se retrouve dans une boucle
+     closedir(DIR);         
+     foreach my $file (@files) { # la liste obtenue est relative au répertoire ouvert
+     next if $file =~ /^\.\.?$/; # next: passe au prochain élément si l'actuel ne correspond pas à celui chérché
+     $file = $path."/".$file;  
+
+
+     if (-d $file) { # vrai si l'objet est un répertoire 
+       print "<NOUVEAU REPERTOIRE> ==> ",$file,"\n";
+       &parcoursarborescencefichiers($file); # récurse! 
+       print "<FIN REPERTOIRE> ==> ",$file,"\n";
+     }
+     if (-f $file) { # vrai si l'objet est un fichier
+       if($file =~/$rubrique.+\.xml$/) # point pris en compte à la fin de la ligne (pour le titre)
+       {
+         print "<",$compteurfile++,"> ==> ",$file,"\n";  
+        
+         open (FIC, "<encoding($encodage)", $file);
+         my $texte="";
+         while (my $ligne = <FIC>){
+           chomp $ligne;
+           $ligne =~ s/\r//g;
+           $texte = $texte . $ligne;
+
+       }
+      
+       close FIC;
+      
+       $texte =~ s/>\s+</></g;
+      
+       while($texte=~ 
+       m/<item>.*?<title>([^<]*?)<\/title>.*?<description>([^<]*?)<\/description>/g)
+       { 
+        
+         my $titre = $1;
+         my $description = $2;
+        
+         ($titre, $description) = &nettoyage($titre, $description);
+         if(!(exists $dico {$titre})) 
+         { 
+           $dico{$titre} = 1;
+          
+           print FILEOUT2 "$titre.\n$description\n\n";
+          
+          
+           $compteurItem++;
+          
+           my ($titre_etiq, $description_etiq) = &etiquetage($titre, $description);
+           print FILEOUT "<item number=\"$compteurItem\">\n<titre>$titre_etiq</titre>\n<description>$description_etiq</description>\n</item>\n";
+        
+         }
+  
+       }   
+
+       }
+      
+      
+    
+     }
+ }
+ sub nettoyage {
+
+   # @_ c'est une liste
+   # my $var1 = $_[0];
+
+   my $var1 = shift(@_);   # shift supprime le premier élément et le recupère dans une variable
+   my $var2 = shift(@_);
+
+   # $description =~s/&lt;.+?&gt;//g;
+     $var1 =~s/&lt;.+?&gt;//g;
+     $var2 =~s/&lt;.+?&gt;//g;
+     $var1 =~s/&amp;/et/g;
+     $var2 =~s/&amp;/et/g;
+     $var1=~s/\?\.$/\?/;
+  
+   return $var1,$var2;
+
+ }
+ #----------------------------------------------
+ sub etiquetage {
+
+   my $var1 = shift(@_); # l'input est le titre et la description
+   my $var2 = shift(@_);
+
+   #-------------------titre
+  
+   open(OUT, ">:encoding(utf8)", "titre_tmp.txt"); 
+   print OUT $var1;
+  
+   close OUT;
+
+  
+   system("perl tokenise-utf8.pl titre_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par > titre_tmp_etiq.txt");
+   system("perl treetagger2xml-utf8.pl titre_tmp_etiq.txt utf8");
+   local $/=undef;
+   open (FIC, "<:encoding(utf8)", "titre_tmp_etiq.txt.xml");
+   my $titre_retour=<FIC>;
+   $titre_retour=~s/<\?xml version="1\.0" encoding="utf-8" standalone="no"\?>\n//;
+  
+   #------------------------------------------description
+  
+   open(OUT, ">:encoding(utf8)", "description_tmp.txt"); 
+   print OUT $var2;
+
+  
+   close OUT;
+  
+   system("perl tokenise-utf8.pl description_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par > description_tmp_etiq.txt");
+   system("perl treetagger2xml-utf8.pl description_tmp_etiq.txt utf8");
+   $/=undef;
+   open (FIC, "<:encoding(utf8)", "description_tmp_etiq.txt.xml");
+   my $description_retour=<FIC>;
+   $description_retour=~s/<\?xml version="1\.0" encoding="utf-8" standalone="no"\?>\n//;
+  
+   return $titre_retour, $description_retour;  
+  
+
+  
+ }
+  
+  
+  
+ }
+ 
+  <% end %>
+ 
  
 
   
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
   <p>Bullshit</p>
  <p> Bullshit</p>
  <p>Bullshit</p>
@@ -160,6 +335,562 @@ sub nettoyage {
   <p>Bullshit</p>
  <p> Bullshit</p>
  <p>Bullshit</p>
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+
+ <h4><B>1) Solutions Perl permettant l'extraction de patrons morphosyntaxiques à partir des fichiers TXT étiquetés par "Cordial" </B></h4>
+ 
+
+ 
+ <B>1.1) Premier programme Perl</B>
+	 
+ <% code("perl") do %>
+ 
+  #!/usr/bin/perl
+  
+ <<DOC;
+ usage : perl BAO3_patrons.pl rubrique_utf.cnr patrons.txt 
+ Par exemple : perl BAO3_patrons.pl 3208_utf.cnr patrons.txt
+ Le programme prend en entrée la sortie Cordial la rubrique étiquetée et des patrons morphosyntaxiques à extraire correspondant à l'expression régulière (exemple : NC.. PREP NC..)
+ DOC
+
+
+ #----------------------------------------
+ use utf8;
+ binmode STDOUT, ":utf8";
+ my $chaine="";
+ open (FIC, "<:encoding(utf8)", $ARGV[0]);
+
+ while (my $ligne=<FIC>) { 
+
+ 	chomp $ligne; 
+ 	$ligne=~s/\r//g; 
+
+ 	#print $ligne;
+
+ 	if (($ligne=~/^(.+?)\t.+?\t(.+?)$/) and ($ligne !~/PCTFORTE/)) { 
+	
+ 		my $f=$1;
+ 		
+ 		my $c=$2;
+ 		
+		$f=~s/ /#/g; 
+		
+
+ 
+
+ 	$chaine = $chaine . $c."_".$f." ";
+ 	#$chaine = $chaine . $c."_".$f." ";
+ 	#print $chaine;
+ 	
+ 	# print $chaine;
+ 	# $continu=<STDIN>; 
+ 
+
+ 	}
+ 	else {
+ 		#print $chaine;
+ 		#$continu=<STDIN>;
+ 		open(TERM,$ARGV[1]);
+ 		while (my $terme=<TERM>){ 
+			
+ 			chomp($terme);
+ 			$terme=~s/([^ ]+)/$1_\[\^ \]+/g;
+ 			
+ 			
+ 			while ($chaine=~/$terme/g){
+ 			
+ 				my $correspondance=$&;
+ 				$correspondance=~s/[A-Z]+_//g;
+ 				$correspondance=~s/#/ /g;
+ 				print $correspondance, "\n";
+ 			}
+
+ 		}
+ 		close(TERM);
+ 		$chaine=""; 
+ 	}
+
+
+ 	} 
+
+ close (FIC);
+ 
+  <% end %>
+
+
+   <p>Bullshit</p>
+ <p> Bullshit</p>
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+
+  <B>1.2) Deuxième programme Perl (programme N-grammes)</B>
+   
+ <% code("perl") do %>
+
+ #!/usr/bin/perl
+
+#----------------------------------
+# Ouverture des fichiers en lecture
+#----------------------------------
+open (FICTAG, $ARGV[0]) or die ("probleme sur ouverture de la sortie CORDIAL...");
+open (FICPOS, $ARGV[1]) or die ("probleme sur ouverture du fichier des patrons...");
+#----------------------------------------------------
+# On stocke les patrons dans une table de hachage
+#----------------------------------------------------
+my %listedespatrons;
+my @liste = ();
+print "Lecture du fichier de POS\n";
+while (my $lignepos = <FICPOS>) {
+    chomp($lignepos);
+    my @patron = split(/\#/, $lignepos);
+  #------------------------------------------------------------------------------------------
+  # @liste gardera en mémoire le nombre de POS dont est composé chaque patron syntaxique
+    push(@liste, $#patron+1);
+  #------------------------------------------------------------------------------------------
+  $lignepos =~ s/#/ /g;
+  #-----------------------------------------------------------------------------------------------------------------
+  # Attention, on stocke des tableaux comme valeurs, donc initialiser ces valeurs à () et non "" !
+  # Sinon le script stockera la totalité des suites reconnues (soit plus de 10 000) comme valeur de chaque clé !
+    $listedespatrons{$lignepos} = ();
+  #-----------------------------------------------------------------------------------------------------------------
+
+
+}
+#------------------------------------------------------------------------------------------------------------------------
+# Suppression des doublons de @patron : on obtient des valeurs uniques qui serviront à générer des n-grammes de POS
+my %listengramstemp  = map { $_, 1 } @liste;
+my @listedesngrams = keys %listengramstemp;
+
+
+#------------------------------------------------------------------------------------------------------------------------
+close(FICPOS);
+#---------------------------
+# Initialisation des listes
+#--------------------------
+my @malignesegmentee = ();
+my @listedetokens = ();
+my @listedelemmes = ();
+my @listedepos = ();
+#-------------------------------------------
+# Lecture du fichier de tags ligne par ligne
+#-------------------------------------------
+print "Lecture du fichier a analyser\n";
+while (my $ligne = <FICTAG>) {
+    #-------------------------------------------------------------------------------------
+    # On ne s'occupe pas des lignes qui ne respectent pas la modèle mot tab mot tab mot
+    #-------------------------------------------------------------------------------------
+    
+    if (($ligne=~/^[^\t]+\t[^\t]+\t[^\t]+$/) and ($ligne !~/PCTFORTE/)){
+      
+  #-------------------------------------------
+  # Suppression du caractère de saut de ligne
+  chomp($ligne);
+  #-------------------------------------------
+  # Remplissage des listes
+  @malignesegmentee = split(/\t/, $ligne);
+  push(@listedetokens, $malignesegmentee[0]);
+  push(@listedelemmes, $malignesegmentee[1]);
+  push(@listedepos, $malignesegmentee[2]);
+  #-------------------------------------------
+  
+    }
+
+}
+close(FICTAG);
+#--------------------------------------------------------------------------------------
+# Génération de n-grammes de POS (en fonction du nombre de POS dans les patrons)
+# et recherche si chaque n-gramme généré correspond à un patron de %listedespatrons
+#--------------------------------------------------------------------------------------
+print "Recherche des patrons syntaxiques\n";
+foreach my $n (@listedesngrams) {
+  $n = $n-1;
+  my $j = 0;  
+  until ($j+$n > $#listedepos) {
+    my $ngram = join(" ", @listedepos[$j .. $j+$n]);
+    
+    #-----------------------------------------------------------------
+    # Si la suite de POS est reconnue comme clé de %listedespatrons
+    # on stocke les tokens correspondants en valeur du hash
+    if (exists $listedespatrons{$ngram}) {
+      my $motsreconnus = join(" ", @listedetokens[$j .. $j+$n]);
+      push(@{$listedespatrons{$ngram}},$motsreconnus);
+    #-----------------------------------------------------------------
+
+
+      
+    }
+    $j++;
+  }
+}
+#-------------------------------------------------
+# Impression des résultats de l'extraction
+#-------------------------------------------------
+my $dump = "";
+#-------------------------------------------------
+# Parcours de la table de hachage
+print "Ecriture des resultats\n";
+while ( ($key, $value) = each(%listedespatrons) ) {
+    $dump .= "------------------------\n";
+    $dump .= "$key\n-------------------------\n";
+
+  
+  #--------------------------------------------------------------
+  # Parcours du tableau contenant les suites de mots reconnues
+  # qui correspondent au patron syntaxique (la clé)
+    foreach my $term (@$value) {
+    $dump .= $term;
+    $dump .= "\n";
+
+    
+  #--------------------------------------------------------------
+  }
+  $dump .= "\n\n\n";
+  
+}
+#-------------------------------------------------
+
+open(OUT, ">:encoding(utf8)", "resultat.txt");
+
+print OUT $dump;
+close(OUT);
+exit;
+
+ <% end %>
+
+<p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+
+   <h4><B>2) Solutions Perl + XSLT + XQuery permettant l'extraction de patrons morphosyntaxiques à partir des fichiers XML étiquetés par "TreeTagger" </B></h4>
+
+   <B>2.1) Programme Perl</B>
+
+   <P>2.1.1) Pour le patron NOM_ADJ</P>
+   
+ <% code("perl") do %>
+
+#!/usr/bin/perl
+
+open(FILE,"$ARGV[0]");
+#--------------------------------------------
+# le patron cherché ici est du type "NOM_ADJ"
+#--------------------------------------------
+my @lignes=<FILE>;
+close(FILE);
+while (my $ligne=shift(@lignes)) {
+    chomp $ligne;
+    my $sequence="";
+    my $longueur=0;
+    if ( $ligne =~ /<element><data type=\"type\">NOM<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+    my $forme=$1;
+    $sequence.=$forme;
+    $longueur=1;
+    my $nextligne=$lignes[1]; # saut de ligne dans nos fichiers XML
+      if ( $nextligne =~ /<element><data type=\"type\">ADJ<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+        my $forme=$1;
+        $sequence.=" ".$forme;
+        $longueur=2;
+      }
+    }
+    if ($longueur == 2) {
+      print $sequence,"\n";
+    }
+}
+   
+
+ <% end %>
+
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+  <P>2.1.2) Pour le patron NOM_PREP_NOM</P>
+   
+ <% code("perl") do %>
+
+#!/usr/bin/perl
+
+open(FILE,"$ARGV[0]");
+#--------------------------------------------
+# le patron cherché ici est du type "NOM_PREP_NOM";
+
+#--------------------------------------------
+my @lignes=<FILE>;
+close(FILE);
+while (my $ligne=shift(@lignes)) {
+    chomp $ligne;
+    my $sequence="";
+    my $longueur=0;
+
+    if ( $ligne =~ /<element><data type=\"type\">NOM<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+    my $forme=$1;
+    $sequence.=$forme;
+    $longueur=1;
+
+    my $nextligne=$lignes[1]; # saut de ligne dans nos fichiers XML
+      if ( $nextligne =~ /<element><data type=\"type\">PRP<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+        my $forme=$1;
+        $sequence.=" ".$forme;
+        $longueur=2;
+
+        my $nextligne1=$lignes[3]; # saut de ligne dans nos fichiers XML
+        if ( $nextligne1 =~ /<element><data type=\"type\">NOM<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+          my $forme=$1;
+          $sequence.=" ".$forme;
+          $longueur=3;
+        }
+      }
+    }
+    if ($longueur == 3) {
+    
+
+    print $sequence,"\n";
+     
+    }
+}
+
+ <% end %>
+
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+
+ <B>2.2) Requêtes XSLT </B>
+
+ <P>2.2.1) Pour le patron NOM_ADJ</P>
+
+  <% code("xslt") do %>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    exclude-result-prefixes="xs"
+    version="2.0">
+        <xsl:output method="text" encoding="utf-8"/>
+        <xsl:template match="/">
+        <xsl:apply-templates select="//element"/>
+        </xsl:template>
+        <xsl:template match="element">
+            <xsl:choose>
+                <xsl:when test="(./data[contains(text(),'NOM')]) and (following-sibling::element[1][./data[contains(text(),'ADJ')]])">
+                    <xsl:value-of select="./data[3]"/>
+                    <xsl:text> </xsl:text>
+                </xsl:when>
+                <xsl:when test="(./data[contains(text(),'ADJ')]) and (preceding-sibling::element[1][./data[contains(text(),'NOM')]])">
+                    <xsl:value-of select="./data[3]"/>
+                    <xsl:text>&#xA;</xsl:text>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:template>
+</xsl:stylesheet>
+
+ <% end %>
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+ <P>2.2.2) Pour le patron NOM_PREP_NOM</P>
+
+  <% code("xslt") do %>
+
+  <?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    exclude-result-prefixes="xs"
+    version="1.0">
+<xsl:output method="text" encoding="utf-8"/>
+    <xsl:template match="/">
+    <xsl:apply-templates select=".//article"/>
+    </xsl:template>
+    <xsl:template match="article">
+        <xsl:for-each select="element">
+            <xsl:if test="(./data[1][contains(text(),'NOM')])">
+                <xsl:variable name="p1" select="./data[3]/text()"/>
+                <xsl:if test="following-sibling::element[1][./data[1][contains(text(),'PRP')]]">
+                    <xsl:variable name="p2" select="following-sibling::element[1]/data[3]/text()"/>
+                    <xsl:if test="following-sibling::element[2][./data[1][contains(text(),'NOM')]]">
+                        <xsl:variable name="p3" select="following-sibling::element[2]/data[3]/text()"/>
+                        <xsl:value-of select="$p1"/>
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="$p2"/>
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="$p3"/>
+                    <xsl:text>&#xA;</xsl:text>
+                    </xsl:if>
+                </xsl:if>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+</xsl:stylesheet>
+
+ <% end %>
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+
+ <P>2.2.3) Pour le patron DET_ADJ_NOM</P>
+
+  <% code("xslt") do %>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    exclude-result-prefixes="xs"
+    version="1.0">
+    <xsl:output method="text" encoding="utf-8"/>
+    <xsl:template match="/">
+    <xsl:apply-templates select=".//article"/>
+    </xsl:template>
+    <xsl:template match="article">
+        <xsl:for-each select="element">
+            <xsl:if test="(./data[1][contains(text(),'PRP:det')])">
+                <xsl:variable name="p1" select="./data[3]/text()"/>
+                <xsl:if test="following-sibling::element[1][./data[1][contains(text(),'ADJ')]]">
+                    <xsl:variable name="p2" select="following-sibling::element[1]/data[3]/text()"/>
+                    <xsl:if test="following-sibling::element[2][./data[1][contains(text(),'NOM')]]">
+                        <xsl:variable name="p3" select="following-sibling::element[2]/data[3]/text()"/>
+                        <xsl:value-of select="$p1"/>
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="$p2"/>
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="$p3"/>
+                        <xsl:text>&#xA;</xsl:text>
+                    </xsl:if>
+                </xsl:if>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+</xsl:stylesheet>
+
+ <% end %>
+
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+ <B>2.3) Requêtes XQuery</B>
+
+ <P>2.3.1) Pour le patron NOM_ADJ</P>
+
+  <% code("xquery") do %>
+for $element in doc("3476.xml")/PARCOURS/FILTRAGE/item/titre/article/element
+where $element/data[1]="NOM" and $element/following-sibling::*[1]/data[1]="ADJ"
+return ($element/data[3]/text(), $element/following-sibling::*[1]/data[3]/text())
+<% end %>
+
+<p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+
+
+  <P>2.3.2) Pour le patron NOM_PREP_NOM</P>
+
+<% code("xquery") do %>
+for $element in doc("3660.xml")/PARCOURS/FILTRAGE/item/*/*/element
+where $element/data[1]="NOM" and $element/following-sibling::*[1]/data[1]="PRP" and $element/following-sibling::*[2]/data[1]="NOM"
+return ($element/data[3]/text(), $element/following-sibling::*[1]/data[3]/text(), $element/following-sibling::*[2]/data[3]/text())
+<% end %>
+
+<p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
+ 
+  <p>Bullshit</p>
+ <p> Bullshit</p>
+ <p>Bullshit</p>
+ 
+ 
  
  <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Boîte à outils 4 : Création des graphes"} %>
  <%= partial "partials/onglets_bao_ferial" %>
