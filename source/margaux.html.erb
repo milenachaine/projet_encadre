@@ -504,5 +504,54 @@ return <PATRON-NOM-PRP-NOM>{$element,$next,$nextN}</PATRON-NOM-PRP-NOM>
 
 <h3> Suite BAO3 </h3>
 
-<p>
-<p> Explication bao4 </p>
+<p> Le deuxième solution perl pour extraire des patrons morphosyntaxiques utilise les données extrait avec <em> TreeTagger</em>.
+<br/>La grande différence que ce script possède par rapport qu premier que l'on a pu observer plus haut
+est que les données entrantes sont placées dans un tableau, sont ensuite analysées par notre programme puis extraite du tableau.
+<br/> Nous possédons alors deux scripts pour cette solution : un pour chaques patrons.</p>
+
+<h4><b> PATRON NOM ADJECTIF </b></h4>
+
+<label>
+
+<%= partial "partials/code", :locals => { :code_file => "assets/margaux/BAO3-2-NOM_ADJ.pl"} %>
+
+<% code("perl") do %>
+
+open(FILE,"$ARGV[0]");
+
+# Définition du tableau #
+my @lignes=<FILE>;
+close(FILE);
+
+#Début de la boucle #
+while (my $ligne=shift(@lignes)) {
+
+    chomp $ligne;
+    my $sequence="";
+    my $longueur=0;
+
+    # Recherche des NOMS #
+    if ( $ligne =~ /<element><data type=\"type\">NOM<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+		my $forme=$1;
+		$sequence.=$forme;
+		$longueur=1;
+		my $nextligne=$lignes[1];
+
+    # Recherche des ADJECTIFS #
+  		if ( $nextligne =~ /<element><data type=\"type\">ADJ<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+  			my $forme=$1;
+  			$sequence.=" ".$forme;
+  			$longueur=2;
+  		}
+    }
+    if ($longueur == 2) {
+	    print $sequence,"\n";
+    }
+}
+
+<% end %>
+</label>
+<h4> Résultats </h4>
+<h4><a href="assets/margaux/result_perl_treetagger/a-la-une-nomadj.txt"> Rubrique À la Une </a></h4>
+<h4><a href="assets/margaux/result_perl_treetagger/pol-nomadj.txt"> Rubrique Politique </a></h4>
+<h4><a href="assets/margaux/result_perl_treetagger/culture-nomadj.txt"> Rubrique Culture </a></h4>
