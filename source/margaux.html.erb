@@ -551,7 +551,64 @@ while (my $ligne=shift(@lignes)) {
 
 <% end %>
 </label>
+
 <h4> Résultats </h4>
 <h4><a href="assets/margaux/result_perl_treetagger/a-la-une-nomadj.txt"> Rubrique À la Une </a></h4>
 <h4><a href="assets/margaux/result_perl_treetagger/pol-nomadj.txt"> Rubrique Politique </a></h4>
 <h4><a href="assets/margaux/result_perl_treetagger/culture-nomadj.txt"> Rubrique Culture </a></h4>
+
+h4><b> PATRON NOM PRÉPOSITION NOM </b></h4>
+
+<label>
+
+<%= partial "partials/code", :locals => { :code_file => "assets/margaux/BAO2-2-NOM_PREP_NOM.pl"} %>
+
+<% code("perl") do %>
+
+open(FILE,"$ARGV[0]");
+
+my @lignes=<FILE>;
+close(FILE);
+while (my $ligne=shift(@lignes)) {
+    chomp $ligne;
+    my $sequence="";
+    my $longueur=0;
+
+# RECHERCHE DU NOM #
+    if ( $ligne =~ /<element><data type=\"type\">NOM<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+		my $forme=$1;
+		$sequence.=$forme;
+		$longueur=1;
+
+# RECHERCHE DU PRP #
+		my $nextligne=$lignes[1];
+  		if ( $nextligne =~ /<element><data type=\"type\">PRP<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+  			my $forme=$1;
+  			$sequence.=" ".$forme;
+  			$longueur=2;
+
+
+# RECHERCHE DU NOM #
+  			my $nextligne1=$lignes[3];
+  			if ( $nextligne1 =~ /<element><data type=\"type\">NOM<\/data><data type=\"lemma\">[^<]+<\/data><data type=\"string\">([^<]+)<\/data><\/element>/) {
+  				my $forme=$1;
+  				$sequence.=" ".$forme;
+  				$longueur=3;
+  			}
+  		}
+    }
+    if ($longueur == 3) {
+
+
+    print $sequence,"\n";
+
+    }
+}
+
+<% end %>
+</label>
+
+<h4> Résultats </h4>
+<h4><a href="assets/margaux/result_perl_treetagger/a-la-une-npn.txt"> Rubrique À la Une </a></h4>
+<h4><a href="assets/margaux/result_perl_treetagger/pol-npn.txt"> Rubrique Politique </a></h4>
+<h4><a href="assets/margaux/result_perl_treetagger/culture-npn.txt"> Rubrique Culture </a></h4>
