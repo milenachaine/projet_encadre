@@ -649,12 +649,29 @@ exit;
 
    <h4><B>2) Solutions Perl + XSLT + XQuery permettant l'extraction de patrons morphosyntaxiques à partir des fichiers XML étiquetés par "TreeTagger" </B></h4>
    
-   <div class="explication"><p>	L'a
+    <div class="explication"><p>	Les données des fichiers taggés par TreeTagger se structurent en 3 colonnes:<br/><br/>
+    					<ul>
 
-   </p></div><br/><br/>
+    					<li>1. la catégorie morphosyntaxique du token</li><br/>
+    					<li>2. son lemme</li><br/>
+    					<li>3. le token </li><br/><br/>
+				
+    				</ul>
+
+    Par exemple: <element><data type="type">NOM</data><data type="lemma">l’économiste</data><data type="string">l’économiste</data></element>
+ <br/>
+
+  
+    </p></div><br/><br/>
+  
    
 
-     <%= image_tag 'cog_transparent_32px.png', :class => "icon" %><B>2.1) Programme Perl</B>
+     <%= image_tag 'cog_transparent_32px.png', :class => "icon" %><B>2.1) Programme Perl</B><br/><br/>
+	 
+	 
+     <br/>Les deux programmes prennent comme argument: le fichier XML taggé par TreeTagger.<br/>
+
+     Les programmes doivent retrouner des éléments lexicalisés correpsondant à la structure des fichiers des rubriques taggées.<br/><br/>
 
    <P>2.1.1) Pour le patron NOM_ADJ</P>
    
