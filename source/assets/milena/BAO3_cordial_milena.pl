@@ -5,7 +5,7 @@
 # description : ce programme parcourt un fichier étiqueté par le logiciel Cordial et extrait des patrons morphosyntaxiques prédéfinis dans ce fichier
 # il transforme les données Cordial en deux listes de POS et de tokens
 # à chaque fois qu'il rencontre la POS qui constitue le début d'un motif, il essaie de le compléter et s'il y parvient il envoie le résultat dans un fichier txt
-# données : le fichier de sortie cordial (converti en UTF-8), un fichier txt contenant un patron (sous forme de regexp) à rechercher par ligne
+# données : le fichier de sortie cordial (converti en UTF-8), un fichier txt contenant des patrons (sous forme de regexp) à rechercher par ligne
 # résultat : un fichier txt (en UTF-8) contenant les patrons extraits dans le fichier cordial (une occurrence par ligne)
 
 #-----------------------------------------------------------
@@ -61,7 +61,7 @@ foreach $motif (@liste_motif) {
   chomp ($motif);
   print "MOTIF : $motif\n";
   mkdir $rubrique;
-  open($sortie, ">>:encoding(utf-8)", "./$rubrique/$motif.txt")
+  open($sortie, ">>:encoding(utf-8)", "./$rubrique/CORDIAL_$motif.txt")
     || die "Impossible d'ouvrir $motif.txt";
 
   # transformer le motif en une liste de POS et vérifier le nombre de POS qu'il contient
