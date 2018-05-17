@@ -1,12 +1,11 @@
 #/usr/bin/perl
 
 # Milena Chaîne - 2017-2018
-# commande : perl BAO3_cordial_milena.pl ./sortie_cordial/rubrique_cordial_utf8.txt fichier_patrons.txt numéro_rubrique
-# description : ce programme parcourt un fichier étiqueté par le logiciel Cordial et extrait des patrons morphosyntaxiques prédéfinis dans ce fichier
-# il transforme les données Cordial en deux listes de POS et de tokens
-# à chaque fois qu'il rencontre la POS qui constitue le début d'un motif, il essaie de le compléter et s'il y parvient il envoie le résultat dans un fichier txt
-# données : le fichier de sortie cordial (converti en UTF-8), un fichier txt contenant des patrons (sous forme de regexp) à rechercher par ligne
-# résultat : un fichier txt (en UTF-8) contenant les patrons extraits dans le fichier cordial (une occurrence par ligne)
+# commande : perl BAO3_treetagger_milena.pl ./sortie_cordial/rubrique_treetagger.xml fichier_patrons.txt numéro_rubrique
+# description : ce programme parcourt le fichier xml contenant des étiquettes treetagger et extrait des patrons morphosyntaxiques prédéfinis dans ce fichier
+# son fonctionnement est similaire à celui du programme pour Cordial, l'extraction des POS/tokens se fait différemment en fonction de la structure de la ligne
+# données : le fichier XML traité par Treetagger, un fichier txt contenant des patrons (sous forme de regexp) à rechercher par ligne
+# résultat : un fichier txt (en UTF-8) contenant les patrons extraits dans le fichier (une occurrence par ligne)
 
 #-----------------------------------------------------------
 use utf8;
@@ -18,7 +17,7 @@ if (@ARGV!=3) {
   die $test;
 }
 
-open (CORDIAL,"<:encoding(utf-8)", $ARGV[0]);
+open (TREETAGGER,"<:encoding(utf-8)", $ARGV[0]);
 open (MOTIF,"<:encoding(utf-8)", $ARGV[1]);
 
 # on récupère le numéro de rubrique
@@ -33,24 +32,21 @@ print "\n";
 close MOTIF;
 
 #-----------------------------------------------------------
-# transformation du fichier Cordial en listes de tokens et de POS
+# transformation du fichier Treetagger en listes de tokens et de POS
 my @liste_tokens=();
 my @liste_POS=();
 
 # pour chaque ligne du fichier
-while (my $ligne = <CORDIAL>) {
-  #passer à la ligne suivante si la ligne ne correspond à notre schéma TOKEN LEMME POS
-  next if ($ligne!~/^[^\t]+\t[^\t]+\t[^\t]+/);
-  $ligne =~ s/\r//g;
-  #récupérer la ligne
-  chomp($ligne);
-  #transformer la ligne en liste
-  @liste=split(/\t/, $ligne);
-  print "TOKEN : $liste[0]\tPOS : $liste[2]\n";
+while (my $ligne = <TREETAGGER>) {
+  #passer à la ligne suivante si la ligne n'est pas une ligne contenant un token
+  next if ($ligne!~/^<element><data type="type">([^>]+)<\/data><data type="lemma">([^>]+)<\/data><data type="string">([^>]+)<\/data><\/element>/);
+	my $pos = $1;
+	my $token = $3;
+  print "TOKEN : $token\tPOS : $pos\n";
   #rajouter le token (premier élément de la ligne/liste) à la liste globale
   #de même pour la POS
-  push(@liste_tokens , $liste[0]);
-  push(@liste_POS, $liste[2]);
+  push(@liste_tokens , $token);
+  push(@liste_POS, $pos);
 }
 
 close CORDIAL;
@@ -61,7 +57,7 @@ foreach $motif (@liste_motif) {
   chomp ($motif);
   print "MOTIF : $motif\n";
   mkdir $rubrique;
-  open($sortie, ">>:encoding(utf-8)", "./$rubrique/CORDIAL_$motif.txt")
+  open($sortie, ">>:encoding(utf-8)", "./$rubrique/TREETAGGER_$motif.txt")
     || die "Impossible d'ouvrir $motif.txt";
 
   # transformer le motif en une liste de POS et vérifier le nombre de POS qu'il contient
