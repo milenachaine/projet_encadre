@@ -1,0 +1,14 @@
+
+perl patron2graphedemots.pl "codagedes2fichiers" FichierEnEntree FichierContenantLeMotif
+
+par exemple :
+
+1. Pour afficher tous les noeuds du graphe
+perl patron2graphedemots.pl "iso-8859-1" patrons-1.txt
+
+2. avec uniquement des noeuds obtenus par filtrage prealable du motif dans les patrons
+perl patron2graphedemots.pl "iso-8859-1" patrons-1.txt motif-iso-8859-1.txt
+(cf fichiers fournis)
+
+
+
