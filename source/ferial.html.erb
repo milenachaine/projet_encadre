@@ -13,127 +13,53 @@ author:
 
 master:
   site: "http://www.tal.univ-paris3.fr/plurital/"
+  
 
 layout: ferial
 
 ---
 
 <% content_for :logo do %>
-<%= image_tag "box3.jpg" %>
+<%= image_tag "box2.jpg" %>
 <% end %>
 
 
-<p>Bullshit</p>
-<p> Bullshit</p>
-<p>Bullshit</p>
+<p>Bienvenue sur ma page.</p>
+<p>J'ai pour ma part travaillé sur les rubriques suivantes:<br/>
+<br/> - La rubrique 3476 qui est la rubrique <em>Cinéma</em>.
+<br/> - La rubrique 3232 qui est la rubrique <em>Idées</em>.
+<br/> - la rubrique 3260  qui est la rubrique <em>Livres</em>.</p>
+
+<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi les interviews et tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année. Pour la rubrique Idées, per exemple, nous pensons que que le contenu sera plus touné vers style argumentatif que descriptif). De ce fait, l'hypothèse de départ est que nos résultats de patrons vont probablement refléter les évènements marquants de l'année 2017. Pour plus de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.  </p>
+
+<p>Cette page contient les différentes Boîtes à Outils, leurs explications, les résultats obtenus, ainsi que les analyses qui en découlent.</p>
+<p>Tous les scripts sont visibles sur la page elle-même et téléchargeables. Pour naviguer entre les différentes boîtes à outils, vous pouvez utiliser la barre d'onglets ci-dessous.</p>
+
+<p>Bonne visite !</p>
+
+
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao1_2", :titre => "Boîtes à outils 1 et 2 : Parcours, filtrage, création et étiquetage des fichiers créés"} %>
 <%= partial "partials/onglets_bao_ferial" %>
 
-<p>Bullshit</p>
-
-<p>Bullshit</p>
-<p>Bullshit</p>
 
 
-<% code("perl") do %>
+	
+	<%= image_tag 'schema/bao_schema_1_2.png' %>
 
-#!/usr/bin/perl
+	<p>La deuxième BAO utilise les résultats de la première. En effet, la BAO1 s’occupe d’extraire le texte de chaque rubrique en récupérant le titre et la description de celles-ci, sous deux formats : un texte brut + un fichier XML. Tout cela en parcourant l’arborescence du fils RSS jusqu’au traitement de toutes les rubriques. Ensuite, la BAO2 récupère les fichiers XML pour les étiqueter morphosyntaxiquement grâce à l’annotateur « TreeTagger ».
+<br/>
+Que faire de nos fichiers au format TXT?<br/>
+Après les avoir converti en ISO 8859-15, on les passe à l’annotateur « Cordial » qui les étiquettera morphosyntaxiquement.<br/>
+Ce sont ces fichiers étiquetés par deux annotateur différents qui seront utilisés par la BAO3.<br/>
+Ci-dessous, le programme en question:
 
-<<DOC;
- usage : perl parcours-arborescence-fichiers.pl repertoire-a-parcourir rubrique
- Par exemple : perl parcours-arborescence-fichiers-2018.pl 2017 3208
- Le programme prend en entrée le nom du répertoire contenant les fichiers à traiter et le nom de la rubrique à traiter
-DOC
-#-----------------------------------------------------------
-my $rep="$ARGV[0]";
-my $rubrique="$ARGV[1]";
-my %redondant= ();
-$rep=~ s/[\/]$//; # assure que le nom du répertoire ne se termine pas par un "/"
+</p> 
 
-open my $sortie_txt,">:encoding(utf8)", "$rubrique.txt"; 
-open my $sortie_xml,">:encoding(utf8)", "$rubrique.xml";
-print $sortie_xml "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
-print $sortie_xml "<PARCOURS>\n";
-print $sortie_xml "<NOM>Ferial YAHIAOUI</NOM>\n";
-print $sortie_xml "<ABSTRACT>\n";
 
-#----------------------------------------
-&parcoursarborescencefichiers($rep);	# lance la récursion... elle se terminera après examen de toute l'arborescence
-#----------------------------------------
-print $sortie_xml "</ABSTRACT>\n";
-print $sortie_xml "</PARCOURS>\n";
+<label>
 
-close $sortie_txt; 
-close $sortie_xml; 
-
-exit;
-#----------------------------------------------
-sub parcoursarborescencefichiers {
-    my $path = shift(@_);
-    opendir(DIR, $path) or die "can't open $path: $!\n";
-    my @files = readdir(DIR);
-    closedir(DIR);
-    foreach my $file (@files) {
-		next if $file =~ /^\.\.?$/;
-		$file = $path."/".$file;
-		if (-d $file) {
-			print "<NOUVEAU REPERTOIRE> ==> ",$file,"\n";
-			&parcoursarborescencefichiers($file);	# récurse!
-			print "<FIN REPERTOIRE> ==> ",$file,"\n";
-		}
-		if (-f $file) {
-            if($file =~ m/$rubrique.+\.xml$/) {
-
-                print "<",$i++,"> ==> ",$file,"\n"; 
-               
-                open my $FILEIN, "<:encoding(utf-8)", $file;
-                
-                my $ensemble="";
-                while (my $ligne=<$FILEIN>) {
-                    chomp $ligne;
-                    $ligne =~ s/\r//g;
-                    $ensemble = $ensemble . $ligne ;
-                }
-                while ($ensemble =~ m/<item>.*?<title>(.+?)<\/title>.*?<description>(.+?)<\/description>.*?<\/item>/g){
-                    my $title = $1; # mettre dans un fichier
-                    my $description = $2; # mettre dans des fichiers locaux temporaires
-                    if (!exists $redondant{$title})
-                        {
-                        $redondant{$title} = 1;
-                        my ($titre_propre, $description_propre) = &nettoyage($title, $description);
-                        print $sortie_txt "$titre_propre.\n";
-                        print $sortie_txt "$description_propre\n\n";
-                        print $sortie_xml "<item><titre>$titre_propre</titre><description>$description_propre</description></item>\n";
-                        }
-                }
-
-            }
-			
-		}
-    }
-}
-#----------------------------------------------
-
-sub nettoyage {
-    my $var1 = shift(@_);   # shift supprime le premier élément et le recupère dans une variable
-    my $var2 = shift(@_);
-
-    $var1 =~s/&lt;.+?&gt;//g;
-    $var2 =~s/&lt;.+?&gt;//g;
-    $var1 =~s/&amp;/et/g;
-    $var2 =~s/&amp;/et/g;
-    $var1=~s/\?\.$/\?/;
-    return $var1,$var2; # il y a une accolade fermante ici qui ne s'affiche pas
-} 
-  <% end %>
-  
-  
-  
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
+<%= partial "partials/code", :locals => { :code_file => "assets/ferial/BAO2_extrac_etiq_utf.pl"} %>
  <% code("perl") do %>
 
 #!/usr/bin/perl
@@ -145,21 +71,42 @@ Le programme prend en entrée le nom du répertoire contenant les fichiers à tr
 DOC
 
  #-----------------------------------------------------------
- my $rep="$ARGV[0]"; # recupère le nom du répertoire racine # assure que le nom du répertoire ne se termine pas par un "/" 
+ 
+ # recupère le nom du répertoire racine 
+ 
+ my $rep="$ARGV[0]"; 
+ 
+ # recupère le nom de la rubrique
+ 
  my $rubrique = "$ARGV[1]";
+ 
+ # initialise 
+ 
  my %dico=();
 
- $rep=~ s/[\/]$//; 
+ $rep=~ s/[\/]$//; # assure que le nom du répertoire ne se termine pas par un "/" 
 
- $encodage = "utf-8";
- my $compteurfile=1;
- my $compteuritem=0;
+ $encodage = "utf-8"; 
+ 
+ # initialisele  compteur de fichichiers à 1
+ 
+ my $compteurfile=1; 
+ 
+ # initialisation du compteur d items à 0
+ 
+ my $compteuritem=0; 
+ 
+ # initialise les fichiers d output 
 
- my $output1=$rubrique.".xml";
- my $output2=$rubrique.".txt";
+ my $output1=$rubrique.".xml"; # initialisation du fichier d output XML 
+ my $output2=$rubrique.".txt"; # initialisation du fichier d output TXT
+ 
+ # ouvre les fichiers d output
 
  if(!open (FILEOUT, ">:encoding($encodage)", $output1)) { die "Pb à l'ouverture du fichier $output1" }; 
  if(!open (FILEOUT2, ">:encoding($encodage)", $output2)) { die "Pb à l'ouverture du fichier $output2" }; 
+ 
+ # écris l entête du fichier d output XML
 
  print FILEOUT "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
  print FILEOUT "<PARCOURS>\n";
@@ -167,62 +114,117 @@ DOC
  print FILEOUT "<FILTRAGE>\n";
 
 
+# lance la récursion...elle se terminera après examen de toute l arborescence
+
  #----------------------------------------
- &parcoursarborescencefichiers($rep);  # lance la récursion...elle se terminera après examen de toute l'arborescence
+ &parcoursarborescencefichiers($rep);  
  #----------------------------------------
 
+# réouvre le fichier d output XML et écris les balises fermantes
 
  if(!open (FILEOUT, ">>:encoding($encodage)", $output1)) { die "Pb à l'ouverture du fichier $output1" }; 
 
  print FILEOUT "\n</FILTRAGE>\n";
  print FILEOUT "</PARCOURS>\n";
 
+# ferme le fichier XML
+
  close(FILEOUT); 
+ 
 
  exit;
  #----------------------------------------------
+ 
+ # définis le sous-programme responsable de parcourir le répertoire
+  
  sub parcoursarborescencefichiers {
-     my $path = shift(@_); # récupère le répertoire
-     opendir(DIR, $path) or die "can't open $path: $!\n"; # ouvre le répertorie reçu en argument, donc $path
-     my @files = readdir(DIR); # lit le repertoire, readdir renvoit une liste, celle des documents à l'intérieur de DIR, on les met dans un listes # ne traite pas./ et courant../ précédent sinon, on se retrouve dans une boucle
+	 
+	 # récupère le répertoire
+	 
+     my $path = shift(@_); 
+	 
+	 # ouvre le répertorie reçu en argument, donc $path
+	 
+     opendir(DIR, $path) or die "can't open $path: $!\n"; 
+	 
+	 # lis le repertoire, readdir renvoit une liste, celle des fichiers à l intérieur de DIR, on les met dans un listes # ne traite pas./, courant../ précédent sinon, on se retrouve dans une boucle
+	 
+     my @files = readdir(DIR); 
      closedir(DIR);         
      foreach my $file (@files) { # la liste obtenue est relative au répertoire ouvert
-     next if $file =~ /^\.\.?$/; # next: passe au prochain élément si l'actuel ne correspond pas à celui chérché
+     next if $file =~ /^\.\.?$/; # next: passe au prochain élément si l actuel ne correspond pas à celui chérché
      $file = $path."/".$file;  
 
-
-     if (-d $file) { # vrai si l'objet est un répertoire 
+	# vrai si l objet est un répertoire
+	
+     if (-d $file) { 
        print "<NOUVEAU REPERTOIRE> ==> ",$file,"\n";
-       &parcoursarborescencefichiers($file); # récurse! 
+		   
+		   # récurse! 
+		   
+       &parcoursarborescencefichiers($file); 
        print "<FIN REPERTOIRE> ==> ",$file,"\n";
      }
-     if (-f $file) { # vrai si l'objet est un fichier
-       if($file =~/$rubrique.+\.xml$/) # point pris en compte à la fin de la ligne (pour le titre)
+	 
+	 # vrai si l objet est un fichier
+	 
+     if (-f $file) { 
+		 
+		 # si le fichier en question correspond à ce pattern
+		 
+       if($file =~/$rubrique.+\.xml$/) 
        {
          print "<",$compteurfile++,"> ==> ",$file,"\n";  
+		 
+		 #  alors, ouvre le fichier de la rubrique pour 
         
          open (FIC, "<encoding($encodage)", $file);
+		 
+		 # intialise varaibale texte à une chaîne vide
+		 
          my $texte="";
+		 
+		 # tant que la variable ligne prend comme valeur l ensemble du texte
+		 
          while (my $ligne = <FIC>){
+			 
+		   # supprime les retours à la ligne
+			 
            chomp $ligne;
+		   
+		   # nettoie la ligne du retour chariot
+		   
            $ligne =~ s/\r//g;
+		   
+		   # concatène l ensemble du texte
+		   
            $texte = $texte . $ligne;
 
        }
       
        close FIC;
-      
+	   
+	   
+       # nettoie le texte
+	   
        $texte =~ s/>\s+</></g;
+	   
+	   # tant que le texte recherché correspond à ce match
       
        while($texte=~ 
        m/<item>.*?<title>([^<]*?)<\/title>.*?<description>([^<]*?)<\/description>/g)
        { 
         
+		# stocke les titres dans la variable $titre 
          my $titre = $1;
+		 
+		 # stocke les descriptions dans la variable $description
+		 
          my $description = $2;
+		 
         
-         ($titre, $description) = &nettoyage($titre, $description);
-         if(!(exists $dico {$titre})) 
+         ($titre, $description) = &nettoyage($titre, $description); # appel du sous-programme nettoyage
+         if(!(exists $dico {$titre})) # ne prends pas en compte les titres redondants 
          { 
            $dico{$titre} = 1;
           
@@ -230,8 +232,13 @@ DOC
           
           
            $compteurItem++;
+		   
+		   # initialisation des variables contenant les titres + descriptions étiquetés
           
            my ($titre_etiq, $description_etiq) = &etiquetage($titre, $description);
+		   
+		   # écris dans l'output XML le contenu étiqueté
+		   
            print FILEOUT "<item number=\"$compteurItem\">\n<titre>$titre_etiq</titre>\n<description>$description_etiq</description>\n</item>\n";
         
          }
@@ -244,6 +251,9 @@ DOC
     
      }
  }
+ 
+ # définition du sous-programme nettoyage
+ 
  sub nettoyage {
 
    # @_ c'est une liste
@@ -251,8 +261,11 @@ DOC
 
    my $var1 = shift(@_);   # shift supprime le premier élément et le recupère dans une variable
    my $var2 = shift(@_);
+   
+   # $var1 et $var2 prennennet respectivement les valeurs des titres et descriptions 
+   
+   # nettoie les titres + descriptions des entités HTML
 
-   # $description =~s/&lt;.+?&gt;//g;
      $var1 =~s/&lt;.+?&gt;//g;
      $var2 =~s/&lt;.+?&gt;//g;
      $var1 =~s/&amp;/et/g;
@@ -263,6 +276,9 @@ DOC
 
  }
  #----------------------------------------------
+ 
+ # définition du sous-programme étiquetage
+ 
  sub etiquetage {
 
    my $var1 = shift(@_); # l'input est le titre et la description
@@ -275,10 +291,19 @@ DOC
   
    close OUT;
 
+  # system permet de lancer une commande de notre système d exploitation, ici une commande bash
+  # la première permettant de segmenter les titres en tokens et de les passer à l annotateur TreeTagger
   
-   system("perl tokenise-utf8.pl titre_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par > titre_tmp_etiq.txt");
-   system("perl treetagger2xml-utf8.pl titre_tmp_etiq.txt utf8");
+   system("perl tokenise-utf8.pl titre_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par > titre_tmp_etiq.txt"); # resultat envoyé dans des fichiers temporaires permattant de stocker chaque titre traité
+   
+   # la seconde commande permet de trasnformer le résultat de l'étiquetage en fichier XML
+   
+   system("perl treetagger2xml-utf8.pl titre_tmp_etiq.txt utf8"); 
+   
+   # le mode slurp permet de lire, localement, le texte d une traite
+   
    local $/=undef;
+   
    open (FIC, "<:encoding(utf8)", "titre_tmp_etiq.txt.xml");
    my $titre_retour=<FIC>;
    $titre_retour=~s/<\?xml version="1\.0" encoding="utf-8" standalone="no"\?>\n//;
@@ -291,7 +316,9 @@ DOC
   
    close OUT;
   
-   system("perl tokenise-utf8.pl description_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par > description_tmp_etiq.txt");
+   system("perl tokenise-utf8.pl description_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par
+    > description_tmp_etiq.txt"); # resultat envoyé dans des fichiers temporaires permattnt de stocker chaque description traitée
+	
    system("perl treetagger2xml-utf8.pl description_tmp_etiq.txt utf8");
    $/=undef;
    open (FIC, "<:encoding(utf8)", "description_tmp_etiq.txt.xml");
@@ -309,22 +336,42 @@ DOC
  }
  
   <% end %>
+</label>
  
- 
+ <p><div class="explication"><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Ce programme se compose de quatre blocs: dont 3 sous-programmes où certais sont imbriqués les unes dans les autres.<br/><br/>
 
-  
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+
+bloc1: <br/>
+
+	 Le lancement du du programme requiert deux arguments qui sont le nom du répertoire contenant l’ensemble du fils RSS ainsi que le numéro de la rubrique choisie dont le texte doit être extrait. Il va ensuite initialiser les différents fichiers de sortie, de parcourir l’arborescence, donc le répertoire du fils RSS et d’en extraire le contenu ciblé.<br/><br/>
+
+
+bloc2:<br/>
+
+	La fonction récursive parcoursarboresence est définie et prend, s’il correspond à un répertoire, le premier élément, en l’occurrence le répertoire « Library » contenant les fichiers des rubriques. 
+Elle fait elle-même appel au sous-programme etiquetage pour initialiser les variables contenant les titres et descriptions « nettoyés » par un autre sous-programme, nettoyage. <br/><br/>
+
+bloc3: <br/>
+
+	La fonction nettoyage est définie par la suppression des balises HTML et par le remplacement des entités HTML par leurs correspondants textuels.<br/>
+
+bloc4: <br/> 
+	
+	pour chaque token (mot) nous obtenons sa catégorie morphosyntaxique et son lemme. La fonction étiquetage est définie par l’appel des programmes Perl responsables de la segmentation du texte, de son annotation, ainsi que de sa transformation en fichier XML. Ce dernier sera formé de balises indiquant pour chaque token sa catégorie morpho-syntaxique et son lemme.<br/>
+
+Il est à noter que seul le fichier d’output XML est étiqueté morphosyntaxiquement par TreeTagger dans ce programme. Le fichier d’output TXT sera, quant à lui, étiqueté séparément par Cordial.<br/>
+
+Les deux, seront par la suite utilisés par la BAO3 pour en extraire, à partir de patrons morpho-syntaxiques prédéfinis, les éléments lexicalisés qui y sont associés.
+</p></div>
+
+  <p><div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %> Les résultats obtenus par l'étiquetage des fichiers XML, <b><a href="assets/ferial/rubriques_etiquetees_tagger.zip" download>sont téléchargeables ici</a></b> et ceux obtenus par l'étiquetage des fichiers TXT par Cordial<b><a href="assets/ferial/rebriques_etiquetees_cordial" download> sont téléchargeables ici</a></b> .</p></div>
+<center><p>Les fichiers XML étiquetés par TreeTagger se présentent ainsi :</p></center>
+<center><%= image_tag 'ferial/3232_tagger.png' %></center>
+<center><p>Les fichier TXT étiquetés par Cordial se présentent ainsi :</p></center>
+<center><%= image_tag 'ferial/3232_cordial.png' %></center>
+
+
  
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
  
  
  <%= partial "partials/h3", :locals => { :raccourci => "bao3", :titre => "Boîte à outils 3 : Extraction des patrons morphosyntaxiques"} %>
@@ -332,27 +379,50 @@ DOC
  
 
  
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+  	<%= image_tag 'schema/bao_schema_3.png' %>
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+  	<p>L’objectif de la BAO3 est d’extraire, selon des patrons morphosyntaxiques donnés, les éléments lexicalisés correspondants et ce, grâce à plusieurs solutions proposées, en fonction des fichiers annotés à exploiter (fichiers TXT et XML étiquetés).
+
  
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+
+  </p> 
+  
+
 
 
  <h4><B>1) Solutions Perl permettant l'extraction de patrons morphosyntaxiques à partir des fichiers TXT étiquetés par "Cordial" </B></h4>
  
+<div class="explication"><p>	Les données des fichiers taggés par Cordial se structurent en 3 colonnes:<br/><br/>
+					<ul>
+	
+					<li>1. le token</li><br/>
+					<li>2. son lemme</li><br/>
+					<li>3. sa catégorie morphosyntaxique</li><br/><br/>
+					
+				</ul>
+
+Par exemple: rentabilité	rentabilité	NCFS<br/>
+ 
+<br/>Les deux programmes prennent plusieurs arguments: le fichier taggé et la liste des éléments constitutifs du patron (exprimé chacun par exemple sur la forme d'une regexp).<br/>
+
+Les programmes doivent retrouner des éléments lexicalisés correpsondant aux patrons indiqués.
+</p></div><br/><br/>
+
+
+
 
  
- <B>1.1) Premier programme Perl</B>
-	 
+ <%= image_tag 'cog_transparent_32px.png', :class => "icon" %><B>1.1) Premier programme Perl</B>
+ 
+ 
+ <div class="explication"><p> Cette solution permet de comparer des chaînes de caractères avec une suite de POS grâce à une expression régulière. L'inconvénient qu'elle présente c'est qu'il faut à chaque fois changer l'argument du fichier de patron recherché visé.
+
+ </p></div><br/><br/>
+ 
+ 
+ <label>
+ 
+<%= partial "partials/code", :locals => { :code_file => "assets/ferial/BAO3_patrons_utf"} %> 
  <% code("perl") do %>
  
   #!/usr/bin/perl
@@ -360,7 +430,7 @@ DOC
  <<DOC;
  usage : perl BAO3_patrons.pl rubrique_utf.cnr patrons.txt 
  Par exemple : perl BAO3_patrons.pl 3208_utf.cnr patrons.txt
- Le programme prend en entrée la sortie Cordial la rubrique étiquetée et des patrons morphosyntaxiques à extraire correspondant à l'expression régulière (exemple : NC.. PREP NC..)
+ Le programme prend en entree la sortie Cordial la rubrique etiquetee et des patrons morphosyntaxiques a extraire correspondant a l expression reguliere (exemple : NC.. PREP NC..)
  DOC
 
 
@@ -426,24 +496,20 @@ DOC
  close (FIC);
  
   <% end %>
+   </label>
 
 
-   <p>Bullshit</p>
- <p> Bullshit</p>
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+  <%= image_tag 'cog_transparent_32px.png', :class => "icon" %><B>1.2) Deuxième programme Perl (programme N-grammes)</B> 
+  
+  <div class="explication"><p>	Pour cette solution, j'ai opté pour celle proposée par Axel Court. En effet, des tables de hachage sont utilisées dans ce script qui consiste à chercher chaque patron devenant la clé d'un %hash. Au fur et à mesure qu'un patron est reconnu, il est ajouté à la liste des valeurs de cette clé. Chaque clé stockée dans une table de hachage est un objet unique, et sa valeur peut être représentée par une chaîne de caractères ($string) ou une liste (@liste). Dans notre cas, des @tableaux sont stockés dans une %hash. Cette option est avantageuse dans le sens où il est plus rapide de vérifier si les éléments constitutifs d'un patron de POS du fichier TXT étiqueté est une clé dans le tableau associatif, que de comparer deux strings. Elle présente cependant le désavantage d'exiger la précision dans la défintiion des patrons recherchés, car Cordial est précis dans son annotation contrairement à TreeTagger, qui lui, ne va pas dans le détail pour indiquer le genre et le nombre, par exemple, d'un adjectif ou d'un nom. 
 
+  </p></div><br/><br/>
+  
+  
+  
+  <label>
 
-  <B>1.2) Deuxième programme Perl (programme N-grammes)</B>
+  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/extraction-hach-ngram-cordial_utf.pl"} %>
    
  <% code("perl") do %>
 
@@ -576,33 +642,25 @@ close(OUT);
 exit;
 
  <% end %>
+</label>
 
-<p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
 
 
    <h4><B>2) Solutions Perl + XSLT + XQuery permettant l'extraction de patrons morphosyntaxiques à partir des fichiers XML étiquetés par "TreeTagger" </B></h4>
+   
+   <div class="explication"><p>	L'a
 
-   <B>2.1) Programme Perl</B>
+   </p></div><br/><br/>
+   
+
+     <%= image_tag 'cog_transparent_32px.png', :class => "icon" %><B>2.1) Programme Perl</B>
 
    <P>2.1.1) Pour le patron NOM_ADJ</P>
+   
+   <label>
+
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/BAO3_solu_treetagger_NOM_ADJ_utf.pl"} %>
    
  <% code("perl") do %>
 
@@ -636,29 +694,16 @@ while (my $ligne=shift(@lignes)) {
    
 
  <% end %>
+</label>
 
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
  
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+    <P>2.1.2) Pour le patron NOM_PRP_NOM</P>
+  
+    <label>
 
-  <P>2.1.2) Pour le patron NOM_PREP_NOM</P>
+  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/BAO3_solu_treetagger_NOM_PREP_NOM_utf.pl"} %>
    
  <% code("perl") do %>
 
@@ -666,7 +711,7 @@ while (my $ligne=shift(@lignes)) {
 
 open(FILE,"$ARGV[0]");
 #--------------------------------------------
-# le patron cherché ici est du type "NOM_PREP_NOM";
+# le patron cherché ici est du type "NOM_PRP_NOM";
 
 #--------------------------------------------
 my @lignes=<FILE>;
@@ -704,22 +749,19 @@ while (my $ligne=shift(@lignes)) {
 }
 
  <% end %>
+ <label/>
 
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
  
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
 
 
- <B>2.2) Requêtes XSLT </B>
+   <%= image_tag 'xsl.png', :class => "icon" %><B>2.2) Feuilles de Style XSL </B>
 
  <P>2.2.1) Pour le patron NOM_ADJ</P>
+ 
+   <label>
+
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM-ADJ_utf.xsl"} %>
 
   <% code("xslt") do %>
 
@@ -747,6 +789,7 @@ while (my $ligne=shift(@lignes)) {
 </xsl:stylesheet>
 
  <% end %>
+</label>
 
  <p>Bullshit</p>
  <p> Bullshit</p>
@@ -759,6 +802,10 @@ while (my $ligne=shift(@lignes)) {
  <p>Bullshit</p>
 
  <P>2.2.2) Pour le patron NOM_PREP_NOM</P>
+ 
+   <label>
+
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM-PRP-NOM_utf.xsl"} %>
 
   <% code("xslt") do %>
 
@@ -793,6 +840,7 @@ while (my $ligne=shift(@lignes)) {
 </xsl:stylesheet>
 
  <% end %>
+</label>
 
  <p>Bullshit</p>
  <p> Bullshit</p>
@@ -806,6 +854,10 @@ while (my $ligne=shift(@lignes)) {
 
 
  <P>2.2.3) Pour le patron DET_ADJ_NOM</P>
+ 
+   <label>
+
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
 
   <% code("xslt") do %>
 
@@ -840,6 +892,7 @@ while (my $ligne=shift(@lignes)) {
 </xsl:stylesheet>
 
  <% end %>
+</label>
 
  <p>Bullshit</p>
  <p> Bullshit</p>
@@ -851,15 +904,25 @@ while (my $ligne=shift(@lignes)) {
  <p> Bullshit</p>
  <p>Bullshit</p>
 
- <B>2.3) Requêtes XQuery</B>
+  <%= image_tag 'xquery.png', :class => "icon" %><B>2.3) Requêtes XQuery</B> 
 
  <P>2.3.1) Pour le patron NOM_ADJ</P>
+ 
+   <label>
+
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
+ 
 
   <% code("xquery") do %>
-for $element in doc("3476.xml")/PARCOURS/FILTRAGE/item/titre/article/element
-where $element/data[1]="NOM" and $element/following-sibling::*[1]/data[1]="ADJ"
-return ($element/data[3]/text(), $element/following-sibling::*[1]/data[3]/text())
+<corpus> { for $art in doc("numéro_de_la_rubrique")//article 
+for $elt in $art/element 
+let $nextelt := $elt/following-sibling::element[1] 
+let $nextelt2 := $nextelt/following-sibling::element[1] 
+where $elt/data[1] = "NOM" and $nextelt/data[1] = "PRP" and $nextelt2/data[1] = "NOM" 
+return <NOMPRPNOM>{$elt/data[2]/text(), " ", $nextelt/data[2]/text(), " ",$nextelt2/data[2]/text()}</NOMPRPNOM> 
+} </corpus> 
 <% end %>
+</label>
 
 <p>Bullshit</p>
  <p> Bullshit</p>
@@ -872,17 +935,72 @@ return ($element/data[3]/text(), $element/following-sibling::*[1]/data[3]/text()
  <p>Bullshit</p>
 
 
-  <P>2.3.2) Pour le patron NOM_PREP_NOM</P>
+  <P>2.3.2) Pour le patron NOM_PRP_NOM</P>
+  
+    <label>
+
+  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
+  
 
 <% code("xquery") do %>
-for $element in doc("3660.xml")/PARCOURS/FILTRAGE/item/*/*/element
-where $element/data[1]="NOM" and $element/following-sibling::*[1]/data[1]="PRP" and $element/following-sibling::*[2]/data[1]="NOM"
-return ($element/data[3]/text(), $element/following-sibling::*[1]/data[3]/text(), $element/following-sibling::*[2]/data[3]/text())
+<corpus> { for $art in doc("numéro_de_la_rubrique")//article 
+for $elt in $art/element 
+let $nextelt := $elt/following-sibling::element[1] where $elt/data[1] = "NOM" and $nextelt/data[1] = "ADJ"
+return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
+</corpus>
 <% end %>
+</label>
 
-<p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+ 
+ <div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Vous trouverez dans ce tableau l'intégralité des résultats obtenus, au format TXT et HTML. Ils sont classés par motif, puis par étiqueteur afin de pouvoir comparer les résultats plus facilement.</p></div>
+
+ <div class= "tableau"><table style="float:center">
+   <tr>
+     <th colspan="2">Motifs</th>
+     <th>Rubrique 3476 (Cinéma)</th>
+     <th>Rubrique 3232 (Idées)</th>
+     <th>Rubrique 3260 (Livres)</th>
+   </tr>
+   <tr>
+   <th rowspan="2">ADJ NOM</th>
+   <td>Cordial</td>
+   <td>TXT</td>
+   <td>TXT</td>
+   <td>TXT</td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+     <td>TXT, HTML</td>
+     <td>TXT, HTML</td>
+     <td>TXT, HTML</td>
+   </tr>
+   <tr>
+   <th rowspan="2">NOM ADJ</th>
+   <td>Cordial</td>
+   <td>TXT</td>
+   <td>TXT</td>
+   <td>TXT</td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+     <td>TXT, HTML</td>
+     <td>TXT, HTML</td>
+     <td>TXT, HTML</td>
+   </tr>
+   <tr>
+   <th rowspan="2">ADV VERBE ADV</th>
+   <td>Cordial</td>
+   <td>TXT</td>
+   <td>TXT</td>
+   <td>TXT</td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+     <td>TXT, HTML</td>
+     <td>TXT, HTML</td>
+     <td>TXT, HTML</td>
+   </tr>
+ </table></div>
  
  
  
