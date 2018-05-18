@@ -52,6 +52,8 @@ layout: margaux
 
 <p>INTRODUCTION</p>
 
+<%= image_tag 'schema/bao_schema.png' %>
+
 <h3>BAO 1 </h3>
 <p> La Boîte à outil n°1 permet de parcourir les rubriques des chacunes des archives du <em>Monde</em> afin de récupérer les titres et les descriptions de chaque article et les mettre dans 2 fichiers :
 un fichier texte et un fichier xml. <br/>Les données récupérées sont également nettoyer dans cette boîte à outil. <br/>Nous observerons les résultats dans la boîte à outil n°2 qui possède seulement un sous-programme d'étiquetage supplémentaire. </p>
@@ -553,9 +555,9 @@ while (my $ligne=shift(@lignes)) {
 </label>
 
 <h4> Résultats </h4>
-<h4><a href="assets/margaux/result_perl_treetagger/a-la-une-nomadj.txt"> Rubrique À la Une </a></h4>
-<h4><a href="assets/margaux/result_perl_treetagger/pol-nomadj.txt"> Rubrique Politique </a></h4>
-<h4><a href="assets/margaux/result_perl_treetagger/culture-nomadj.txt"> Rubrique Culture </a></h4>
+<h4><a href="assets/margaux/result_perl_patron/a-la-une-nomadj.txt"> Rubrique À la Une </a></h4>
+<h4><a href="assets/margaux/result_perl_patron/pol-nomadj.txt"> Rubrique Politique </a></h4>
+<h4><a href="assets/margaux/result_perl_patron/culture-nomadj.txt"> Rubrique Culture </a></h4>
 
 h4><b> PATRON NOM PRÉPOSITION NOM </b></h4>
 
@@ -676,4 +678,65 @@ while (my $ligne=shift(@lignes)) {
 
 <p> Ces différents patrons nous servirons pour la Boîte à outil n°4. Ainsi, nous pourrons observer les différences de résultats obtenus. </p>
 
+<h3>BAO 4 </h3>
 
+<p> La Boîte à outils n°4 va nous permettre de créer des graphes de cooccurrence avec l'aide d'un logiciel qui se nomme <b> patron2graph</b>.
+<br/> Pour ce logiciel nous avons besoin de créer un fichier texte supplémentaire contenant le motif recherché.
+<br/> La commande pour utiliser ce logiciel est : <b> chemin-logiciel "encodage" fichier-patron motif.txt</b>.</p>
+
+<p> Les motifs que j'ai utilisé sont les mots :
+ "Femme", "Homme", "droite/gauche", "scandale/affaire", "Macron", "Fillon".
+ <br/> Ces motifs ont été décidé avec mes collègues en observant les actualités les plus importantes de l'année 2017. 
+ </p>
+ 
+ <h3> Le motif : Rubrique  À la Une </h3>
+ 
+ <p><b><em> Le motif [Ff]emmes? </em></b></p>
+ 
+ <p> Dans le patron NOM ADJ </p>
+ 
+ <%= image_tag 'margaux/graphes/femme-une.png' %>
+ 
+ <p> On peut observer que deux types d'adjectifs utilisés avec le nom "femme(s)".
+<br/>On trouve des adjectifs concernant les origines de la femme ou un adjectif concernant sa situation ("agées", "célibataires"," enceintes").</p>
+
+ <p> Dans le patron NOM PREP NOM </p>
+ 
+ <%= image_tag 'margaux/graphes/femme-une-npn.png' %>
+ 
+ <p> On peut observer que la préposition la plus utilisée avec le mot "femme(s)" est la préposition "de". 
+ <br/> On trouve alors des coocurences telles que "milliers/génération/dizaine de femme" </p>
+ 
+ <p> Observons maintenant la différence avec le motif "[Hh]ommes?"</p>
+ 
+  <p><b><em> Le motif [Hh]ommes? </em></b></p>
+  
+  <%= image_tag 'margaux/graphes/une-homme-tree.png' %>
+  
+  <p>On observe que les résultats sont plus nombreux quand le motif est "[Hh]ommes?".
+  <br/> La coocurence la plus importante est <b>"affaire d'homme"</b>. 
+  <br/> Les adjectifs que l'on retrouve le plus sont des adjectifs concernant le physique de l'homme ("fort", "charismatique"). </p> 
+  
+  <p><b><em> Le motif "scandale/affaire" </em></b></p>
+  
+  <%= image_tag 'margaux/graphes/une-scandale-tree.png' %>
+  <%= image_tag 'margaux/graphes/une-scandale-cordial.png' %>
+  
+  <p><b><em> Le motif "Fillon" </em></b></p>
+  
+    <%= image_tag 'margaux/graphes/une-fillon-tree.png' %>
+
+  
+  <p><b><em> Le motif "Macron" </em></b></p>
+  
+<%= image_tag 'margaux/graphes/une-macron-tree.png' %>
+
+ <h3> Le motif : Rubrique  Culture </h3>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
