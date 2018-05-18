@@ -550,8 +550,6 @@ layout: milena
   <% end %>
 </label>
 
-<h4 id="treetagger_xquery">TREETAGGER ET XQUERY</h4>
-
 <h4 id="treetagger_xslt">TREETAGGER ET XSLT</h4>
 
 <label>
@@ -700,6 +698,37 @@ layout: milena
 </xsl:stylesheet>
 <% end %>
 </label>
+
+<h4 id="treetagger_xquery">TREETAGGER ET XQUERY</h4>
+
+<label>
+
+  <input id="more" type="checkbox">
+  <p id="text-more">Afficher/masquer la requête</a></p>
+
+<% code("xml") do %>
+<corpus> { for $art in doc("numéro_de_la_rubrique")//article
+for $elt in $art/element
+let $nextelt := $elt/following-sibling::element[1]
+let $nextelt2 := $nextelt/following-sibling::element[1]
+where $elt/data[1] = "NOM" and $nextelt/data[1] = "PRP" and $nextelt2/data[1] = "NOM"
+return <NOMPRPNOM>{$elt/data[2]/text(), " ", $nextelt/data[2]/text(), " ",$nextelt2/data[2]/text()}</NOMPRPNOM>
+} </corpus>
+<% end %>
+</label>
+
+<label>
+  <input id="more" type="checkbox">
+  <p id="text-more">Afficher/masquer la requête</a></p>
+<% code("xml") do %>
+<corpus> { for $art in doc("numéro_de_la_rubrique")//article
+for $elt in $art/element
+let $nextelt := $elt/following-sibling::element[1] where $elt/data[1] = "NOM" and $nextelt/data[1] = "ADJ"
+return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
+</corpus>
+<% end %>
+</label>
+
 <div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Vous pouvez accéder  via le tableau suivant aux résultats utilisés pour l'analyse, au format TXT et HTML. Ils sont classés par motif, puis par étiqueteur afin de pouvoir comparer les résultats plus facilement. Vous pouvez également <b><a href="assets/milena/archives_etiquetage_3214_3210_3224.zip" download>télécharger une archive contenant tous les résultats obtenus</a></b>.</p></div>
 
 <div class= "tableau"><table style="float:center">
@@ -770,6 +799,18 @@ layout: milena
     <td>Treetagger</td>
     <td>TXT</td>
     <td>TXT, <a href="assets/milena/xslt/exercice12_2_1.html">HTML</a></td>
+    <td>TXT</td>
+  </tr>
+  <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM</th>
+  <td>Cordial</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT</td>
+    <td>TXT</td>
     <td>TXT</td>
   </tr>
   <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM - ADJECTIF</th>
