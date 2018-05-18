@@ -32,7 +32,6 @@ patrons:
   treetagger:
     - DET:ART#NOM#NAM
     - DET:ART#NOM#DET:ART#NAM
-    - DET:ART#NOM#DET:ART#NAM
     - ADV#VER:[a-z]{1,5}#ADV
     - DET:[A-Z]{1,3}#NOM#ADJ
     - DET:[A-Z]{1,3}#ADJ#NOM
@@ -277,7 +276,7 @@ layout: milena
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-<h4>CORDIAL</h4>
+<h4 id="cordial">CORDIAL ET PERL</h4>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier txt traité par Cordial (converti en UTF-8), un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Il va ensuite
@@ -419,16 +418,9 @@ layout: milena
   <% end %>
 </label>
 
-<h4>TREETAGGER</h4>
+<h4 id="treetagger_perl">TREETAGGER ET PERL</h4>
 
-<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier txt traité par Cordial (converti en UTF-8), un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Il va ensuite
-<ul>
-  <li>transformer le fichier txt en deux listes, l'une contenant tous les termes (c'est-à-dire la première colonne du fichier) et l'autre contenant toutes les étiquettes (la troisième colonne du fichier). La deuxième colonne du fichier (les lemmes) ne nous intéresse pas et sera ignorée</li>
-  <li>pour chaque patron présent dans la liste de patrons :</li>
-  <ul><li>transformer le patron en une liste d'étiquettes</li>
-  <li>trouver une ligne où l'étiquette de la liste correspond à la première étiquette du patron, puis vérifier si la ligne suivante correspond à l'étiquette suivante, jusqu'à ce que le patron soit complété</li>
-  <li>envoyer tous les patrons morpho-syntaxiques complets dans un fichier txt</b></li></ul>
-</ul></p>
+<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier XML contenant les étiquettes Treetagger, un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Son fonctionnement est presque identique au programme traitant la sortie Cordial, à l'exception de l'extraction des termes et des étiquettes, qui se fait directement dans le fichier XML. Le format des patrons est également différent car Treetagger n'utilise pas les mêmes étiquettes que Cordial.</p>
 <p>Format du fichier de patrons :</p>
 <table style="float:center">
   <% current_page.data.patrons.treetagger.each do |patron| %>
@@ -444,7 +436,7 @@ layout: milena
   # Milena Chaîne - 2017-2018
   # commande : perl BAO3_treetagger_milena.pl ./sortie_cordial/rubrique_treetagger.xml fichier_patrons.txt numéro_rubrique
   # description : ce programme parcourt le fichier xml contenant des étiquettes treetagger et extrait des patrons morphosyntaxiques prédéfinis dans ce fichier
-  # son fonctionnement est similaire à celui du programme pour Cordial, l'extraction des POS/tokens se fait différemment en fonction de la structure de la ligne
+  # son fonctionnement est très similaire à celui du programme pour Cordial, l'extraction des POS/tokens se fait différemment en fonction de la structure de la ligne
   # données : le fichier XML traité par Treetagger, un fichier txt contenant des patrons (sous forme de regexp) à rechercher par ligne
   # résultat : un fichier txt (en UTF-8) contenant les patrons extraits dans le fichier (une occurrence par ligne)
 
@@ -556,6 +548,156 @@ layout: milena
   <% end %>
 </label>
 
+<h4 id="treetagger_xquery">TREETAGGER ET XQUERY</h4>
+
+<h4 id="treetagger_xslt">TREETAGGER ET XSLT</h4>
+
+<label>
+  <%= partial "partials/code", :locals => { :code_file => "assets/milena/xslt/exercice12_2_1.xsl"} %>
+  <% code("xml") do %>
+  <?xml version="1.0" encoding="UTF-8"?>
+  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="1.0">
+      <xsl:output method="html" encoding="UTF-8"/>
+      <xsl:template match="/">
+          <html>
+              <body>
+                  <h1>Extraction du patron NOM ADJ</h1>
+                  <table>
+                      <tr>
+                          <td>
+                              <xsl:apply-templates select="//item"/>
+                          </td>
+                      </tr>
+                  </table>
+              </body>
+          </html>
+      </xsl:template>
+      <xsl:template match="item">
+                  <xsl:apply-templates select="./titre/document/article/element"/>
+      </xsl:template>
+      <xsl:template match="element">
+          <xsl:choose>
+              <xsl:when
+                  test="(./data[contains(text(), 'NOM')]) and (following-sibling::element[1][./data[contains(text(), 'ADJ')]])">
+                  <xsl:value-of select="./data[3]"/>
+                  <xsl:text> </xsl:text>
+              </xsl:when>
+              <xsl:when
+                  test="(./data[contains(text(), 'ADJ')]) and (preceding-sibling::element[1][./data[contains(text(), 'NOM')]])">
+                  <xsl:value-of select="./data[3]"/>
+                  <xsl:text>&#xA;</xsl:text>
+              </xsl:when>
+          </xsl:choose>
+      </xsl:template>
+  </xsl:stylesheet>
+
+  <% end %>
+</label>
+
+<label>
+  <%= partial "partials/code", :locals => { :code_file => "assets/milena/xslt/exercice12_2_2.xsl"} %>
+  <% code("xml") do %>
+  <?xml version="1.0" encoding="UTF-8"?>
+  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="1.0">
+      <xsl:output method="text" encoding="utf-8"/>
+      <xsl:template match="/">
+          <html>
+              <body>
+                  <h1>Extraction du patron DET:ART NOM NAM</h1>
+                  <table>
+                      <tr>
+                          <td>
+                              <xsl:apply-templates select="//item"/>
+                          </td>
+                      </tr>
+                  </table>
+              </body>
+          </html>
+      </xsl:template>
+      <xsl:template match="item">
+                  <xsl:apply-templates select="./titre/document/article"/>
+      </xsl:template>
+      <xsl:template match="article">
+          <xsl:for-each select="element">
+              <xsl:if test="(./data[1][contains(text(), 'DET:ART')])">
+                  <xsl:variable name="a" select="./data[3]/text()"/>
+                  <xsl:if test="following-sibling::element[1][./data[1][contains(text(), 'NOM')]]">
+                      <xsl:variable name="b" select="following-sibling::element[1]/data[3]/text()"/>
+                      <xsl:if test="following-sibling::element[2][./data[1][contains(text(), 'NAM')]]">
+                          <xsl:variable name="c" select="following-sibling::element[2]/data[3]/text()"/>
+                          <xsl:value-of select="$a"/>
+                          <xsl:text> </xsl:text>
+                          <xsl:value-of select="$b"/>
+                          <xsl:text> </xsl:text>
+                          <xsl:value-of select="$c"/>
+                          <xsl:text>&#xA;</xsl:text>
+                      </xsl:if>
+                  </xsl:if>
+              </xsl:if>
+          </xsl:for-each>
+      </xsl:template>
+  </xsl:stylesheet>
+
+  <% end %>
+</label>
+<label>
+  <%= partial "partials/code", :locals => { :code_file => "assets/milena/xslt/exercice12_2_3.xsl"} %>
+  <% code("xml") do %>
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+    <xsl:output method="html" encoding="utf-8"/>
+    <xsl:template match="/">
+        <html>
+            <body>
+                <h1>Extraction du patron VER:infi DET:ART NOM ADJ</h1>
+                <table>
+                    <tr>
+                        <td>
+                            <xsl:apply-templates select="//item"/>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+        </html>
+        <xsl:apply-templates select=".//article"/>
+    </xsl:template>
+    <xsl:template match="item">
+        <xsl:apply-templates select="./titre/document/article"/>
+    </xsl:template>
+
+    <xsl:template match="article">
+        <xsl:for-each select="element">
+            <xsl:if test="(./data[1][contains(text(), 'VER:infi')])">
+                <xsl:variable name="a" select="./data[3]/text()"/>
+                <xsl:if test="following-sibling::element[1][./data[1][contains(text(), 'DET:ART')]]">
+                    <xsl:variable name="b" select="following-sibling::element[1]/data[3]/text()"/>
+                    <xsl:if test="following-sibling::element[2][./data[1][contains(text(), 'NOM')]]">
+                        <xsl:variable name="c" select="following-sibling::element[2]/data[3]/text()"/>
+                        <xsl:if
+                            test="following-sibling::element[3][./data[1][contains(text(), 'ADJ')]]">
+                            <xsl:variable name="d"
+                                select="following-sibling::element[3]/data[3]/text()"/>
+                            <xsl:value-of select="$a"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="$b"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="$c"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="$d"/>
+                            <xsl:text>&#xA;</xsl:text>
+                        </xsl:if>
+                    </xsl:if>
+                </xsl:if>
+            </xsl:if>
+        </xsl:for-each>
+
+    </xsl:template>
+
+</xsl:stylesheet>
+<% end %>
+</label>
 <div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Vous trouverez dans ce tableau l'intégralité des résultats obtenus, au format TXT et HTML. Ils sont classés par motif, puis par étiqueteur afin de pouvoir comparer les résultats plus facilement.</p></div>
 
 <div class= "tableau"><table style="float:center">
@@ -566,7 +708,7 @@ layout: milena
     <th>Rubrique 3224 (Société)</th>
   </tr>
   <tr>
-  <th rowspan="2">ADJ NOM</th>
+  <th rowspan="2">DETERMINANT - NOM COMMUN - NOM PROPRE</th>
   <td>Cordial</td>
   <td>TXT</td>
   <td>TXT</td>
@@ -579,7 +721,7 @@ layout: milena
     <td>TXT, HTML</td>
   </tr>
   <tr>
-  <th rowspan="2">NOM ADJ</th>
+  <th rowspan="2">DETERMINANT - NOM COMMUN - DETERMINANT - NOM PROPRE</th>
   <td>Cordial</td>
   <td>TXT</td>
   <td>TXT</td>
@@ -592,7 +734,19 @@ layout: milena
     <td>TXT, HTML</td>
   </tr>
   <tr>
-  <th rowspan="2">ADV VERBE ADV</th>
+  <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM</th>
+  <td>Cordial</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT, HTML</td>
+    <td>TXT, HTML</td>
+    <td>TXT, HTML</td>
+  </tr>
+  <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM - ADJECTIF</th>
   <td>Cordial</td>
   <td>TXT</td>
   <td>TXT</td>
