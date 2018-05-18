@@ -30,7 +30,7 @@ layout: ferial
 <br/> - La rubrique 3232 qui est la rubrique <em>Idées</em>.
 <br/> - la rubrique 3260  qui est la rubrique <em>Livres</em>.</p>
 
-<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi au sujet des interviews et des tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année. Pour la rubrique Idées, par exemple, nous pensons que que le contenu sera tourné plus vers un style argumentatif que descriptif). De ce fait, l'hypothèse de départ est que nos résultats de patrons vont probablement refléter les évènements marquants de l'année 2017. Pour plus de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.  </p>
+<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi au sujet des interviews et des tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année. Pour plus de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.</p>
 
 <p>Cette page contient les différentes Boîtes à Outils, leurs explications, les résultats obtenus, ainsi que les analyses qui en découlent.</p>
 <p>Tous les scripts sont visibles sur la page elle-même et téléchargeables. Pour naviguer entre les différentes boîtes à outils, vous pouvez utiliser la barre d'onglets ci-dessous.</p>
@@ -499,9 +499,9 @@ Les programmes doivent retrouner des éléments lexicalisés correpsondant aux p
    </label>
 
 
-  <%= image_tag 'cog_transparent_32px.png', :class => "icon" %><B>1.2) Deuxième programme Perl (programme N-grammes)</B> 
+<br/><br/>  <%= image_tag 'cog_transparent_32px.png', :class => "icon" %><B>1.2) Deuxième programme Perl (programme N-grammes)</B> 
   
-  <div class="explication"><p>	Pour cette solution, j'ai opté pour celle proposée par Axel Court. En effet, des tables de hachage sont utilisées dans ce script qui consiste à chercher chaque patron devenant la clé d'un %hash. Au fur et à mesure qu'un patron est reconnu, il est ajouté à la liste des valeurs de cette clé. Chaque clé stockée dans une table de hachage est un objet unique, et sa valeur peut être représentée par une chaîne de caractères ($string) ou une liste (@liste). Dans notre cas, des @tableaux sont stockés dans une %hash. Cette option est avantageuse dans le sens où il est plus rapide de vérifier si les éléments constitutifs d'un patron de POS du fichier TXT étiqueté est une clé dans le tableau associatif, que de comparer deux strings. Elle présente cependant le désavantage d'exiger la précision dans la défintiion des patrons recherchés, car Cordial est précis dans son annotation contrairement à TreeTagger, qui lui, ne va pas dans le détail pour indiquer le genre et le nombre, par exemple, d'un adjectif ou d'un nom. 
+  <div class="explication"><p>	Pour cette solution, j'ai opté pour celle proposée par Axel Court. En effet, des tables de hachage sont utilisées dans ce script qui consiste à chercher chaque patron devenant la clé d'un %hash. Au fur et à mesure qu'un patron est reconnu, il est ajouté à la liste des valeurs de cette clé. Chaque clé stockée dans une table de hachage est un objet unique, et sa valeur peut être représentée par une chaîne de caractères ($string) ou une liste (@liste). Dans notre cas, des @tableaux sont stockés dans une %hash. Cette option est avantageuse dans le sens où il est plus rapide de vérifier si les éléments constitutifs d'un patron de POS du fichier TXT étiqueté est une clé dans le tableau associatif, que de comparer deux strings. Elle présente cependant le désavantage d'exiger la précision dans la défintion des patrons recherchés, car Cordial est précis dans son annotation contrairement à TreeTagger, qui lui, ne va pas dans le détail pour indiquer le genre et le nombre, par exemple, d'un adjectif ou d'un nom. 
 
   </p></div><br/><br/>
   
@@ -658,7 +658,11 @@ exit;
 				
     				</ul>
 
-    Par exemple: <element><data type="type">NOM</data><data type="lemma">l’économiste</data><data type="string">l’économiste</data></element>
+    Par exemple: <label>
+   
+ <% code("xml") do %><element><data type="type">NOM</data><data type="lemma">l’économiste</data><data type="string">l’économiste</data></element>
+ <%end%></label>
+ 
  <br/>
 
   
@@ -712,7 +716,7 @@ while (my $ligne=shift(@lignes)) {
 
  <% end %>
 </label>
-
+<br/><br/>
 
  
 
@@ -766,13 +770,18 @@ while (my $ligne=shift(@lignes)) {
 }
 
  <% end %>
- <label/>
+ <label/><br/><br/>
 
 
  
 
 
    <%= image_tag 'xsl.png', :class => "icon" %><B>2.2) Feuilles de Style XSL </B>
+   
+   
+   <div class="explication"><p>	Les feuilles de style XSL permettent également l'extraction de patrons morphosyntaxiques selon le principe des templates qui matchent avec les noeuds définis dans des requêtes.
+
+   </p></div><br/><br/>
 
  <P>2.2.1) Pour le patron NOM_ADJ</P>
  
@@ -780,7 +789,7 @@ while (my $ligne=shift(@lignes)) {
 
  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM-ADJ_utf.xsl"} %>
 
-  <% code("xslt") do %>
+  <% code("xml") do %>
 
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -806,17 +815,9 @@ while (my $ligne=shift(@lignes)) {
 </xsl:stylesheet>
 
  <% end %>
-</label>
+</label><br/><br/>
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+
 
  <P>2.2.2) Pour le patron NOM_PREP_NOM</P>
  
@@ -824,7 +825,7 @@ while (my $ligne=shift(@lignes)) {
 
  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM-PRP-NOM_utf.xsl"} %>
 
-  <% code("xslt") do %>
+  <% code("xml") do %>
 
   <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -857,17 +858,8 @@ while (my $ligne=shift(@lignes)) {
 </xsl:stylesheet>
 
  <% end %>
-</label>
+</label><br/><br/>
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
 
 
  <P>2.2.3) Pour le patron DET_ADJ_NOM</P>
@@ -876,7 +868,7 @@ while (my $ligne=shift(@lignes)) {
 
  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
 
-  <% code("xslt") do %>
+  <% code("xml") do %>
 
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -909,28 +901,65 @@ while (my $ligne=shift(@lignes)) {
 </xsl:stylesheet>
 
  <% end %>
-</label>
+</label><br/><br/>
 
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+ <P>2.2.4) Pour le patron NOM_VER_KON</P>
+ 
+   <label>
+
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM_VER_KON.xsl"} %>
+
+  <% code("xml") do %>
+  
+  <?xml version="1.0" encoding="UTF-8"?>
+  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      exclude-result-prefixes="xs"
+      version="1.0">
+  <xsl:output method="text" encoding="UTF-8"/>
+      <xsl:template match="/">
+          <xsl:apply-templates select=".//article"/>
+      </xsl:template>
+      <xsl:template match="article">
+          <xsl:for-each select="element">
+              <xsl:if test="(./data[1][contains(text(),'NOM')])">
+                  <xsl:variable name="p1" select="./data[3]/text()"/>
+                  <xsl:if test="following-sibling::element[1][./data[1][contains(text(),'VER')]]">
+                      <xsl:variable name="p2" select="following-sibling::element[1]/data[3]/text()"/>
+                      <xsl:if test="following-sibling::element[2][./data[1][contains(text(),'KON')]]">
+                          <xsl:variable name="p3" select="following-sibling::element[2]/data[3]/text()"/>
+                          <xsl:value-of select="$p1"/>
+                          <xsl:text> </xsl:text>
+                          <xsl:value-of select="$p2"/>
+                          <xsl:text> </xsl:text>
+                          <xsl:value-of select="$p3"/>
+                      <xsl:text>&#xA;</xsl:text>
+                      </xsl:if>
+                  </xsl:if>
+              </xsl:if>
+          </xsl:for-each>
+      </xsl:template>
+  </xsl:stylesheet>
+
+
+  
  
  
+  <% end %>
+ </label><br/><br/>
+
  
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
 
   <%= image_tag 'xquery.png', :class => "icon" %><B>2.3) Requêtes XQuery</B> 
 
- <P>2.3.1) Pour le patron NOM_ADJ</P>
+ <P>2.3.1) Pour le patron NOM_PRP_NOM</P>
  
    <label>
 
  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
  
 
-  <% code("xquery") do %>
+  <% code("xml") do %>
 <corpus> { for $art in doc("numéro_de_la_rubrique")//article 
 for $elt in $art/element 
 let $nextelt := $elt/following-sibling::element[1] 
@@ -939,124 +968,188 @@ where $elt/data[1] = "NOM" and $nextelt/data[1] = "PRP" and $nextelt2/data[1] = 
 return <NOMPRPNOM>{$elt/data[2]/text(), " ", $nextelt/data[2]/text(), " ",$nextelt2/data[2]/text()}</NOMPRPNOM> 
 } </corpus> 
 <% end %>
-</label>
-
-<p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+</label><br/><br/>
 
 
-  <P>2.3.2) Pour le patron NOM_PRP_NOM</P>
+
+  <P>2.3.2) Pour le patron ADJ_NOM </P><br/><br/>
   
     <label>
 
   <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
   
 
-<% code("xquery") do %>
+<% code("xml") do %>
 <corpus> { for $art in doc("numéro_de_la_rubrique")//article 
 for $elt in $art/element 
 let $nextelt := $elt/following-sibling::element[1] where $elt/data[1] = "NOM" and $nextelt/data[1] = "ADJ"
 return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 </corpus>
 <% end %>
-</label>
+</label><br/><br/>
 
  
- <div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Vous trouverez dans ce tableau l'intégralité des résultats obtenus, au format TXT et HTML. Ils sont classés par motif, puis par étiqueteur afin de pouvoir comparer les résultats plus facilement.</p></div>
+ <div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Vous trouverez dans ce tableau l'intégralité des résultats obtenus. Ils sont classés par patron, puis par étiqueteur afin de pouvoir comparer les résultats plus facilement.</p></div>
 
  <div class= "tableau"><table style="float:center">
    <tr>
-     <th colspan="2">Motifs</th>
+     <th colspan="2">Patrons</th>
      <th>Rubrique 3476 (Cinéma)</th>
      <th>Rubrique 3232 (Idées)</th>
      <th>Rubrique 3260 (Livres)</th>
    </tr>
    <tr>
-   <th rowspan="2">ADJ NOM</th>
+   <th rowspan="2">ADJ NOM / DET ADJ NOM</th>
    <td>Cordial</td>
-   <td>TXT</td>
-   <td>TXT</td>
-   <td>TXT</td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM3260.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td>TXT, HTML</td>
-     <td>TXT, HTML</td>
-     <td>TXT, HTML</td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
    </tr>
    <tr>
    <th rowspan="2">NOM ADJ</th>
    <td>Cordial</td>
-   <td>TXT</td>
-   <td>TXT</td>
-   <td>TXT</td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td>TXT, HTML</td>
-     <td>TXT, HTML</td>
-     <td>TXT, HTML</td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
    </tr>
    <tr>
-   <th rowspan="2">ADV VERBE ADV</th>
+   <th rowspan="2">NOM VER KON / VER DET NOM</th>
    <td>Cordial</td>
-   <td>TXT</td>
-   <td>TXT</td>
-   <td>TXT</td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td>TXT, HTML</td>
-     <td>TXT, HTML</td>
-     <td>TXT, HTML</td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
    </tr>
- </table></div>
+   
+   <tr>
+   <th rowspan="2">NOM PRP NOM</th>
+   <td>Cordial</td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   </tr>
+ </table></div><br/><br/>
+ 
+ <%= partial "partials/h3", :locals => { :raccourci => "comp", :titre => "Comparaison des Résultats"} %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
  
  
-  <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+  <div class="explication"><p>	A observer nos résultats, nous relevons une différence en raison des outils utilisés pour tagger nos deux types de fichiers. En effet, Si Cordial est précis et annote finement les tokens, TreeTagger ne détaille pas l'annotation pour le genre et le nombre pour les "NOM" et "ADJ", par exemple. De plus, il arrive à TreeTgger de confondre les homographes et de tagger un "VER" comme un "NOM". C'est précisément ce cas auquel nous nous sommes confrontée pour le verbe: estime à la troisième personne du singulier, TreeTagger l'a annoté comme étant un nom. Cela a par conséquent provoqué un écart important dans les résultats produits par les deux outils.<br/>
+	  Cette disparité est probablement due au fait que Cordial est un correcteur orthagraphique français, tandis que TreeTagger est un outil allemand ayant été adapté à la langue française.
+	  
+
+  </p></div><br/><br/><br/>
  
  
  
  <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Boîte à outils 4 : Création des graphes"} %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
+ 
+  <%= image_tag 'schema/bao_schema_4.png' %><br/><br/>
+ 
+ 	<p>Une fois les éléments obtenus et les résultats comparés, on utilisera les occurrences les plus pertinentes produites par la BAO3 pour en analyser les coocurrents pour chaque rubrique et selon les thèmes choisis en visualisant les graphes générés par un programme fourni par M.Serge Fleury.
+
+ <br/>Ce programme demande plusieurs arguments: "l'encodage du fichier" + le fichier des patrons marpho-syntaxiques extraits + fichier du motif recherché sous la forme de: MOTIF=Regex avec motif recherché.
+ </p> <br/><br/>
+ 
+ Rubrique 3476<em> Cinéma</em>.<br/><br/>
+ 
+ Patron: <b>NOM_ADJ</b><br/>
+ Motif: <b>(f|F)emmes? / (h|H)ommes?</b><br/>
+
+<p>Ce choix est motivé par l'actualité qui a marqué le monde du cinéma en 2017, telle que <em>l'Affaire Weinstein</em> où des actrices américaines ont dénoncé publiquement les agressions sexuelles/viols dont elles ont été victimes et dont l'auteur n'est d'autre que le producteur américain Harvey Weinstein.
+Cette affaire s'est étendue partout ailleurs dans le reste du monde, permettant ainsi à des actrices de lever l'omerta sur les cas d'agressions et de harcèlements sexuels commis par les hommes de leur milieu professionnel.
+On s'attend donc à avoir un environnement linguistique particulier autour des deux entités.
+</p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(f|F)emmes?</b><br/>
+
+<%= image_tag 'ferial/graphes/femme.s.cinema-nom_adj.png' %><br/><br/>
+
+Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|H)ommes?</b><br/>
+
+<%= image_tag 'ferial/graphes/homme.s.cine-adj-nom.png' %><br/><br/>
+
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
  <%= partial "partials/onglets_bao_ferial" %>
  
-  <p>Bullshit</p>
- <p> Bullshit</p>
  <p>Bullshit</p>
- 
- 
- 
-  <p>Bullshit</p>
  <p> Bullshit</p>
- <p>Bullshit</p>
- 
 
 
- 
- 
- <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Analyse"} %>
+
+<br/> - Rubrique 3232 <em>Idées</em>.<br/><br/>
+
+
+ Patron: <b>NOM VER KON / VER DET NOM</b><br/>
+ Motif: <b>.*estime? / .*explique.*</b><br/>
+
+<p>compte tenu de la spécificité de cette rubrique, nous pensons qu’elle comprendra un nombre important de verbes d’opinion, tels que estimer, considérer, etc. Autrement dit, une position subjective. Parallèlement, nous pensons qu’elle contiendra également des verbes argumentatifs, tels que: expliquer, analyser, etc. Contrairement aux premiers, ces derniers auront tendance à exprimer un avis plutôt objectif.
+
+Pour le vérifier, nous avons compté et trié les occurrences grâce aux commandes UNIX. Les résultats affichent les verbes « estime » et « explique » comme les premiers dans le classement des verbes avec le nombre suivant:<br/><br/>
+
+414 estime<br/>
+351 explique
+
+</p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*estime?</b><br/>
+
+<%= image_tag 'ferial/graphes/estime.s-idees.png' %><br/><br/>
+
+Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*explique.*</b><br/>
+
+<%= image_tag 'ferial/graphes/explique.ver.idees.png' %><br/><br/>
+
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
  <%= partial "partials/onglets_bao_ferial" %>
  
  <p>Bullshit</p>
  <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
  
+ <p>Bullshit</p>
+ <p>Bullshit</p>
+ <p> Bullshit</p>
+ 
+ 
+ <br/> - Rubrique 3260 <em>Livres</em>.<br/><br/>
+
+
+  Patron: <b>NOM PRP NOM</b><br/>
+  Motif: <b>\bà\b</b><br/>
+
+ <p>Le choix de la préposition relève du registre qu'on pense plus soutenu dans cette rubrique tourné vers un style littéraire. usage non-littéral plus un usage abstrait au vu du registre et du thème littéraire
+
+usage de à : pour parler d’une tâche à effectuer, description lieu, destination des objets, de la conséquence, expression de la manière, expression du temps <br/><br/>
+
+ 414 estime<br/>
+ 351 explique
+
+ </p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>\bà\b</b><br/>
+
+ <%= image_tag 'ferial/graphes/a.prep.livres.png' %><br/><br/>
+
+
  
  <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
  <%= partial "partials/onglets_bao_ferial" %>
