@@ -1,0 +1,118 @@
+---
+site:
+  title: Projet BAO
+  categorie: Accueil
+  description: Projet de traitement automatique des langues, utilisant Perl et XSLT
+
+author:
+  all: Milena Chaîne, Margaux Duhayon, Ferial Yahiaoui
+  milena: Milena Chaîne
+  margaux: Margaux Duhayon
+  ferial: Ferial Yahiaoui
+  school: Inalco
+
+master:
+  site: "http://www.tal.univ-paris3.fr/plurital/"
+
+layout: layout
+---
+
+<% content_for :logo do %>
+<%= image_tag "logo.jpg" %>
+<% end %>
+
+<h3> ANALYSE </h3>
+
+<p> Pour ce projet, nous avons décidé d'utiliser l'actualité de l'année 2017 afin de choisir nos motifs et effectuer nos graphes. 
+<br/> Nous avons décidé d'utiliser trois grands événements de l'année 2017 afin de réaliser nos graphes. </p>
+<p>Tout d'abord, du 23 avril 2017 au 7 mai 2017 a eu lieu la onzième élection présidentielle de la Ve République qui a été empli de beaucoup de rebondissement. 
+</br>Ainsi, l'affaire Fillon a pris une place importante dans ces élections. Appelée aussi l'affaire Pénélope Fillon ou Penelopegate, cette affaire concerne François Fillon, candidat de la droite et du centre, et son épouse Pénélope Fillon. 
+</br>Elle porte sur des soupçons d'emplois fictifs. (Fillon - scandale-affaire)</p>
+<p> MAcron election mouvement en marche, insoumis, mélenchon, insoumis (motif gauche/droite/politiciens)</p>
+
+<p> Affaire Weinstein : différent hashtag, intéret plus important de la population sur la condition féminine. Mouvement balancetonporc Metoo (femme homme mouvement scandale )</p>
+<p> Brexit (brexit eu)</p>
+
+<div class= "tableau"><table style="float:center">
+  <tr>
+    <th colspan="1">Prénoms</th>
+    <th>Milena Chaîne</th>
+    <th>Ferial Yahiaoui</th>
+    <th>Margaux Duhayon</th>
+  </tr>
+  <tr>
+  <th rowspan="2">DETERMINANT - NOM COMMUN - NOM PROPRE</th>
+  <td>Cordial</td>
+  <td><a href="assets/milena/perl/3210/CORDIAL_DET_NC_NP.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3214/CORDIAL_DET_NC_NP.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3224/CORDIAL_DET_NC_NP.txt">TXT</a></td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT</td>
+    <td>TXT, <a href="assets/milena/xslt/exercice12_2_2.html">HTML</a></td>
+    <td>TXT</td>
+  </tr>
+  <tr>
+  <th rowspan="2">DETERMINANT - NOM COMMUN - DETERMINANT - NOM PROPRE</th>
+  <td>Cordial</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT</td>
+    <td>TXT</td>
+    <td>TXT</td>
+  </tr>
+  <tr>
+  <th rowspan="2">DETERMINANT - NOM - ADJECTIF</th>
+  <td>Cordial</td>
+  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT</td>
+    <td>TXT</td>
+    <td>TXT</td>
+  </tr>
+  <th rowspan="2">DETERMINANT - ADJECTIF - NOM</th>
+  <td>Cordial</td>
+  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT</td>
+    <td>TXT</td>
+    <td>TXT</td>
+  </tr>
+  <th rowspan="2">NOM - ADJECTIF</th>
+  <td>Cordial</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT</td>
+    <td>TXT, <a href="assets/milena/xslt/exercice12_2_1.html">HTML</a></td>
+    <td>TXT</td>
+  </tr>
+  <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM - ADJECTIF</th>
+  <td>Cordial</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  <td>TXT</td>
+  </tr>
+  <tr>
+    <td>Treetagger</td>
+    <td>TXT</td>
+    <td>TXT, <a href="assets/milena/xslt/exercice12_2_3.html">HTML</a></td>
+    <td>TXT</td>
+  </tr>
+</table></div>
