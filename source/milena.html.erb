@@ -43,6 +43,13 @@ patrons:
     - PREP#NAM
     - VER:infi#DET:ART#NOM
     - VER:infi#DET:ART#NOM#ADJ
+  xsl:
+    - NOM ADJ
+    - DET:ART NOM NAM
+    - VER:infi DET:ART NOM ADJ
+  xquery:
+    - NOM PREP NOM
+    - NOM ADJ
 
 layout: milena
 ---
@@ -276,11 +283,18 @@ layout: milena
 
 <%= image_tag 'schema/bao_schema_3.png' %>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Cette boîte à outils a pour but de développer différentes méthodes d'extraction de patrons dans les fichiers obtenus précédemment. Cela nous permettra d'obtenir des résultats comparables pour Treetagger et Cordial, et d'expérimenter avec différents outils de traitement textuel. On abordera, dans l'ordre :
+  <ul>
+    <li><a href="milena.html#cordial">le traitement du fichier étiqueté par Cordial via Perl</a></li>
+    <li><a href="milena.html#treetagger_perl">le traitement du fichier étiqueté par Treetagger via Perl</a></li>
+    <li><a href="milena.html#treetagger_xslt">le traitement du fichier étiqueté par Treetagger via XSLT</a></li>
+    <li><a href="milena.html#treetagger_xquery">le traitement du fichier étiqueté par Treetagger via XQuery</a></li>
+  </ul></p>
+<p>La liste des patrons utilisés et des résultats obtenus est disponible en fin de BAO.</p>
 
 <h4 id="cordial">CORDIAL ET PERL</h4>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>En inspectant le fichier étiqueté par Cordial, on se rend déjà compte que Cordial est un étiqueteur extrêmement fin (ce qui s'explique en partie par le fait qu'il s'agit d'un correcteur orthographique du français) : les noms communs, par exemple, sont étiquetés en fonction de leur genre et de leur nombre. J'ai donc choisi d'exploiter cette finesse d'analyse pour faire des distinctions dans les patrons que Treetagger n'autorise pas. J'ai choisi d'essayer d'utiliser une méthode différente de celles vues lors du cours  pour le travail en Perl.</p>
 <div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier txt traité par Cordial (converti en UTF-8), un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Il va ensuite
 <ul>
   <li>transformer le fichier txt en deux listes, l'une contenant tous les termes (c'est-à-dire la première colonne du fichier) et l'autre contenant toutes les étiquettes (la troisième colonne du fichier). La deuxième colonne du fichier (les lemmes) ne nous intéresse pas et sera ignorée</li>
@@ -289,7 +303,7 @@ layout: milena
   <li>trouver une ligne où l'étiquette de la liste correspond à la première étiquette du patron, puis vérifier si la ligne suivante correspond à l'étiquette suivante, jusqu'à ce que le patron soit complété</li>
   <li>envoyer tous les patrons morpho-syntaxiques complets dans un fichier txt</b></li></ul>
 </ul></p>
-<p>Format du fichier de patrons :</p>
+<p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Format du fichier de patrons :</p>
 <table style="float:center">
   <% current_page.data.patrons.cordial.each do |patron| %>
   <tr><td><%= patron %></td></tr>
@@ -422,8 +436,9 @@ layout: milena
 
 <h4 id="treetagger_perl">TREETAGGER ET PERL</h4>
 
+<p>Après avoir obtenu des données exploitables avec Cordial et Perl, on peut passer aux fichiers XML étiquetées par Treetagger. La méthode Perl utilisée pour Treetagger est globalement similaire à celle que j'utilise pour Cordial ; l'extraction du patron est simplement différente car le format des lignes du fichier est différent. Les patrons extraits sont moins nombreux car Treetagger utilise moins d'étiquettes que Cordial.</p>
 <div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier XML contenant les étiquettes Treetagger, un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Son fonctionnement est presque identique au programme traitant la sortie Cordial, à l'exception de l'extraction des termes et des étiquettes, qui se fait directement dans le fichier XML. Le format des patrons est également différent car Treetagger n'utilise pas les mêmes étiquettes que Cordial.</p>
-<p>Format du fichier de patrons :</p>
+<p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Format du fichier de patrons :</p>
 <table style="float:center">
   <% current_page.data.patrons.treetagger.each do |patron| %>
   <tr><td><%= patron %></td></tr>
@@ -484,7 +499,7 @@ layout: milena
     push(@liste_POS, $pos);
   }
 
-  close CORDIAL;
+  close TREETAGGER;
 
   #-----------------------------------------------------------
   # on va créer un fichier différent
@@ -552,6 +567,14 @@ layout: milena
 
 <h4 id="treetagger_xslt">TREETAGGER ET XSLT</h4>
 
+<p>Une autre méthode que l'on peut utiliser pour afficher des informations au format XML est une feuille de style XSL. Les feuilles de styles XSL permettent de formater et d'afficher des données XML dans un format HTML : l'enjeu est donc ici de produire une page HTMl facilement lisible à l'oeil nu. Les pages HTML créées sont disponibles en fin de BAO, et dans l'exercice 12 du projet de XML effectué dans le cadre du master.</p>
+<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Les trois feuilles de style XSL ci-dessous sélectionnent les éléments correspondant à un patron dans les fichiers XML et les affichent sous forme de tableau. Ce travail a seulement été effectué sur quelques patrons car il prend un certain temps et n'est pas essentiel dans le cadre du projet. Ce travail a été réalisé en utilisant le logiciel Oxygen.</p>
+<p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Patrons extraits, dans l'ordre (rubrique 3214) :</p>
+<table style="float:center">
+  <% current_page.data.patrons.xsl.each do |patron| %>
+  <tr><td><%= patron %></td></tr>
+  <% end %>
+</table></div>
 <label>
   <%= partial "partials/code", :locals => { :code_file => "assets/milena/xslt/exercice12_2_1.xsl"} %>
   <% code("xml") do %>
@@ -701,6 +724,15 @@ layout: milena
 
 <h4 id="treetagger_xquery">TREETAGGER ET XQUERY</h4>
 
+<p>Les requêtes XQuery ci-dessous sont encore une autre méthode d'obtention de patrons. Xquery est le langage de requêtes associé à XML : chaque requête ci-dessous navigue dans l'arborescence du fichier XML et extrait les éléments définis.</p>
+<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Ces requêtes ne sont pas téléchargeables en raison de leur brièveté et du fait que les patrons extraits ici proviennent du projet de XML et ne sont pas forcément pertinents à notre recherche.</p>
+<p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Patrons extraits, dans l'ordre :</p>
+<table style="float:center">
+  <% current_page.data.patrons.xquery.each do |patron| %>
+  <tr><td><%= patron %></td></tr>
+  <% end %>
+</table></div>
+
 <label>
 
   <input id="more" type="checkbox">
@@ -747,103 +779,117 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
   </tr>
   <tr>
     <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT, <a href="assets/milena/xslt/exercice12_2_2.html">HTML</a></td>
-    <td>TXT</td>
+    <td><a href="assets/milena/perl/3210/TREETAGGER_DET_NC_NP.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3214/TREETAGGER_DET_NC_NP.txt">TXT</a>, <a href="assets/milena/xslt/exercice12_2_2.html">HTML</a></td>
+    <td><a href="assets/milena/perl/3224/TREETAGGER_DET_NC_NP.txt">TXT</a></td>
   </tr>
   <tr>
   <th rowspan="2">DETERMINANT - NOM COMMUN - DETERMINANT - NOM PROPRE</th>
   <td>Cordial</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  <td>TXT</td>
+  <td><a href="assets/milena/perl/3210/CORDIAL_DET_NC_DET_NP.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3214/CORDIAL_DET_NC_DET_NP.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3224/CORDIAL_DET_NC_DET_NP.txt">TXT</a></td>
   </tr>
   <tr>
     <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT</td>
-    <td>TXT</td>
+    <td><a href="assets/milena/perl/3210/TREETAGGER_DET_NC_DET_NP.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3214/TREETAGGER_DET_NC_DET_NP.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3224/TREETAGGER_DET_NC_DET_NP.txt">TXT</a></td>
   </tr>
   <tr>
   <th rowspan="2">DETERMINANT - NOM - ADJECTIF</th>
   <td>Cordial</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  <td><a href="assets/milena/perl/3210/CORDIAL_DET_NCF_ADJ.txt">TXT (féminin)</a>, <a href="assets/milena/perl/3210/CORDIAL_DET_NCM_ADJ.txt">TXT (masculin)</a>, <a href="assets/milena/perl/3210/CORDIAL_DET_NC_ADJ.txt">TXT (tous)</a></td>
+  <td><a href="assets/milena/perl/3214/CORDIAL_DET_NCF_ADJ.txt">TXT (féminin)</a>, <a href="assets/milena/perl/3214/CORDIAL_DET_NCM_ADJ.txt">TXT (masculin)</a>, <a href="assets/milena/perl/3214/CORDIAL_DET_NC_ADJ.txt">TXT (tous)</a></td>
+  <td><a href="assets/milena/perl/3224/CORDIAL_DET_NCF_ADJ.txt">TXT (féminin)</a>, <a href="assets/milena/perl/3224/CORDIAL_DET_NCM_ADJ.txt">TXT (masculin)</a>, <a href="assets/milena/perl/3224/CORDIAL_DET_NC_ADJ.txt">TXT (tous)</a></td>
   </tr>
   <tr>
     <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT</td>
-    <td>TXT</td>
+    <td><a href="assets/milena/perl/3210/TREETAGGER_DET_NOM_ADJ.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3214/TREETAGGER_DET_NOM_ADJ.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3224/TREETAGGER_DET_NOM_ADJ.txt">TXT</a></td>
   </tr>
   <th rowspan="2">DETERMINANT - ADJECTIF - NOM</th>
   <td>Cordial</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
+  <td><a href="assets/milena/perl/3210/CORDIAL_DET_ADJ_NCF.txt">TXT (féminin)</a>, <a href="assets/milena/perl/3210/CORDIAL_DET_ADJ_NCM.txt">TXT (masculin)</a>, <a href="assets/milena/perl/3210/CORDIAL_DET_ADJ_NC.txt">TXT (tous)</a></td>
+  <td><a href="assets/milena/perl/3214/CORDIAL_DET_ADJ_NCF.txt">TXT (féminin)</a>, <a href="assets/milena/perl/3214/CORDIAL_DET_ADJ_NCM.txt">TXT (masculin)</a>, <a href="assets/milena/perl/3214/CORDIAL_DET_ADJ_NC.txt">TXT (tous)</a></td>
+  <td><a href="assets/milena/perl/3224/CORDIAL_DET_ADJ_NCF.txt">TXT (féminin)</a>, <a href="assets/milena/perl/3224/CORDIAL_DET_ADJ_NCM.txt">TXT (masculin)</a>, <a href="assets/milena/perl/3224/CORDIAL_DET_ADJ_NC.txt">TXT (tous)</a></td>
   </tr>
   <tr>
     <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT</td>
-    <td>TXT</td>
+    <td><a href="assets/milena/perl/3210/TREETAGGER_DET_ADJ_NOM.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3214/TREETAGGER_DET_ADJ_NOM.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3224/TREETAGGER_DET_ADJ_NOM.txt">TXT</a></td>
   </tr>
   <th rowspan="2">NOM - ADJECTIF</th>
   <td>Cordial</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  <td>TXT</td>
+  <td><a href="assets/milena/perl/3210/CORDIAL_NC_ADJ.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3214/CORDIAL_NC_ADJ.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3224/CORDIAL_NC_ADJ.txt">TXT</a></td>
   </tr>
   <tr>
     <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT, <a href="assets/milena/xslt/exercice12_2_1.html">HTML</a></td>
-    <td>TXT</td>
+    <td><a href="assets/milena/perl/3210/TREETAGGER_NOM_ADJ.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3214/TREETAGGER_NOM_ADJ.txt">TXT</a>, <a href="assets/milena/xslt/exercice12_2_1.html">HTML</a></td>
+    <td><a href="assets/milena/perl/3224/TREETAGGER_DET_NOM_ADJ.txt">TXT</a></td>
   </tr>
   <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM</th>
   <td>Cordial</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  <td>TXT</td>
+  <td><a href="assets/milena/perl/3210/CORDIAL_VER_DET_NOM.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3214/CORDIAL_VER_DET_NOM.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3224/CORDIAL_VER_DET_NOM.txt">TXT</a></td>
   </tr>
   <tr>
     <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT</td>
-    <td>TXT</td>
+    <td><a href="assets/milena/perl/3210/TREETAGGER_VER_DET_NOM.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3214/TREETAGGER_VER_DET_NOM.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3224/TREETAGGER_VER_DET_NOM.txt">TXT</a></td>
   </tr>
   <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM - ADJECTIF</th>
   <td>Cordial</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  <td>TXT</td>
+  <td><a href="assets/milena/perl/3210/CORDIAL_VER_DET_NC_ADJ.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3214/CORDIAL_VER_DET_NC_ADJ.txt">TXT</a></td>
+  <td><a href="assets/milena/perl/3224/CORDIAL_VER_DET_NC_ADJ.txt">TXT</a></td>
   </tr>
   <tr>
     <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT, <a href="assets/milena/xslt/exercice12_2_3.html">HTML</a></td>
-    <td>TXT</td>
+    <td><a href="assets/milena/perl/3210/TREETAGGER_VER_DET_NOM_ADJ.txt">TXT</a></td>
+    <td><a href="assets/milena/perl/3214/TREETAGGER_VER_DET_NOM_ADJ.txt">TXT</a>, <a href="assets/milena/xslt/exercice12_2_3.html">HTML</a></td>
+    <td><a href="assets/milena/perl/3224/TREETAGGER_VER_DET_NOM_ADJ.txt">TXT</a></td>
   </tr>
 </table></div>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Boîte à outils 4 : création de graphes"} %>
 <%= partial "partials/onglets_milena" %>
 
 <%= image_tag 'schema/bao_schema_4.png' %>
 
+<h4 id="graphe_affaire">THÈME 1 : affaires et scandales</h4>
+
+<%= image_tag 'milena/graphes/affaire/3210_affaire_cordial.png' %>
+<%= image_tag 'milena/graphes/affaire/3210_affaire_treetagger.png' %>
+<%= image_tag 'milena/graphes/affaire/3214_affaire_cordial.png' %>
+<%= image_tag 'milena/graphes/affaire/3214_affaire_treetagger.png' %>
+<%= image_tag 'milena/graphes/affaire/3224_affaire_cordial.png' %>
+<%= image_tag 'milena/graphes/affaire/3224_affaire_treetagger.png' %>
+
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<h4 id="graphe_affaire">THÈME 2 : l'Union Européenne</h4>
+
+<%= image_tag 'milena/graphes/europe/3214_europe_cordial.png' %>
+<%= image_tag 'milena/graphes/europe/3214_europe_treetagger.png' %>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
+<h4 id="graphe_affaire">THÈME 3 : mouvements et mouvances</h4>
+
+<%= image_tag 'milena/graphes/mvt/3210_mvt_cordial.png' %>
+<%= image_tag 'milena/graphes/mvt/3210_mvt_treetagger.png' %>
+<%= image_tag 'milena/graphes/mvt/3224_mvt_cordial.png' %>
+<%= image_tag 'milena/graphes/mvt/3224_mvt_treetagger.png' %>
 
 <%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion et analyse"} %>
 <%= partial "partials/onglets_milena" %>

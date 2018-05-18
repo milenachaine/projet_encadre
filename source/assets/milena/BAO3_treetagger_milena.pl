@@ -49,7 +49,7 @@ while (my $ligne = <TREETAGGER>) {
   push(@liste_POS, $pos);
 }
 
-close CORDIAL;
+close TREETAGGER;
 
 #-----------------------------------------------------------
 # on va créer un fichier différent
