@@ -20,7 +20,7 @@ layout: ferial
 ---
 
 <% content_for :logo do %>
-<%= image_tag "box2.jpg" %>
+<%= image_tag "vintage-mechanics-tool-box.jpg" %>
 <% end %>
 
 
@@ -30,7 +30,7 @@ layout: ferial
 <br/> - La rubrique 3232 qui est la rubrique <em>Idées</em>.
 <br/> - la rubrique 3260  qui est la rubrique <em>Livres</em>.</p>
 
-<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi au sujet des interviews et des tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année. Pour plus de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.</p>
+<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi au sujet des interviews et des tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année ; et par souci de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.</p>
 
 <p>Cette page contient les différentes Boîtes à Outils, leurs explications, les résultats obtenus, ainsi que les analyses qui en découlent.</p>
 <p>Tous les scripts sont visibles sur la page elle-même et téléchargeables. Pour naviguer entre les différentes boîtes à outils, vous pouvez utiliser la barre d'onglets ci-dessous.</p>
@@ -50,7 +50,7 @@ layout: ferial
 	<p>La deuxième BAO utilise les résultats de la première. En effet, la BAO1 s’occupe d’extraire le texte de chaque rubrique en récupérant le titre et la description de celles-ci, sous deux formats : un texte brut + un fichier XML. Tout cela en parcourant l’arborescence du fils RSS jusqu’au traitement de toutes les rubriques. Ensuite, la BAO2 récupère les fichiers XML pour les étiqueter morphosyntaxiquement grâce à l’annotateur « TreeTagger ».
 <br/>
 Que faire de nos fichiers au format TXT?<br/>
-Après les avoir converti en ISO 8859-15, on les passe à l’annotateur « Cordial » qui les étiquettera morphosyntaxiquement.<br/>
+Après les avoir converti en ISO 8859-15, on les passe à l’annotateur « Cordial » qui les étiquètera morphosyntaxiquement.<br/>
 Ce sont ces fichiers étiquetés par deux annotateur différents qui seront utilisés par la BAO3.<br/>
 Ci-dessous, le programme en question:
 
@@ -364,7 +364,7 @@ Il est à noter que seul le fichier d’output XML est étiqueté morphosyntaxiq
 Les deux, seront par la suite utilisés par la BAO3 pour en extraire, à partir de patrons morpho-syntaxiques prédéfinis, les éléments lexicalisés qui y sont associés.
 </p></div>
 
-  <p><div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %> Les résultats obtenus par l'étiquetage des fichiers XML, <b><a href="assets/ferial/rubriques_etiquetees_tagger.zip" download>sont téléchargeables ici</a></b> et ceux obtenus par l'étiquetage des fichiers TXT par Cordial<b><a href="assets/ferial/rebriques_etiquetees_cordial" download> sont téléchargeables ici</a></b> .</p></div>
+  <p><div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %> Les résultats obtenus par l'étiquetage des fichiers XML, <b><a href="assets/ferial/rubriques_etiquetees_tagger.zip" download>sont téléchargeables ici</a></b><br/> et ceux obtenus par l'étiquetage des fichiers TXT par Cordial<b><a href="assets/ferial/rebriques_etiquetees_cordial" download> sont téléchargeables ici</a></b> .</p></div>
 <center><p>Les fichiers XML étiquetés par TreeTagger se présentent ainsi :</p></center>
 <center><%= image_tag 'ferial/3232_tagger.png' %></center>
 <center><p>Les fichier TXT étiquetés par Cordial se présentent ainsi :</p></center>
@@ -956,7 +956,7 @@ while (my $ligne=shift(@lignes)) {
  
    <label>
 
- <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM_PRP_NOM.xq"} %>
  
 
   <% code("xml") do %>
@@ -976,7 +976,7 @@ return <NOMPRPNOM>{$elt/data[2]/text(), " ", $nextelt/data[2]/text(), " ",$nexte
   
     <label>
 
-  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
+  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM_ADJ.xq"} %>
   
 
 <% code("xml") do %>
@@ -999,57 +999,57 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
      <th>Rubrique 3260 (Livres)</th>
    </tr>
    <tr>
-   <th rowspan="2">ADJ NOM / DET ADJ NOM</th>
+   <th rowspan="2">ADJ NOM / DET ADJ NOM</th>        
    <td>Cordial</td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
    <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM3260.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM_3260.txt" download>TXT</a></td>
    </tr>
    <tr>
-     <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td>Treetagger</td>   
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA_TAGGER.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/DET_ADJ_NOM_3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_DET_ADJ_NOM.zip" download>ZIP</a></td>
    </tr>
    <tr>
    <th rowspan="2">NOM ADJ</th>
    <td>Cordial</td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ZIP_NOM_ADJ_TAGGER_LIVRES" download>ZIP</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM_3260.txt" download>TXT</a></td>
    </tr>
    <tr>
    <th rowspan="2">NOM VER KON / VER DET NOM</th>
    <td>Cordial</td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NONE.zip" download>NONE</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/VER3232" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/none.txt" download>NONE</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+    <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NONE.zip" download>NONE</a></td>
+    <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/NOM_VER_KON-VER_DET_NOM.zip" download>ZIP</a></td>
+    <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/none.txt" download>NONE</a></td>
    </tr>
    
    <tr>
    <th rowspan="2">NOM PRP NOM</th>
    <td>Cordial</td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NOM_PRP_NOM_CINEMA_CORDIAL.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/NOM_PRP_NOM_IDEES_CORDIAL.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/NOM-PREP-NOM3260.txt" download>TXT</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NOM_PRP_NOM_CINEMA_TAGGER.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/TAG3232_NOM_PRP_NOM.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/NOM_PRP_NOM_LIVRES_TAGGER.zip" download>TXT</a></td>
    </tr>
  </table></div><br/><br/>
  
@@ -1058,7 +1058,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
  
  
  
-  <div class="explication"><p>	A observer nos résultats, nous relevons une différence en raison des outils utilisés pour tagger nos deux types de fichiers. En effet, Si Cordial est précis et annote finement les tokens, TreeTagger ne détaille pas l'annotation pour le genre et le nombre pour les "NOM" et "ADJ", par exemple. De plus, il arrive à TreeTgger de confondre les homographes et de tagger un "VER" comme un "NOM". C'est précisément ce cas auquel nous nous sommes confrontée pour le verbe: estime à la troisième personne du singulier, TreeTagger l'a annoté comme étant un nom. Cela a par conséquent provoqué un écart important dans les résultats produits par les deux outils.<br/>
+  <div class="explication"><p>	A observer nos résultats, on relève une différence en raison des outils utilisés pour tagger nos deux types de fichiers. En effet, Si Cordial est précis et annote finement les tokens, TreeTagger ne détaille pas l'annotation pour le genre et le nombre pour les "NOM" et "ADJ", par exemple. De plus, il arrive à TreeTgger de confondre les homographes et de tagger un "VER" comme un "NOM". C'est précisément ce cas auquel on s'est confronté pour le verbe: estime à la troisième personne du singulier, TreeTagger l'a annoté comme étant un nom. Cela a par conséquent provoqué un écart important dans les résultats produits par les deux outils.<br/>
 	  Cette disparité est probablement due au fait que Cordial est un correcteur orthagraphique français, tandis que TreeTagger est un outil allemand ayant été adapté à la langue française.
 	  
 
@@ -1071,9 +1071,9 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
  
   <%= image_tag 'schema/bao_schema_4.png' %><br/><br/>
  
- 	<p>Une fois les éléments obtenus et les résultats comparés, on utilisera les occurrences les plus pertinentes produites par la BAO3 pour en analyser les coocurrents pour chaque rubrique et selon les thèmes choisis en visualisant les graphes générés par un programme fourni par M.Serge Fleury.
+ 	<p>Une fois les éléments obtenus et les résultats comparés, on utilisera les occurrences les plus pertinentes produites par la BAO3 pour en analyser les cooccurrents pour chaque rubrique et selon les thèmes choisis en visualisant les graphes générés par un programme fourni par M.Serge Fleury.
 
- <br/>Ce programme demande plusieurs arguments: "l'encodage du fichier" + le fichier des patrons marphosyntaxiques extraits + fichier du motif recherché sous la forme de: MOTIF=Regex avec motif recherché.
+ <br/>Ce programme demande plusieurs arguments: "l'encodage des fichiers" + le fichier des patrons marphosyntaxiques extraits + fichier du motif recherché sous la forme de: MOTIF=Regex avec motif recherché.
  </p> <br/><br/>
  
  Rubrique 3476<em> Cinéma</em>.<br/><br/>
@@ -1081,7 +1081,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
  Patron: <b>NOM_ADJ</b><br/>
  Motif: <b>(f|F)emmes? / (h|H)ommes?</b><br/>
 
-<p>Ce choix est motivé par l'actualité qui a marqué le monde du cinéma en 2017, telle que <em>l'Affaire Weinstein</em> où des actrices américaines ont dénoncé publiquement les agressions sexuelles/viols dont elles ont été victimes et dont l'auteur n'est d'autre que le producteur américain Harvey Weinstein.
+<p>Ce choix est motivé par l'actualité qui a marqué le monde du cinéma en 2017, telle que <em>l'Affaire Weinstein</em> où des actrices américaines ont pu dénoncer publiquement les agressions sexuelles/viols dont elles ont été victimes et dont l'auteur n'est d'autre que le producteur américain Harvey Weinstein.
 Cette affaire s'est étendue partout ailleurs dans le reste du monde, permettant ainsi à des actrices de lever l'omerta sur les cas d'agression et de harcèlement sexuels commis par les hommes de leur milieu professionnel.
 On s'attend donc à avoir un environnement linguistique particulier autour des deux entités.
 </p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(f|F)emmes?</b><br/>
@@ -1092,10 +1092,10 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|
 
 <%= image_tag 'ferial/graphes/homme.s.cine-adj-nom.png' %><br/><br/>
 
- <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse1", :titre => "Analyse 1"} %>
  <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <div class="explication"><p> L'affichage des deux graphes ne reflète pas tout à fait ce quoi on s'attendait, si ce n'est 1 occurrence pour agissements d'hommes et 1 occurrence pour viol de femmes. Toutefois, nous remraquons bien les 
+ <div class="explication"><p> L'affichage des deux graphes ne reflète finalement pas exactement ce quoi on s'attendait, si ce n'est 1 occurrence pour agissements d'hommes et 1 occurrence pour viol de femmes. Toutefois, on note bien que les cooccurrents des deux entités renforcent bien l'idée des rôles du genre attribués aux deux sexes par l'imaginaire collectif. En effet, le cooccurrent le plus important pour 'femme' est 'douce' (10), tandis que pour 'homme', 'intègre' arrive en première position avec (5) occurrences. De la même façon, le nombre de cooccurrents péjoratifs est plus élevé autour de 'femme.s' (jolies, en cuisine, coquettes, excommuniée) qu'autour d''homme.s'(exentrique).
   
 
  </p></div><br/><br/><br/>
@@ -1109,14 +1109,16 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|
  Patron: <b>NOM VER KON / VER DET NOM</b><br/>
  Motif: <b>.*estime? / .*explique.*</b><br/>
 
-<p>Compte tenu de la spécificité de cette rubrique, nous pensons qu’elle comprendra un nombre important de verbes d’opinion, tels que estimer, considérer, etc. Autrement dit, une position subjective. Parallèlement, nous pensons qu’elle contiendra également des verbes argumentatifs, tels que: expliquer, analyser, etc. Contrairement aux premiers, ces derniers auront tendance à exprimer un avis plutôt objectif.
+<p>Compte tenu de la spécificité de cette rubrique, on pense qu’elle comprendra un nombre important de verbes d’opinion, tels que estimer, considérer, etc. Autrement dit, une position subjective. Parallèlement, on pense qu’elle contiendra également des verbes argumentatifs, tels que: expliquer, analyser, etc. Contrairement aux premiers, ces derniers auront tendance à exprimer un avis plutôt objectif.
 
 Pour le vérifier, nous avons compté et trié les occurrences grâce aux commandes UNIX. Les résultats affichent les verbes « estime » et « explique » comme les premiers dans le classement des verbes avec le nombre suivant:<br/><br/>
 
 414 estime<br/>
-351 explique
+351 explique<br/><br/>
 
-</p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*estime?</b><br/>
+La forme que prend le patron avec le verbe "estimer" est NOM VER KON, et celle avec le verbe "expliquer" est VER DET NOM. Le but derrière ce choix, est d'observer qui "estime" et qui "explique". </p> 
+
+<br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*estime?</b><br/>
 
 <%= image_tag 'ferial/graphes/estime.s-idees.png' %><br/><br/>
 
@@ -1124,15 +1126,14 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*e
 
 <%= image_tag 'ferial/graphes/explique.ver.idees.png' %><br/><br/>
 
- <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
- <%= partial "partials/onglets_bao_ferial" %>
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse2", :titre => "Analyse 2"} %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <p>Bullshit</p>
- <p> Bullshit</p>
+ <div class="explication"><p>Ce que l'on observe en premier est que le nombre des cooccurrents d'expliquer est plus élevé que celui d'estimer (explique, expliquent). Par ailleurs, le rôle du verbe "estimer" semble être d'introduire des noms propres ou des noms propres avec la profession de la personne dont les propos sont rapportés. Quant au rôle du verbe "expliquer", il semble se résumer à introduire exclusivement  des locuteurs en les qualifiant par leurs professions. En effet, on ne relève aucun nom propre lié à ce verbe. <br/>
+	 Cela pourrait s'expliquer par la prise de distance, donc l'objectivité, exprimée par le verbe "expliquer", et par la prise de position, comme pour affirmer la subjectivité exprimée par le verbe "estimer".
+	 
+ </p></div><br/><br/><br/>
  
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
  
  
  <br/> - Rubrique 3260 <em>Livres</em>.<br/><br/>
@@ -1151,33 +1152,21 @@ Le choix de la préposition relève du registre qu'on pense être plus soutenu d
 
 
  
- <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
- <%= partial "partials/onglets_bao_ferial" %>
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse3", :titre => "Analyse 3"} %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+ <div class="explication"><p> L'usage de la préposition 'à' à est codifié syntaxiqument. En effet, elle est employée pour parler d’une tâche à effectuer, d'une description d'un lieu, d'une destination à des objets, d'une conséquence, de l'expression de la manière, de l'expression temporelle et spaciale, etc. Or dans ce ce cas et comme il a été souligné plus haut, on relève un emploi non-littéral et plus abstrait au vu du registre et du thème littéraire caratérisant cette rubrique: <em>hymne à la vie, hommage à la langue, antidote à la grisaille,etc. </em>
+	 
+ </p></div><br/><br/><br/>
  
  <%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion"} %>
- <%= partial "partials/onglets_bao_ferial" %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
  
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
+ <p>Tout d'abord, l'analyse de chaque motif en fonction de chaque rubrique a permis, d'une part, de mettre en évidence l'environnement lexical et sémantique de ceux-ci. D'autre part, elle a permis également de souligner leur comportement syntaxique dans un contexte journalistique spécifique. Si pour deux motifs l'hypothèse de départ a été invalidée, le reste des motifs a fourni des résultats plutôt satisfaisants. Cela peut s'expliquer par un mauvais choix du patron ou par un mauvais étiquetage de certains syntagmes. En effet, en dépit de la précision dont Cordial fait preuve, Il va avoir plus de difficulté à reconnaître certains syntagmes et les annotera comme NOM ADJ. Tandis que TreeTagger peut s'avèrer plus precis dans son étiquetage pour certains syntagmes comme <em>"L'affaire Weinstein"</em> qui sera annotée comme une seule entité. Cela est probablement dû à la version du logiciel Cordial qui nous été fournie (datant de 1999).<br/> <br/> 
+ Par ailleurs, l'observation du comportement des motifs avec les graphes ne peut être suffisante à elle seule. Il manque donc une analyse plus poussée et une exploration textométrique plus détaillée qui permettrait l'observation des contextes droit et gauche sous forme de concordancier avec iTrameur ou Lexico. <br/><br/> 
+Enfin, j'ai pris beaucoup de plaisir à réaliser ce travail grâce à la manipulation des différentes boîtes à outils et grâce au travail collectif effectué en vue de la réalisation de ce site avec un nouveau langage de programmation.   </p>
+
  
  
  
