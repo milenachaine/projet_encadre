@@ -69,14 +69,14 @@ layout: milena
 <%= image_tag 'schema/bao_schema_1_2.png' %>
 
 <p>J'ai choisi de regrouper les boîtes à outils 1 et 2 en un seul script qui recueille en même temps les données recherchées dans l'arborescence de fils RSS et les étiquète avec Treetagger (l'étiquetage avec Cordial se fait à la main après avoir converti les fichiers en ISO-8859-1).</p>
-<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend deux arguments : le numéro de la rubrique à traiter dans les fils RSS, et le chemin de l'arborescence contenant ces fils RSS. Il va ensuite
+<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend deux arguments : le numéro de la rubrique à traiter dans les fils RSS, et le chemin de l'arborescence contenant ces fils RSS. Il va ensuite</p>
 <ul>
   <li>créer un fichier XML et un fichier TXT qui récupèreront nos données</li>
   <li>parcourir l'arborescence de fils RSS <b>(fonction parcoursarborescencefichiers)</b></li>
   <li>à chaque fois qu'il trouve un fichier XML correspondant à la rubrique recherchée, il en récupère le titre et le résumé et les nettoie <b>(fonction nettoyage)</b></li>
   <li>envoyer ces données nettoyées directement dans le fichier TXT (qui sera étiqueté par Cordial en dehors du programme)</li>
   <li>faire étiqueter ces mêmes données par TreeTagger et renvoie ce résultat dans le fichier XML <b>(fonction etiquetage)</b></li>
-</ul></p></div>
+</ul></div>
 <label>
   <%= partial "partials/code", :locals => { :code_file => "assets/milena/BAO1_2_milena_utf_8.pl"} %>
   <% code("perl") do %>
@@ -295,14 +295,14 @@ layout: milena
 <h4 id="cordial">CORDIAL ET PERL</h4>
 
 <p>En inspectant le fichier étiqueté par Cordial, on se rend déjà compte que Cordial est un étiqueteur extrêmement fin (ce qui s'explique en partie par le fait qu'il s'agit d'un correcteur orthographique du français) : les noms communs, par exemple, sont étiquetés en fonction de leur genre et de leur nombre. J'ai donc choisi d'exploiter cette finesse d'analyse pour faire des distinctions dans les patrons que Treetagger n'autorise pas. J'ai choisi d'essayer d'utiliser une méthode différente de celles vues lors du cours  pour le travail en Perl.</p>
-<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier txt traité par Cordial (converti en UTF-8), un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Il va ensuite
+<div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier txt traité par Cordial (converti en UTF-8), un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Il va ensuite</p>
 <ul>
   <li>transformer le fichier txt en deux listes, l'une contenant tous les termes (c'est-à-dire la première colonne du fichier) et l'autre contenant toutes les étiquettes (la troisième colonne du fichier). La deuxième colonne du fichier (les lemmes) ne nous intéresse pas et sera ignorée</li>
   <li>pour chaque patron présent dans la liste de patrons :</li>
   <ul><li>transformer le patron en une liste d'étiquettes</li>
   <li>trouver une ligne où l'étiquette de la liste correspond à la première étiquette du patron, puis vérifier si la ligne suivante correspond à l'étiquette suivante, jusqu'à ce que le patron soit complété</li>
   <li>envoyer tous les patrons morpho-syntaxiques complets dans un fichier txt</b></li></ul>
-</ul></p>
+</ul>
 <p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Format du fichier de patrons :</p>
 <table style="float:center">
   <% current_page.data.patrons.cordial.each do |patron| %>
@@ -867,7 +867,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <p>Maintenant qu'on a récupéré nos données, on peut essayer de les interpréter avec des graphes. On effectue ce travail avec un programme dédié récupéré en cours, qui s'utilise sur Mac sous ce format :</p>
 <figure>
 <%= image_tag 'milena/graphe_ex.png' %>
-<figcaption>chemin-absolu-vers-le-programme encodage fichier-a-traiter fichier-de-motif</figcaption>
+<figcaption>chemin-absolu-vers-le-programme "encodage" fichier-a-traiter fichier-de-motif</figcaption>
 </figure>
 <p>Le fichier de motif doit se présenter de cette façon :</p>
 <%= image_tag 'milena/motif_ex.png' %>
@@ -920,13 +920,12 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/europe/3214_europe_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3214</figcaption>
 </figure>
-<p>On retrouve plusieurs influences dans ces résultats qui sont déjà assez conséquents :
+<p>On retrouve plusieurs influences dans ces résultats qui sont déjà assez conséquents :</p>
   <ul>
     <li>des termes liés au Brexit : "quitter l'Union européenne", "respecter les traités européens", "rassurer les ressortissants européens"...</li>
     <li>une contre-réaction à la sortie de Royaume-Uni de l'UE, qui a engendré force débats pendant la campagne présidentielle. On retrouve des termes tels que "l'édifice", "le projet", "l'identité", "l'idée", "la coopération", "la dynamique" et "l'idéal" européens, qui doivent être sauvés, consolidés, reconstruits, renforcés, préservés...Ce lexique est de loin le plus présent dans le graphe.</li>
     <li>enfin, on retrouve aussi des termes plus pragmatiques et économiques dans le graphe, comme "croissance", "financements" et "partenariats"</li>
   </ul>
-</p>
 
 <h4 id="graphe_affaire">THÈME 3 : mouvements et mouvances</h4>
 <p>Le dernier motif que j'ai choisi a été l'occasion d'explorer les patrons de type "nom-adjectif". J'ai choisi de chercher le motif "mouvement" dans les rubriques "International" et "Société" car peu d'interférences de sens me semblaient probables (telles que l'emploi du terme "mouvement" au sens littéral). Je souhaitais notamment voir s'il était possible de voir si les adjectifs qui accompagnaient le terme étaient péjoratifs ou mélioratifs.</p>
