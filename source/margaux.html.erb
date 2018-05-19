@@ -559,7 +559,7 @@ while (my $ligne=shift(@lignes)) {
 <h4><a href="assets/margaux/result_perl_patron/pol-nomadj.txt"> Rubrique Politique </a></h4>
 <h4><a href="assets/margaux/result_perl_patron/culture-nomadj.txt"> Rubrique Culture </a></h4>
 
-h4><b> PATRON NOM PRÉPOSITION NOM </b></h4>
+<h4><b> PATRON NOM PRÉPOSITION NOM </b></h4>
 
 <label>
 
@@ -629,8 +629,8 @@ while (my $ligne=shift(@lignes)) {
  <h4><a href="assets/margaux/result_perl_patron/3208/CORDIAL_NC-V.txt">  Patron NC V  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3208/CORDIAL_npn.txt">  Patron NC PREP NC  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3208/cordial-nc-adj.txt">  Patron NC ADJ </a></h4>
- 
- 
+
+
  <p><em><b> Solution Perl TreeTagger </b></em></p>
  <h4><a href="assets/margaux/result_perl_patron/3208/TREETAGGER_ADJ-NOM.txt">  Patron ADJ NC  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3208/TREETAGGER_NAM-VER.txt">  Patron NAM VER  </a></h4>
@@ -638,7 +638,7 @@ while (my $ligne=shift(@lignes)) {
  <h4><a href="assets/margaux/result_perl_patron/3208/TREETAGGER_NOM-DET_ART-NAM.txt">  Patron NOM DET NAM  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3208/TREETAGGER_NOM-NAM.txt">  Patron NOM NAM  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3208/TREETAGGER_NOM-NOM.txt">  Patron NOM NOM  </a></h4>
- 
+
  <h4> Rubrique Culture </h4>
  <p><em><b> Solution Perl Cordial </b></em></p>
  <h4><a href="assets/margaux/result_perl_patron/3246/cordial-adj-nc.txt">  Patron ADJ NC  </a></h4>
@@ -647,7 +647,7 @@ while (my $ligne=shift(@lignes)) {
  <h4><a href="assets/margaux/result_perl_patron/3246/cordial-nc-nc.txt">  Patron NC NC  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3246/cordial-nc-np.txt">  Patron NC NP  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3246/cordial-np-v.txt">  Patron NP V  </a></h4>
- 
+
  <p><em><b> Solution Perl TreeTagger </b></em></p>
   <h4><a href="assets/margaux/result_perl_patron/3246/tree-adj-nom.txt">  Patron ADJ NC  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3246/tree-nom-adj.txt">  Patron NC ADJ  </a></h4>
@@ -655,8 +655,8 @@ while (my $ligne=shift(@lignes)) {
  <h4><a href="assets/margaux/result_perl_patron/3246/tree-nomnam.txt">  Patron NC NC  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3246/tree-nom-nom.txt">  Patron NC NP  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/3246/cordial-nam-v.txt">  Patron NP V  </a></h4>
- 
-  
+
+
  <h4> Rubrique Politique </h4>
   <p><em><b> Solution Perl Cordial </b></em></p>
 <h4><a href="assets/margaux/result_perl_patron/823353/cordial-adj-nc.txt">  Patron ADJ NC  </a></h4>
@@ -665,8 +665,8 @@ while (my $ligne=shift(@lignes)) {
  <h4><a href="assets/margaux/result_perl_patron/823353/cordial-nc-nc.txt">  Patron NC NC  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/823353/cordial-nc-np.txt">  Patron NC NP  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/823353/cordial-np-v.txt">  Patron NP V  </a></h4>
-  
-  
+
+
 <p><em><b> Solution Perl TreeTagger </b></em></p>
 <h4><a href="assets/margaux/result_perl_patron/823353/tree-adj-nom.txt">  Patron ADJ NC  </a></h4>
  <h4><a href="assets/margaux/result_perl_patron/823353/tree-nom-adj.txt">  Patron NC ADJ  </a></h4>
@@ -686,122 +686,114 @@ while (my $ligne=shift(@lignes)) {
 
 <p> Les motifs que j'ai utilisé sont les mots :
  "Femme", "Homme", "droite/gauche", "scandale/affaire/cas", "Macron", "Fillon".
- <br/> Ces motifs ont été décidé avec mes collègues en observant les actualités les plus importantes de l'année 2017. 
+ <br/> Ces motifs ont été décidé avec mes collègues en observant les actualités les plus importantes de l'année 2017.
  </p>
- 
+
  <h3> Le motif : Rubrique  À la Une </h3>
- 
+
  <p><b><em> Le motif [Ff]emmes? </em></b></p>
- 
+
  <p> Dans le patron NOM ADJ </p>
- 
+
  <%= image_tag 'margaux/graphes/femme-une.png' %>
- 
+
  <p> On peut observer que deux types d'adjectifs utilisés avec le nom "femme(s)".
 <br/>On trouve des adjectifs concernant les origines de la femme ou un adjectif concernant sa situation ("agées", "célibataires"," enceintes").</p>
 
  <p> Dans le patron NOM PREP NOM </p>
- 
+
  <%= image_tag 'margaux/graphes/femme-une-npn.png' %>
- 
- <p> On peut observer que la préposition la plus utilisée avec le mot "femme(s)" est la préposition "de". 
+
+ <p> On peut observer que la préposition la plus utilisée avec le mot "femme(s)" est la préposition "de".
  <br/> On trouve alors des coocurences telles que "milliers/génération/dizaine de femme" </p>
- 
+
  <p> Observons maintenant la différence avec le motif "[Hh]ommes?"</p>
- 
+
   <p><b><em> Le motif [Hh]ommes? </em></b></p>
-  
+
   <%= image_tag 'margaux/graphes/une-homme-tree.png' %>
-  
+
   <p>On observe que les résultats sont plus nombreux quand le motif est "[Hh]ommes?".
-  <br/> La coocurence la plus importante est <b>"affaire d'homme"</b>. 
-  <br/> Les adjectifs que l'on retrouve le plus sont des adjectifs concernant le physique de l'homme ("fort", "charismatique"). </p> 
-  
+  <br/> La coocurence la plus importante est <b>"affaire d'homme"</b>.
+  <br/> Les adjectifs que l'on retrouve le plus sont des adjectifs concernant le physique de l'homme ("fort", "charismatique"). </p>
+
   <p><b><em> Le motif (scandales?)|(affaires? )|(cas)|(.*gate/b)</em></b></p>
-  
+
   <p><b><em> Comparaison entre les deux sorties : Cordial et Treetagger </em></b></p>
   <%= image_tag 'margaux/graphes/une-scandale-tree.png' %>
-  <p> Avec la sortie Treetagger, seul les mot finissant par "gate", n'apparaissent pas. 
-  <br/> Nous retrouvons une des plus grosses affaires de l'année avec le mot <b> scandale</b>. 
+  <p> Avec la sortie Treetagger, seul les mot finissant par "gate", n'apparaissent pas.
+  <br/> Nous retrouvons une des plus grosses affaires de l'année avec le mot <b> scandale</b>.
   <br/> Les données ne sont pas très nombreuses mais reflète parfaite les grands scandales et affaires de l'année 2017.</p>
-  
+
   <%= image_tag 'margaux/graphes/une-scandale-cordial.png' %>
-  
-  <p> Le mot le plus récurrent dans le motif recherché pour la sortie cordial est le mot <b> affaire </b>. On observe que l'on trouve énormément de nom de personne liée à telle ou telle affaire. 
+
+  <p> Le mot le plus récurrent dans le motif recherché pour la sortie cordial est le mot <b> affaire </b>. On observe que l'on trouve énormément de nom de personne liée à telle ou telle affaire.
   <br/> Les données qui ont été récupérées avec Cordial sont plus importantes que les données récupérées avec Treetagger mais les coocurences trouvaient ne trouve pas les mot <b>scandale</b> et cas</b> contrairement à la sortie Treetagger. </p>
-  
-  
+
+
   <p><b><em> Le motif "Fillon" </em></b></p>
-  
+
     <%= image_tag 'margaux/graphes/une-fillon-tree.png' %>
 	<p> Les coocurences du motif <b> Fillon</b> sont surtout accès sur l'affaire Fillon qui a marqué cette année 2017 et qui est le cooccurent le plus fréquent du graphe. C'est ainsi que les coocurrents de "Fillon" sont des mots tels que "couple", "maison", "époux". </p>
 
-  
+
   <p><b><em> Le motif "Macron" </em></b></p>
-  
+
 <%= image_tag 'margaux/graphes/une-macron-tree.png' %>
-<p> Les coocurrents associés avec le motif <b> Macron </b> nous permet d'obtenir un graphe très complet. 
-<br/> En effet, on retrouve tout ce qui permet de définir Emmanuel Macron dans sa manière de présider. Ce qui font de lui le président qu'il est. 
+<p> Les coocurrents associés avec le motif <b> Macron </b> nous permet d'obtenir un graphe très complet.
+<br/> En effet, on retrouve tout ce qui permet de définir Emmanuel Macron dans sa manière de présider. Ce qui font de lui le président qu'il est.
 <br/> Ainsi, on obtient "monarque", "président", "gouvernement", "proeuropéen" mais aussi "couple" qui met en valeur la dimension de couple présidentiel qu'il met en avant.</p>
 
  <h3> Le motif : Rubrique  Culture </h3>
- 
+
   <p><b><em> Le motif [Ff]emmes? </em></b></p>
-  
+
    <%= image_tag 'margaux/graphes/femme-pol.png' %>
-   
-   <p> Tout d'abord, ce graphe est extrait du patron NOM ADJ. 
+
+   <p> Tout d'abord, ce graphe est extrait du patron NOM ADJ.
    <br/> Dans la rubrique Politique, les cooccurents les plus récurrents sont "femmes politiques" et "femmes noires".
 <br/> On observe ainsi que dans la rubrique politique, le mot "femme" est utilisé en décrivant sa couleur de peau plutôt que de sa fonction.</p>
    <%= image_tag 'margaux/graphes/femme-pol-npn.png' %>
-   
+
    <p> Avec le patron morphosyntaxique NOM PREP NOM, on observe que dans le rubrique Politique, les coocurrents les plus présents sont des coocurents qui concerne le couple. Les mots "homme" et "femme" sont utilisés ensemble ainsi que les mots "couple" et "femme".
    <br/> On retrouve également, par 2 fois, la cooccurrence "femme en situation".</p>
-   
- 
+
+
    <p><b><em> Le motif [Hh]ommes? </em></b></p>
-  
+
   <%= image_tag 'margaux/graphes/politique-homme-tree.png' %>
-  <p> Contrairement au motif <b> Femme</b>, le motif <b>Homme</b> n'est pas associé au mot "femme". On trouve des cooccurents qui permettent de mettre l'homme en valeur. 
+  <p> Contrairement au motif <b> Femme</b>, le motif <b>Homme</b> n'est pas associé au mot "femme". On trouve des cooccurents qui permettent de mettre l'homme en valeur.
 <br/> On trouve alors les cooccurent "homme fort", "homme romanesque", "hommes jeunes".
-<br/> Le cooccurent le plus fréquent est "homme à affaires".</p>  
- 
+<br/> Le cooccurent le plus fréquent est "homme à affaires".</p>
+
  <p><b><em> Le motif (scandales?)|(affaires? )|(cas)|(.*gate/b)</em></b></p>
- 
+
  <%= image_tag 'margaux/graphes/pol-scandale-tree.png' %>
- <p> Comme pour la rubrique étudiée précédemment, on observe que la sortie Treetagger ne trouve que le mot "affaire" et ses cooccurents. 
- <br/> Les deux affaires que l'on trouve le plus sont "affaire Grégory" et "affaire Fillon". 
- 
+ <p> Comme pour la rubrique étudiée précédemment, on observe que la sortie Treetagger ne trouve que le mot "affaire" et ses cooccurents.
+ <br/> Les deux affaires que l'on trouve le plus sont "affaire Grégory" et "affaire Fillon".
+
   <%= image_tag 'margaux/graphes/pol-scandale-cord.png' %>
-  <p> 
- 
+  <p>
+
    <p><b><em> Le motif "Fillon" </em></b></p>
-  
+
 <%= image_tag 'margaux/graphes/politique-fillon-tree.png' %>
 
    <p><b><em> Le motif "Macron" </em></b></p>
-  
+
 <%= image_tag 'margaux/graphes/politique-macron-tree.png' %>
 
 
 <p><b><em> Le motif "gauche/droite" </em></b></p>
 
- 
+
   <h3> Le motif : Rubrique  Culture </h3>
- 
+
   <p><b><em> Le motif [Ff]emmes? </em></b></p>
-  
+
     <%= image_tag 'margaux/graphes/femme-cult.png' %>
 	<%= image_tag 'margaux/graphes/femme-cult-npn.png' %>
- 
+
    <p><b><em> Le motif [Hh]ommes? </em></b></p>
-  
+
   <%= image_tag 'margaux/graphes/culture-homme-tree.png' %>
- 
- 
- 
- 
- 
- 
- 
- 
