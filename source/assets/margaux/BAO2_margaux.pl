@@ -1,9 +1,5 @@
 #/usr/bin/perl
-<<DOC;
-JANVIER 2018
- usage : perl parcours-arborescence-fichiers repertoire-a-parcourir
- Le programme prend en entrée le nom du répertoire contenant les fichiers à traiter
-DOC
+
 
 my $rep="$ARGV[0]"; #recupere le nom du r�pertoire
 my $rubrique="$ARGV[1]"; #filtrer
