@@ -20,7 +20,7 @@ layout: ferial
 ---
 
 <% content_for :logo do %>
-<%= image_tag "box2.jpg" %>
+<%= image_tag "vintage-mechanics-tool-box.jpg" %>
 <% end %>
 
 
@@ -956,7 +956,7 @@ while (my $ligne=shift(@lignes)) {
  
    <label>
 
- <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
+ <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM_PRP_NOM.xq"} %>
  
 
   <% code("xml") do %>
@@ -976,7 +976,7 @@ return <NOMPRPNOM>{$elt/data[2]/text(), " ", $nextelt/data[2]/text(), " ",$nexte
   
     <label>
 
-  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/DET-ADJ-NOM_utf.xsl"} %>
+  <%= partial "partials/code", :locals => { :code_file => "assets/ferial/NOM_ADJ.xq"} %>
   
 
 <% code("xml") do %>
@@ -999,57 +999,57 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
      <th>Rubrique 3260 (Livres)</th>
    </tr>
    <tr>
-   <th rowspan="2">ADJ NOM / DET ADJ NOM</th>
+   <th rowspan="2">ADJ NOM / DET ADJ NOM</th>        
    <td>Cordial</td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
    <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM3260.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM_3260.txt" download>TXT</a></td>
    </tr>
    <tr>
-     <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td>Treetagger</td>   
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA_TAGGER.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/DET_ADJ_NOM_3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_DET_ADJ_NOM.zip" download>ZIP</a></td>
    </tr>
    <tr>
    <th rowspan="2">NOM ADJ</th>
    <td>Cordial</td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ZIP_NOM_ADJ_TAGGER_LIVRES" download>ZIP</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM_3260.txt" download>TXT</a></td>
    </tr>
    <tr>
    <th rowspan="2">NOM VER KON / VER DET NOM</th>
    <td>Cordial</td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NONE.zip" download>NONE</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/VER3232" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/none.txt" download>NONE</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+    <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NONE.zip" download>NONE</a></td>
+    <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/NOM_VER_KON-VER_DET_NOM.zip" download>ZIP</a></td>
+    <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/none.txt" download>NONE</a></td>
    </tr>
    
    <tr>
    <th rowspan="2">NOM PRP NOM</th>
    <td>Cordial</td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NOM_PRP_NOM_CINEMA_CORDIAL.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/NOM_PRP_NOM_IDEES_CORDIAL.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/NOM-PREP-NOM3260.txt" download>TXT</a></td>
    </tr>
    <tr>
      <td>Treetagger</td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
-     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/ADJ_NOM.3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/NOM_PRP_NOM_CINEMA_TAGGER.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/CORDIAL/TAG3232_NOM_PRP_NOM.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/NOM_PRP_NOM_LIVRES_TAGGER.zip" download>TXT</a></td>
    </tr>
  </table></div><br/><br/>
  
