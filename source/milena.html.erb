@@ -436,7 +436,7 @@ layout: milena
 
 <h4 id="treetagger_perl">TREETAGGER ET PERL</h4>
 
-<p>Après avoir obtenu des données exploitables avec Cordial et Perl, on peut passer aux fichiers XML étiquetées par Treetagger. La méthode Perl utilisée pour Treetagger est globalement similaire à celle que j'utilise pour Cordial ; l'extraction du patron est simplement différente car le format des lignes du fichier est différent. Les patrons extraits sont moins nombreux car Treetagger utilise moins d'étiquettes que Cordial.</p>
+<p>Après avoir obtenu des données exploitables avec Cordial et Perl, on peut passer aux fichiers XML étiquetés par Treetagger. La méthode Perl utilisée pour Treetagger est globalement similaire à celle que j'utilise pour Cordial ; l'extraction du patron est simplement différente car le format des lignes du fichier est différent. Les patrons extraits sont moins nombreux car Treetagger utilise moins d'étiquettes que Cordial.</p>
 <div class="explication"><p><%= image_tag 'cog_transparent_32px.png', :class => "icon" %>Le programme en perl ci-dessous attend trois arguments : le fichier XML contenant les étiquettes Treetagger, un fichier de patrons (sous forme d'expressions régulières) à extraire dans le fichier, et le numéro de la rubrique (pour nommer les fichiers). Son fonctionnement est presque identique au programme traitant la sortie Cordial, à l'exception de l'extraction des termes et des étiquettes, qui se fait directement dans le fichier XML. Le format des patrons est également différent car Treetagger n'utilise pas les mêmes étiquettes que Cordial.</p>
 <p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Format du fichier de patrons :</p>
 <table style="float:center">
