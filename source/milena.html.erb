@@ -1,7 +1,7 @@
 ---
 site:
   title: Projet BAO
-  categorie: Travail de Milena Chaîne
+  categorie: Milena Chaîne
   description: Projet de traitement automatique des langues, utilisant Perl et XSLT
 
 author:
@@ -872,7 +872,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <p>Le fichier de motif doit se présenter de cette façon :</p>
 <%= image_tag 'milena/motif_ex.png' %>
 
-<p>Ici on doit se demander : que cherche-t-on à analyser avec ces données ? Je voulais trouver des exemples de différence d'analyse syntaxique entre Cordial et Treetagger, mais également choisir des motifs qui apporteraient des informations sur les rubriques choisies. Cette analyse n'est bien sûr pas exhaustive, et une présentation visuelle permet également d'influencer la perception des résultats, mais on peut quand même percevoir des indices qui pourraient aider à la formation d'une analyse plus complexe. Une explication plus détaillée des choix que nous avons effectués ensemble au cours de notre recherche en disponible dans la <%= link_to("page de conclusion", "analyse.html",) %>.</p>
+<p>Ici on doit se demander : que cherche-t-on à analyser avec ces données ? Je voulais trouver des exemples de différence d'analyse syntaxique entre Cordial et Treetagger, mais également choisir des motifs qui apporteraient des informations sur les rubriques choisies. Cette analyse n'est bien sûr pas exhaustive, et une présentation visuelle permet également d'influencer la perception des résultats, mais on peut quand même percevoir des indices qui pourraient aider à la formation d'une analyse plus complexe. Une explication plus détaillée des choix que nous avons effectués ensemble au cours de notre recherche en disponible dans la <%= link_to("page de synthèse", "analyse.html",) %>.</p>
 <div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Vous pouvez cliquer sur les graphes ci-dessous pour les élargir. Il est également possible de <b><a href="assets/milena/graphes_milena.zip" download>télécharger une archive contenant tous les graphes obtenus</a></b> pour une lecture plus aisée.</p></div>
 <h4 id="graphe_affaire">THÈME 1 : affaires et scandales</h4>
 
@@ -954,4 +954,4 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <p>J'ai abordé ce projet sous l'angle d'un travail de comparaisons entre différents outils et j'ai essayé de centrer mon analyse des outils linguistiques autour de cette question. Cependant, pour mon travail sur les graphes, j'ai préféré choisir des hypothèses de départ (ex.une rubrique telle que "Société" traitera de nombre de faits et scandales choquants) et essayer de les confirmer ou de les infirmer via les graphes. Un outil visuel comme celui-ci est une arme à double tranchant car si elle peut fortement faciliter la lecture de données elle l'influence aussi énormément par sa présentation, en renforçant nos biais de confirmation. C'est une difficulté que j'ai fait mon possible pour contrer. </p>
 <p>Si je devais approfondir mon analyse, je choisirai probablement un des thèmes que j'ai abordés et centrerais tous mes patrons autour de ce dernier pour pouvoir obtenir son environnement linguistique complet. Cependant, je suis satisfaite d'avoir aussi pu effectuer des comparaisons entre différents rubriques et thèmes.</p>
 <p>J'aurais aussi souhaité pouvoir poursuivre ma comparaison de Treetagger et Cordial, notamment en comparant leurs fichiers étiquetés pour pouvoir classer les différences trouvées.</p>
-<p>Je vous invite également à lire la <%= link_to("conclusion générale", "analyse.html",) %> du projet.</p>
+<p>Je vous invite également à lire la <%= link_to("synthèse générale", "analyse.html",) %> du projet.</p>
