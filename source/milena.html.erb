@@ -64,7 +64,7 @@ layout: milena
 <p>Tous les scripts sont visibles sur la page elle-même et téléchargeables. Pour naviguer entre les différentes boîtes à outils, vous pouvez utiliser la barre d'onglets ci-dessous. </p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao1_2", :titre => "Boîtes à outils 1 et 2 : création des fichiers"} %>
-<%= partial "partials/onglets_milena" %>
+<%= partial "partials/onglets_bao_milena" %>
 
 <%= image_tag 'schema/bao_schema_1_2.png' %>
 
@@ -279,7 +279,7 @@ layout: milena
 <p>On voit bien qu'il va falloir traiter ces fichiers de façon différente pour pouvoir extraire des patrons. Ce travail est l'objet de la BAO 3.</p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao3", :titre => "Boîte à outils 3 : recherche des patrons"} %>
-<%= partial "partials/onglets_milena" %>
+<%= partial "partials/onglets_bao_milena" %>
 
 <%= image_tag 'schema/bao_schema_3.png' %>
 
@@ -861,7 +861,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <p>On a donc obtenu nos fichiers, après avoir testé plusieurs méthodes d'extraction. Ici, celle qui est la plus adaptée à nos besoins est celle du script perl : il permet de traiter un grand nombre de patrons rapidement, et bien qu'il ne permette pas de raffiner la présentation des données comme XSLT, ceci n'est pas un problème ici puisque la BAO4 constituera justement le travail de mise en forme de ces données.</p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Boîte à outils 4 : création de graphes"} %>
-<%= partial "partials/onglets_milena" %>
+<%= partial "partials/onglets_bao_milena" %>
 
 <%= image_tag 'schema/bao_schema_4.png' %>
 <p>Maintenant qu'on a récupéré nos données, on peut essayer de les interpréter avec des graphes. On effectue ce travail avec un programme dédié récupéré en cours, qui s'utilise sur Mac sous ce format :</p>
@@ -951,7 +951,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 </figure>
 <p>La rubrique "Société" nous offre une image légèrement différente : les termes employés sont liés aux questions et dynamiques sociales (on note l'apparition du terme "féministe" et le retour de "metoo") et certains adjectifs qualifient les mouvements : "inédit", "spontané"... Une différence de registre et de thème qui nous renseigne sur les priorités des articles de la rubrique.</p>
 <%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion"} %>
-<%= partial "partials/onglets_milena" %>
+<%= partial "partials/onglets_bao_milena" %>
 <p>J'ai abordé ce projet sous l'angle d'un travail de comparaisons entre différents outils et j'ai essayé de centrer mon analyse des outils linguistiques autour de cette question. Cependant, pour mon travail sur les graphes, j'ai préféré choisir des hypothèses de départ (ex.une rubrique telle que "Société" traitera de nombre de faits et scandales choquants) et essayer de les confirmer ou de les infirmer via les graphes. Un outil visuel comme celui-ci est une arme à double tranchant car si elle peut fortement faciliter la lecture de données elle l'influence aussi énormément par sa présentation, en renforçant nos biais de confirmation. C'est une difficulté que j'ai fait mon possible pour contrer. </p>
 <p>Si je devais approfondir mon analyse, je choisirai probablement un des thèmes que j'ai abordés et centrerais tous mes patrons autour de ce dernier pour pouvoir obtenir son environnement linguistique complet. Cependant, je suis satisfaite d'avoir aussi pu effectuer des comparaisons entre différents rubriques et thèmes.</p>
 <p>J'aurais aussi souhaité pouvoir poursuivre ma comparaison de Treetagger et Cordial, notamment en comparant leurs fichiers étiquetés pour pouvoir classer les différences trouvées.</p>

@@ -23,38 +23,13 @@ layout: margaux
 <%= image_tag "test3.jpg" %>
 <% end %>
 
-<h1>
-  <%= current_page.data.site.title %>
-</h1>
-
-
-<%= link_to(
-  current_page.data.author.milena,
-  "milena.html",
-  target: "_blank"
-) %>
-<%= link_to(
-  current_page.data.author.margaux,
-  "margaux.html",
-  target: "_blank"
-) %>
-<%= link_to(
-  current_page.data.author.ferial,
-  "ferial.html",
-  target: "_blank"
-) %>
-
-<h2>
-  <%= current_page.data.site.categorie %>
-</h2>
-
 <%= partial "partials/onglet_bao_margaux" %>
 
 <p>INTRODUCTION</p>
 
 <%= image_tag 'schema/bao_schema.png' %>
 
-<h3>BAO 1 </h3>
+<h3 id="bao1">BAO 1 </h3>
 <p> La Boîte à outil n°1 permet de parcourir les rubriques des chacunes des archives du <em>Monde</em> afin de récupérer les titres et les descriptions de chaque article et les mettre dans 2 fichiers :
 un fichier texte et un fichier xml. <br/>Les données récupérées sont également nettoyer dans cette boîte à outil. <br/>Nous observerons les résultats dans la boîte à outil n°2 qui possède seulement un sous-programme d'étiquetage supplémentaire. </p>
 
@@ -175,7 +150,7 @@ sub nettoyage {
 <% end %>
 </label>
 
-<h3>BAO 2 </h3>
+<h3 id="bao2">BAO 2 </h3>
 <p> La Boîte à outil n°2 effectue la même action que la Boîte à outil n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
 </p>
 
@@ -189,7 +164,7 @@ sub nettoyage {
 <% end %>
 </label>
 
-<h3>BAO 3 </h3>
+<h3 id="bao3">BAO 3 </h3>
 
 <p>La Boîte à outil n°3 permet d'extraire des patrons morphosyntaxiques dans les étiquetages produits avec Cordial. </p>
 <p> Plusieurs possibilités seront présentées :
@@ -678,7 +653,7 @@ while (my $ligne=shift(@lignes)) {
 
 <p> Ces différents patrons nous servirons pour la Boîte à outil n°4. Ainsi, nous pourrons observer les différences de résultats obtenus. </p>
 
-<h3>BAO 4 </h3>
+<h3 id="bao4">BAO 4 </h3>
 
 <p> La Boîte à outils n°4 va nous permettre de créer des graphes de cooccurrence avec l'aide d'un logiciel qui se nomme <b> patron2graph</b>.
 <br/> Pour ce logiciel nous avons besoin de créer un fichier texte supplémentaire contenant le motif recherché.
@@ -776,31 +751,31 @@ while (my $ligne=shift(@lignes)) {
    <p><b><em> Le motif "Fillon" </em></b></p>
 
 <%= image_tag 'margaux/graphes/politique-fillon-tree.png' %>
-<p> On retrouve les mêmes coocurences que dans la rubrique précédente concernant les affaires Fillon. 
+<p> On retrouve les mêmes coocurences que dans la rubrique précédente concernant les affaires Fillon.
 <br/> Grâce aux cooccurences, on remarque que le fait que François Fillon est été candidat aux présidentielles 2017 n'a été que peu évoqué. Mais la cooccurence "affaire Fillon" se retrouve plus de 20 fois dans la rubrique Politique.</p>
 
 
    <p><b><em> Le motif "Macron" </em></b></p>
 
 <%= image_tag 'margaux/graphes/politique-macron-tree.png' %>
-<p> Dans la rubrique Politique, les cooccurents sont encore une fois représentatif de la présidence d'Emmanuel Macron 
+<p> Dans la rubrique Politique, les cooccurents sont encore une fois représentatif de la présidence d'Emmanuel Macron
 <br/> On retrouve des cooccurents concernant son élection ("candidats","candidat",président"), sur ses relations internationales ("Poutine", "duo", "rencontre"), mais aussi sur sa façon de présider le pays ("méthode","ministre","Philippe", "réformes", "ordonnance"). </p>
 
 
 
 <p><b><em> Le motif "gauche/droite" </em></b></p>
 <%= image_tag 'margaux/graphes/politique-gd-tree-1.png' %>
-<p> Le graphe sur les motifs <b> gauche </b> et <b> droite </b> est très intéréssant à analyser. 
-<br/> Vous pouvez observer sur la droite, toutes les cooccurences du mot <b>droite</b>, sur la gauche toutes les cooccurences du mot <b>gauche</b> et au centre toutes les cooccurences concernant les deux motifs <b>gauche</b> et <b> droite</b>. 
-C'est le patron morphosyntaxique NOM VER qui a été utilisé afin d'observer les verbes les plus utilisés pour l'un ou l'autre des mots. 
-<br/> Pour la droite, on observe des verbes qui donnent une impression de grandes actions. La droite "hérite","construit","gagne", "consacre", "conforte". 
-<br/> Alors que la gauche, quand à elle, "occupe, "affirme", "revendique", "veut", "dénonce". Cela donne l'impression que la gauche utilise les mots et la droite les actions. 
+<p> Le graphe sur les motifs <b> gauche </b> et <b> droite </b> est très intéréssant à analyser.
+<br/> Vous pouvez observer sur la droite, toutes les cooccurences du mot <b>droite</b>, sur la gauche toutes les cooccurences du mot <b>gauche</b> et au centre toutes les cooccurences concernant les deux motifs <b>gauche</b> et <b> droite</b>.
+C'est le patron morphosyntaxique NOM VER qui a été utilisé afin d'observer les verbes les plus utilisés pour l'un ou l'autre des mots.
+<br/> Pour la droite, on observe des verbes qui donnent une impression de grandes actions. La droite "hérite","construit","gagne", "consacre", "conforte".
+<br/> Alors que la gauche, quand à elle, "occupe, "affirme", "revendique", "veut", "dénonce". Cela donne l'impression que la gauche utilise les mots et la droite les actions.
 <br/> Les données concernant la droite sont également plus nombreuses. </p>
 
 <%= image_tag 'margaux/graphes/politique-gd-tree-2.png' %>
-<p> Dans ce deuxième graphe concernant les mots <b>droite</b> et <b> gauche</b> est effectué à partir du patron morphosyntaxique NOM ADJ. 
+<p> Dans ce deuxième graphe concernant les mots <b>droite</b> et <b> gauche</b> est effectué à partir du patron morphosyntaxique NOM ADJ.
 <br/> On peut voir sur le côté gauche du graphe que une des cooccurences reflète le nombre de candidat par partis.
-<br/> On peut voir deux coocurrences qui représente chacun des parties des présidentielles 2017. On observe la cooccurence "droite macroniste" d'un côté et "gauche mélenchoniste" de l'autre. 
+<br/> On peut voir deux coocurrences qui représente chacun des parties des présidentielles 2017. On observe la cooccurence "droite macroniste" d'un côté et "gauche mélenchoniste" de l'autre.
 <br/> On peut également que la cooccurence "extrême droite" est présente 64 fois. Alors que la cooccurence "extrême gauche" n'est présente qu'une fois dans la rubrique Politique. </p>
 
 
@@ -810,16 +785,16 @@ C'est le patron morphosyntaxique NOM VER qui a été utilisé afin d'observer le
 
     <%= image_tag 'margaux/graphes/femme-cult.png' %>
 	<p> Pour le patron morphosyntaxique NOM ADJ, on observe que le mot femme, dans la rubrique culture, est encore utilisé avec des mots tels que "douce", "coquette", "fragile",  ou encore "féline".
-	<br/> Les cooccurences les plus utilisées sont "femme fantastique" et "femme douce". Alors que des cooccurences telles que " femmes artistes", "femmes expertes" ou encore "femmes d'affaires" ne sont évoqués qu'une fois. 
+	<br/> Les cooccurences les plus utilisées sont "femme fantastique" et "femme douce". Alors que des cooccurences telles que " femmes artistes", "femmes expertes" ou encore "femmes d'affaires" ne sont évoqués qu'une fois.
 	<br/> La rubrique Culture évoque encore la femme par rapport aux qualités qu'on lui demandes de posséder dans la société. <p>
-	
-	
-	
-	
+
+
+
+
 	<%= image_tag 'margaux/graphes/femme-cult-npn.png' %>
 	<p> Sur ce graphe issus du patron morphosyntaxique NOM PREP NOM, on peut voir que la cooccurence la plus fréquente est le mot "femme" avec la préposition "de".
-<br/>	
-	
+<br/>
+
 
    <p><b><em> Le motif [Hh]ommes? </em></b></p>
 
