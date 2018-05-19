@@ -30,7 +30,7 @@ layout: ferial
 <br/> - La rubrique 3232 qui est la rubrique <em>Idées</em>.
 <br/> - la rubrique 3260  qui est la rubrique <em>Livres</em>.</p>
 
-<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi au sujet des interviews et des tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année. Pour plus de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.</p>
+<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi au sujet des interviews et des tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année ; et par souci de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.</p>
 
 <p>Cette page contient les différentes Boîtes à Outils, leurs explications, les résultats obtenus, ainsi que les analyses qui en découlent.</p>
 <p>Tous les scripts sont visibles sur la page elle-même et téléchargeables. Pour naviguer entre les différentes boîtes à outils, vous pouvez utiliser la barre d'onglets ci-dessous.</p>
@@ -50,7 +50,7 @@ layout: ferial
 	<p>La deuxième BAO utilise les résultats de la première. En effet, la BAO1 s’occupe d’extraire le texte de chaque rubrique en récupérant le titre et la description de celles-ci, sous deux formats : un texte brut + un fichier XML. Tout cela en parcourant l’arborescence du fils RSS jusqu’au traitement de toutes les rubriques. Ensuite, la BAO2 récupère les fichiers XML pour les étiqueter morphosyntaxiquement grâce à l’annotateur « TreeTagger ».
 <br/>
 Que faire de nos fichiers au format TXT?<br/>
-Après les avoir converti en ISO 8859-15, on les passe à l’annotateur « Cordial » qui les étiquettera morphosyntaxiquement.<br/>
+Après les avoir converti en ISO 8859-15, on les passe à l’annotateur « Cordial » qui les étiquètera morphosyntaxiquement.<br/>
 Ce sont ces fichiers étiquetés par deux annotateur différents qui seront utilisés par la BAO3.<br/>
 Ci-dessous, le programme en question:
 
@@ -1058,7 +1058,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
  
  
  
-  <div class="explication"><p>	A observer nos résultats, nous relevons une différence en raison des outils utilisés pour tagger nos deux types de fichiers. En effet, Si Cordial est précis et annote finement les tokens, TreeTagger ne détaille pas l'annotation pour le genre et le nombre pour les "NOM" et "ADJ", par exemple. De plus, il arrive à TreeTgger de confondre les homographes et de tagger un "VER" comme un "NOM". C'est précisément ce cas auquel nous nous sommes confrontée pour le verbe: estime à la troisième personne du singulier, TreeTagger l'a annoté comme étant un nom. Cela a par conséquent provoqué un écart important dans les résultats produits par les deux outils.<br/>
+  <div class="explication"><p>	A observer nos résultats, on relève une différence en raison des outils utilisés pour tagger nos deux types de fichiers. En effet, Si Cordial est précis et annote finement les tokens, TreeTagger ne détaille pas l'annotation pour le genre et le nombre pour les "NOM" et "ADJ", par exemple. De plus, il arrive à TreeTgger de confondre les homographes et de tagger un "VER" comme un "NOM". C'est précisément ce cas auquel on s'est confronté pour le verbe: estime à la troisième personne du singulier, TreeTagger l'a annoté comme étant un nom. Cela a par conséquent provoqué un écart important dans les résultats produits par les deux outils.<br/>
 	  Cette disparité est probablement due au fait que Cordial est un correcteur orthagraphique français, tandis que TreeTagger est un outil allemand ayant été adapté à la langue française.
 	  
 
@@ -1095,7 +1095,7 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|
  <%= partial "partials/h3", :locals => { :raccourci => "analyse1", :titre => "Analyse 1"} %>
  <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <div class="explication"><p> L'affichage des deux graphes ne reflète finalement pas exactement ce quoi on s'attendait, si ce n'est 1 occurrence pour agissements d'hommes et 1 occurrence pour viol de femmes. Toutefois, nous notons bien que les cooccurrents des deux entités renforcent bien l'idée des rôles du genre attribués aux deux sexes par l'imaginaire collectif. En effet, le cooccurrent le plus important pour 'femme' est 'douce' (10), tandis que pour 'homme', 'intègre' arrive en première position avec (5) occurrences. De la même façon, le nombre de cooccurrents péjoratifs est plus élevé autour de 'femme.s' (jolies, en cuisine, coquettes, excommuniée) qu'autour d''homme.s'(exentrique).
+ <div class="explication"><p> L'affichage des deux graphes ne reflète finalement pas exactement ce quoi on s'attendait, si ce n'est 1 occurrence pour agissements d'hommes et 1 occurrence pour viol de femmes. Toutefois, on note bien que les cooccurrents des deux entités renforcent bien l'idée des rôles du genre attribués aux deux sexes par l'imaginaire collectif. En effet, le cooccurrent le plus important pour 'femme' est 'douce' (10), tandis que pour 'homme', 'intègre' arrive en première position avec (5) occurrences. De la même façon, le nombre de cooccurrents péjoratifs est plus élevé autour de 'femme.s' (jolies, en cuisine, coquettes, excommuniée) qu'autour d''homme.s'(exentrique).
   
 
  </p></div><br/><br/><br/>
@@ -1109,7 +1109,7 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|
  Patron: <b>NOM VER KON / VER DET NOM</b><br/>
  Motif: <b>.*estime? / .*explique.*</b><br/>
 
-<p>Compte tenu de la spécificité de cette rubrique, nous pensons qu’elle comprendra un nombre important de verbes d’opinion, tels que estimer, considérer, etc. Autrement dit, une position subjective. Parallèlement, nous pensons qu’elle contiendra également des verbes argumentatifs, tels que: expliquer, analyser, etc. Contrairement aux premiers, ces derniers auront tendance à exprimer un avis plutôt objectif.
+<p>Compte tenu de la spécificité de cette rubrique, on pense qu’elle comprendra un nombre important de verbes d’opinion, tels que estimer, considérer, etc. Autrement dit, une position subjective. Parallèlement, on pense qu’elle contiendra également des verbes argumentatifs, tels que: expliquer, analyser, etc. Contrairement aux premiers, ces derniers auront tendance à exprimer un avis plutôt objectif.
 
 Pour le vérifier, nous avons compté et trié les occurrences grâce aux commandes UNIX. Les résultats affichent les verbes « estime » et « explique » comme les premiers dans le classement des verbes avec le nombre suivant:<br/><br/>
 
