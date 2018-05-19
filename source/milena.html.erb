@@ -290,7 +290,7 @@ layout: milena
     <li><a href="milena.html#treetagger_xslt">le traitement du fichier étiqueté par Treetagger via XSLT</a></li>
     <li><a href="milena.html#treetagger_xquery">le traitement du fichier étiqueté par Treetagger via XQuery</a></li>
   </ul></p>
-<p>La liste des patrons utilisés et des résultats obtenus est disponible en fin de BAO.</p>
+<p>J'ai choisi les patrons que je souhaitais extraire en fonction des graphes que je souhaitais produire et des différences que je voulais observer entre Cordial et Treetagger. J'ai notamment extrait plusieurs patrons autour du modèle "déterminant-nom commun-nom propre" car je savais que je voulais essayer d'illustrer sous forme de graphes les formations linguistiques du type "l'affaire Fillon". J'ai également choisi un patron avec des verbes (à l'infinitif) pour pouvoir aussi analyser leur utilisation. La liste des patrons utilisés et des résultats obtenus est disponible en fin de BAO.</p>
 
 <h4 id="cordial">CORDIAL ET PERL</h4>
 
@@ -863,33 +863,67 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= partial "partials/onglets_milena" %>
 
 <%= image_tag 'schema/bao_schema_4.png' %>
-
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <h4 id="graphe_affaire">THÈME 1 : affaires et scandales</h4>
 
+<figure>
 <%= image_tag 'milena/graphes/affaire/3210_affaire_cordial.png' %>
+<figcaption>Résultats avec Cordial sur la rubrique 3210</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/affaire/3210_affaire_treetagger.png' %>
+<figcaption>Résultats avec Treetagger sur la rubrique 3210</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/affaire/3214_affaire_cordial.png' %>
+<figcaption>Résultats avec Cordial sur la rubrique 3214</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/affaire/3214_affaire_treetagger.png' %>
+<figcaption>Résultats avec Treetagger sur la rubrique 3214</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/affaire/3224_affaire_cordial.png' %>
+<figcaption>Résultats avec Cordial sur la rubrique 3224</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/affaire/3224_affaire_treetagger.png' %>
+<figcaption>Résultats avec Treetagger sur la rubrique 3224</figcaption>
+</figure>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 <h4 id="graphe_affaire">THÈME 2 : l'Union Européenne</h4>
-
+<figure>
 <%= image_tag 'milena/graphes/europe/3214_europe_cordial.png' %>
+<figcaption>Résultats avec Cordial sur la rubrique 3214</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/europe/3214_europe_treetagger.png' %>
+<figcaption>Résultats avec Treetagger sur la rubrique 3214</figcaption>
+</figure>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 <h4 id="graphe_affaire">THÈME 3 : mouvements et mouvances</h4>
 
+<figure>
 <%= image_tag 'milena/graphes/mvt/3210_mvt_cordial.png' %>
+<figcaption>Résultats avec Cordial sur la rubrique 3210</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/mvt/3210_mvt_treetagger.png' %>
+<figcaption>Résultats avec Treetagger sur la rubrique 3210</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/mvt/3224_mvt_cordial.png' %>
+<figcaption>Résultats avec Cordial sur la rubrique 3224</figcaption>
+</figure>
+<figure>
 <%= image_tag 'milena/graphes/mvt/3224_mvt_treetagger.png' %>
+<figcaption>Résultats avec Treetagger sur la rubrique 3224</figcaption>
+</figure>
 
 <%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion et analyse"} %>
 <%= partial "partials/onglets_milena" %>
