@@ -25,6 +25,13 @@ img {
   border-radius: 20px;
 }
 
+/* Tableaux */
+
+table, tr, td, th {
+  border:1px;
+  border-style: solid;
+  border-color:white;
+}
 /* Avatars */
 
 img.avatar {
