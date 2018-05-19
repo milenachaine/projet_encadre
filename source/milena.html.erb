@@ -858,7 +858,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
     <td><a href="assets/milena/perl/3224/TREETAGGER_VER_DET_NOM_ADJ.txt">TXT</a></td>
   </tr>
 </table></div>
-<p>On a donc obtenu nos fichiers, après avoir testé plusieurs méthodes d'extraction. Ici, celle qui est la plus adaptée à nos besoins est celle du script perl : il permet de traiter un grand nombre de patrons rapidement, et bien qu'il ne permette de raffiner la présentation des données comme XSLT, ceci n'est pas un problème ici puisque la BAO4 constituera justement le travail de mise en forme de ces données.</p>
+<p>On a donc obtenu nos fichiers, après avoir testé plusieurs méthodes d'extraction. Ici, celle qui est la plus adaptée à nos besoins est celle du script perl : il permet de traiter un grand nombre de patrons rapidement, et bien qu'il ne permette pas de raffiner la présentation des données comme XSLT, ceci n'est pas un problème ici puisque la BAO4 constituera justement le travail de mise en forme de ces données.</p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Boîte à outils 4 : création de graphes"} %>
 <%= partial "partials/onglets_milena" %>
@@ -896,7 +896,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/affaire/3214_affaire_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3214</figcaption>
 </figure>
-<p>La rubrique "Europe" est en partie imbriquée dans la rubrique International dans l'organisation du journal, et une partie des articles trouvés dans cette dernière apparaissent dans les deux rubriques. On note cependant que les noms mentionnés ici ont une résonance plus européenne : l'affaire Tariq Ramadan qui a touché principalement la France et le Royaume, et les affaires Gürtel et Puidgemont qui se déroulent en Espagne et en Catalogne.</p>
+<p>La rubrique "Europe" est en partie imbriquée dans la rubrique International dans l'organisation du journal, et une partie des articles trouvés dans cette dernière apparaissent dans les deux rubriques. On note cependant que les noms mentionnés ici ont une résonance plus européenne : l'affaire Tariq Ramadan qui a touché principalement la France et le Royaume-Uni, et les affaires Gürtel et Puidgemont qui se déroulent en Espagne et en Catalogne.</p>
 <figure>
 <%= image_tag 'milena/graphes/affaire/3224_affaire_cordial.png' %>
 <figcaption>Résultats avec Cordial sur la rubrique 3224</figcaption>
@@ -907,11 +907,11 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 </figure>
 <p>La rubrique "Société" est une rubrique assez large qui a tendance à reprendre les évènements à la une sous un angle différent. On notera l'ensemble des termes liés à l'affaire Fillon (qui est devenue "les affaires Fillon" et "l'affaire Penelope Fillon") ; cependant, ce motif a été analysé plus en détail par Margaux dans la rubrique "Politique".</p>
 <p>On note que les évènements discutés ici ont principalement une portée française, à l'exception de l'affaire Weinstein, qui revient le plus souvent, et bien plus souvent que dans les rubriques généralistes vues plus haut. Le reste des termes concerne en partie des évènements politiques (Fillon, Cahuzac...), mais on note qu'un grand nombre des affaires mentionnées dans la rubrique "Société" sont, au sens large, des "faits divers" : des évènements ayant choqué l'opinion et souvent lancé des débats de société. Les meilleurs exemples ici sont probablement les affaires Grégory et Maëlys, l'affaire Jacqueline Sauvage et l'affaire Théo, dont le déroulement avait alimenté des débats sur, respectivement, les erreurs judiciaires, les violences domestiques et les violences policières.</p>
-<p>Que l'affaire Weinstein soit omniprésente dans ce graphe révèle l'angle choisi par le Monde pour la traiter : un sujet de société qui alimenta ensuite un mouvement de protestation et un débat sur la notion de harcèlement sexuel.</p>
+<p>Que l'affaire Weinstein soit omniprésente dans ce graphe révèle l'angle choisi par le Monde pour la traiter : un sujet de société qui alimenta ensuite un mouvement de protestation et un débat sur la notion de harcèlement sexuel. On se souviendra que c'est le Monde qui a publié en janvier 2018 (dans la rubrique "Idées" et non "Société") la tribune controversée d'une centaine de femmes sur la "liberté d'importuner" dans le cadre du mouvement #metoo.</p>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<h4 id="graphe_affaire">THÈME 2 : l'Union européenne</h4>
+<p>Une conséquence d'avoir travaillé sur la rubrique "Europe" est que j'ai pu observer même à l'œil nu l'influence du Brexit dans les rubriques. D'une façon générale, l'Union européenne, son statut, ses lois et ses membres ont occupé une forte place dans l'opinion en 2017 : conséquence du Brexit mais également des élections présidentielles. J'ai choisi de travailler sur le patron "verbe à l'infinitif-déterminant-nom-adjectif" et de chercher les occurrences de l'adjectif "européen", pour voir quelles actions étaient associées à l'Union européenne. Encore une fois, la forte différence entre les deux étiquetages est due au fait que Treetagger n'a reconnu aucune occurrence contenant des l apostrophes.</p>
 
-<h4 id="graphe_affaire">THÈME 2 : l'Union Européenne</h4>
 <figure>
 <%= image_tag 'milena/graphes/europe/3214_europe_cordial.png' %>
 <figcaption>Résultats avec Cordial sur la rubrique 3214</figcaption>
@@ -920,12 +920,16 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/europe/3214_europe_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3214</figcaption>
 </figure>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>On retrouve plusieurs influences dans ces résultats qui sont déjà assez conséquents :
+  <ul>
+    <li>des termes liés au Brexit : "quitter l'Union européenne", "respecter les traités européens", "rassurer les ressortissants européens"...</li>
+    <li>une contre-réaction à la sortie de Royaume-Uni de l'UE, qui a engendré force débats pendant la campagne présidentielle. On retrouve des termes tels que "l'édifice", "le projet", "l'identité", "l'idée", "la coopération", "la dynamique" et "l'idéal" européens, qui doivent être sauvés, consolidés, reconstruits, renforcés, préservés...Ce lexique est de loin le plus présent dans le graphe.</li>
+    <li>enfin, on retrouve aussi des termes plus pragmatiques et économiques dans le graphe, comme "croissance", "financements" et "partenariats"</li>
+  </ul>
+</p>
 
 <h4 id="graphe_affaire">THÈME 3 : mouvements et mouvances</h4>
-
+<p>Le dernier motif que j'ai choisi a été l'occasion d'explorer les patrons de type "nom-adjectif". J'ai choisi de chercher le motif "mouvement" dans les rubriques "International" et "Société" car peu d'interférences de sens me semblaient probables (telles que l'emploi du terme "mouvement" au sens littéral). Je souhaitais notamment voir s'il était possible de voir si les adjectifs qui accompagnaient le terme étaient péjoratifs ou mélioratifs.</p>
 <figure>
 <%= image_tag 'milena/graphes/mvt/3210_mvt_cordial.png' %>
 <figcaption>Résultats avec Cordial sur la rubrique 3210</figcaption>
@@ -934,6 +938,9 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/mvt/3210_mvt_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3210</figcaption>
 </figure>
+<p>On notera ici que Cordial et Treetagger sont pour une fois à égalité en termes d'occurrences trouvées. Treetagger a même détecté une occurrence pertinente, "metoo", que Cordial a ignorée. D'une façon générale, j'ai eu l'impression en travaillant sur ce corpus que, Cordial étant un correcteur orthographique (par ailleurs assez daté), il est parfois normatif au point d'ignorer les occurrences qui ne correspondent pas à du français "traditionnel".</p>
+<p>Ici, aucun des étiqueteurs n'a "raison" (Treetagger identifie un adjectif et Cordial un nom), mais la solution proposée par Treetagger me semble être la meilleure ici (un nom est plus souvent suivi d'un adjectif que d'un autre nom en français, et "#metoo" qualifie le terme "mouvement" : il est souvent employé avec d'autres adjectifs, comme "le mouvement féministe #metoo"). En m'intéressant au <%= link_to("fonctionnement de Treetagger", "http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/tree-tagger1.pdf",) %>, j'ai pu apprendre que ce dernier utilise des arbres de décision pour effectuer ses étiquetages, et le cas donné ici me semble être un bon exemple de ce fonctionnement. Il est beaucoup plus difficile de trouver des informations sur le logiciel Cordial car il n'est pas libre ; je n'ai donc pas pu comparer les deux logiciels sous cet angle-ci. </p>
+<p>On notera également dans les graphes eux-mêmes qu'à l'exception de l'adjectif "antiraciste" (et à la rigueur "pacifiste"), les adjectifs associés à "mouvement" dans la rubrique "International" sont fortement politisés.</p>
 <figure>
 <%= image_tag 'milena/graphes/mvt/3224_mvt_cordial.png' %>
 <figcaption>Résultats avec Cordial sur la rubrique 3224</figcaption>
@@ -942,8 +949,10 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/mvt/3224_mvt_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3224</figcaption>
 </figure>
-
-<%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion et analyse"} %>
+<p>La rubrique "Société" nous offre une image légèrement différente : les termes employés sont liés aux questions et dynamiques sociales (on note l'apparition du terme "féministe" et le retour de "metoo") et certains adjectifs qualifient les mouvements : "inédit", "spontané"... Une différence de registre et de thème qui nous renseigne sur les priorités des articles de la rubrique.</p>
+<%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion"} %>
 <%= partial "partials/onglets_milena" %>
-
-<p><%= link_to("Conclusion générale", "analyse.html",) %></p>
+<p>J'ai abordé ce projet sous l'angle d'un travail de comparaisons entre différents outils et j'ai essayé de centrer mon analyse des outils linguistiques autour de cette question. Cependant, pour mon travail sur les graphes, j'ai préféré choisir des hypothèses de départ (ex.une rubrique telle que "Société" traitera de nombre de faits et scandales choquants) et essayer de les confirmer ou de les infirmer via les graphes. Un outil visuel comme celui-ci est une arme à double tranchant car si elle peut fortement faciliter la lecture de données elle l'influence aussi énormément par sa présentation, en renforçant nos biais de confirmation. C'est une difficulté que j'ai fait mon possible pour contrer. </p>
+<p>Si je devais approfondir mon analyse, je choisirai probablement un des thèmes que j'ai abordés et centrerais tous mes patrons autour de ce dernier pour pouvoir obtenir son environnement linguistique complet. Cependant, je suis satisfaite d'avoir aussi pu effectuer des comparaisons entre différents rubriques et thèmes.</p>
+<p>J'aurais aussi souhaité pouvoir poursuivre ma comparaison de Treetagger et Cordial, notamment en comparant leurs fichiers étiquetés pour pouvoir classer les différences trouvées.</p>
+<p>Je vous invite également à lire la <%= link_to("conclusion générale", "analyse.html",) %> du projet.</p>
