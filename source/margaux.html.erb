@@ -25,25 +25,21 @@ layout: margaux
 
 <%= partial "partials/onglet_bao_margaux" %>
 
-<p>Voici la page pour mon travail pour la matière <b> Projet encadré </b>. 
-<br/> Le but de ce projet était de créer des boîtes à outils permettant d'effectuer des patrons morphosyntaxiques. 
+<p>Voici la page de mon travail pour la matière <b> Projet encadré </b>. 
+<br/> Le but de ce projet est de créer des boîtes à outils permettant d'effectuer des patrons morphosyntaxiques. 
 <br/> Le schéma ci-dessous, a été créé par ma collègue Milena afin d'avoir une représentation visuelle du projet.  </p>
 
 <%= image_tag 'schema/bao_schema.png' %>
 
 <h3 id="bao1">BAO 1 </h3>
-<p> La Boîte à outil n°1 permet de parcourir les rubriques des chacunes des archives du <em>Monde</em> afin de récupérer les titres et les descriptions de chaque article et les mettre dans 2 fichiers :
-un fichier texte et un fichier xml. <br/>Les données récupérées sont également nettoyer dans cette boîte à outil. <br/>Nous observerons les résultats dans la boîte à outil n°2 qui possède seulement un sous-programme d'étiquetage supplémentaire. </p>
+<p> La Boîte à outil n°1 permet de parcourir les rubriques de chacune des archives du <em>Monde</em> afin de récupérer les titres et les descriptions de chaque article et les mettre dans 2 fichiers :
+un fichier texte et un fichier xml. <br/>Les données récupérées sont également nettoyer dans cette boîte à outil. <br/>Nous observerons les résultats dans la boîte à outil n°2 qui possède un sous-programme d'étiquetage supplémentaire. </p>
 
 <label>
 
 <%= partial "partials/code", :locals => { :code_file => "assets/margaux/BAO1_margaux.pl"} %>
 <% code("perl") do %>
 #/usr/bin/perl
-<<DOC;
-BAO 1 Margaux Duhayon
-Commande : perl BAO1.pl repertoire-a-parcourir rubrique
-
 
 #------------------------ BAO1 ----------------------------------
 
@@ -73,7 +69,7 @@ close $sortie_xml;
 
 exit;
 
-#----------------Ouverture des fichier ------------------------------
+#----------------Ouverture des fichiers ------------------------------
 
 sub parcoursarborescencefichiers {
     my $path = shift(@_);
@@ -153,7 +149,7 @@ sub nettoyage {
 </label>
 
 <h3 id="bao2">BAO 2 </h3>
-<p> La Boîte à outil n°2 effectue la même action que la Boîte à outil n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
+<p> La Boîte à outil n°2 effectue la même action que la Boîte à outils n°1 mais possède une étape supplémentaire qui est l'étiquetage des titres et descriptions.
 </p>
 
 <label>
@@ -312,19 +308,21 @@ sub etiquetage
 
 <h3 id="bao3">BAO 3 </h3>
 
-<p>La Boîte à outil n°3 permet d'extraire des patrons morphosyntaxiques dans les étiquetages produits avec Cordial. </p>
+<p>La Boîte à outils n°3 permet d'extraire des patrons morphosyntaxiques dans les étiquetages produit avec Cordial. </p>
 <p> Plusieurs possibilités seront présentées :
 <br/><br/> 1) une solution perl qui prend en argument le fichier texte des patrons
 <br/> 2) une solution avec l'aide de recommandation XSLT
 <br/> 3) une solution avec l'aide de recommandation XQUERY
+<br/> 4) une deuxième solution avec perl et qui utilise Treetagger
 
 </p>
 
 <h4> 1 ère solution :</h4>
-<p>Pour cette solution, il faut dans un premier temps, passer les fichiers étiquetés obtenus dans la BAO 2 dans le logiciel <em>Cordial</em>.
+<p>Pour cette solution, il faut dans un premier temps, passer les fichiers étiquetés, obtenus avec la BAO 2, dans le logiciel <em>Cordial</em>.
 <br/> Le programme va parcourir le fichier ligne par ligne et va mettre dans 3 listes différentes le contenu de chacune des colonnes du fichier Cordial.
 <br/>On a également besoin d'un fichier texte avec les patrons morphosyntaxiques comme ci-dessous.</p>
-<p> Pour passer les fichiers dans <em>Cordial</em>, il faut modiffier l'encodage de nos fichier en <em>ISO-8859-1</em>. <br/>Pour cela, nous utilisons la commande <b>iconv -f UTF-8 -t iso-8859-1 3236.txt > fichier.txt</b>.
+<p> Pour passer les fichiers dans <em>Cordial</em>, il faut modifier l'encodage de nos fichiers en <em>ISO-8859-1</em>. 
+<br/>Pour cela, nous utilisons la commande <b>iconv -f UTF-8 -t iso-8859-1 3236.txt > fichier.txt</b>.
 
 <br/>
 <br/>
@@ -342,9 +340,6 @@ sub etiquetage
 <%= partial "partials/code", :locals => { :code_file => "assets/margaux/BAO3_1_margaux.pl"} %>
 <% code("perl") do %>
 #!/usr/bin/perl
-# Extraction des patrons morphosyntaxiques dans les étiquetages produits avec Cordial
-# Données : fichier d'entrée passé dans le logiciel cordial.
-#  commande : perl BAO3 new_3208.cnr
 
 
 use utf8;
@@ -412,7 +407,7 @@ close FICHIER;
 
 <h4> 2e solution :</h4>
 
-<p> La deuxième solution était un exercice effectué dans une autre matière qui se nomme <em>Document Structuré</em>.
+<p> La deuxième solution était un exercice à effectuer dans une autre matière qui se nomme <em>Document Structuré</em>.
 <br/> Cette solution est effectuée avec le langage XML et des recommandations XSLT et XPATH.</p>
 
 <p> Nous avons trois feuilles de style xslt :</p>
@@ -617,8 +612,9 @@ return <PATRON-NOM-PRP-NOM>{$element,$next,$nextN}</PATRON-NOM-PRP-NOM>
 
 <h3>DIFFICULTÉ : se faire voler son ordinateur</h3>
   <p> Je me retrouve à cette étape du projet sans ordinateur et avec toutes mes données perdues ainsi que mes programmes.
-  <br/> Mes rubriques seront donc plus les mêmes car sans ordinateur, mes collègues ont fait fonctionner leurs programmes sur les rubriques qu'elles pouvaient.
-  <br/> La deuxième partie de la Boîte à outils n°3 ainsi que les Boîte à outils n°4 ne s'effectueront pas avec les mêmes rubriques.
+  <br/> Mes rubriques seront donc différentes à partir de maintenant car, sans ordinateur, 
+  mes collègues ont fait fonctionner leurs programmes sur les rubriques qu'elles pouvaient.
+  <br/> La deuxième partie de la Boîte à outils n°3 ainsi que la Boîte à outils n°4 ne s'effectueront pas avec les mêmes rubriques.
   </p>
   <p> Les nouvelles rubriques que j'utiliseraient seront :
   <br/> - La rubrique 823353 qui est la rubrique <b> Politique</b>
@@ -826,7 +822,7 @@ while (my $ligne=shift(@lignes)) {
  <%= image_tag 'margaux/graphes/femme-une-npn.png' %>
 
  <p> On peut observer que la préposition la plus utilisée avec le mot "femme(s)" est la préposition "de".
- <br/> On trouve alors des coocurences telles que "milliers/génération/dizaine de femme" </p>
+ <br/> On trouve alors des cooccurrences telles que "milliers/génération/dizaine de femme" </p>
 
  <p> Observons maintenant la différence avec le motif "[Hh]ommes?"</p>
 
@@ -835,27 +831,27 @@ while (my $ligne=shift(@lignes)) {
   <%= image_tag 'margaux/graphes/une-homme-tree.png' %>
 
   <p>On observe que les résultats sont plus nombreux quand le motif est "[Hh]ommes?".
-  <br/> La coocurence la plus importante est <b>"affaire d'homme"</b>.
+  <br/> La cooccurrence la plus importante est <b>"affaire d'homme"</b>.
   <br/> Les adjectifs que l'on retrouve le plus sont des adjectifs concernant le physique de l'homme ("fort", "charismatique"). </p>
 
   <p><b><em> Le motif (scandales?)|(affaires? )|(cas)|(.*gate/b)</em></b></p>
 
   <p><b><em> Comparaison entre les deux sorties : Cordial et Treetagger </em></b></p>
   <%= image_tag 'margaux/graphes/une-scandale-tree.png' %>
-  <p> Avec la sortie Treetagger, seul les mot finissant par "gate", n'apparaissent pas.
+  <p> Avec la sortie Treetagger, seul les mots finissant par "gate", n'apparaissent pas.
   <br/> Nous retrouvons une des plus grosses affaires de l'année avec le mot <b> scandale</b>.
-  <br/> Les données ne sont pas très nombreuses mais reflète parfaite les grands scandales et affaires de l'année 2017.</p>
+  <br/> Les données ne sont pas très nombreuses mais reflètent parfaitement les grands scandales et affaires de l'année 2017.</p>
 
   <%= image_tag 'margaux/graphes/une-scandale-cordial.png' %>
 
   <p> Le mot le plus récurrent dans le motif recherché pour la sortie cordial est le mot <b> affaire </b>. On observe que l'on trouve énormément de nom de personne liée à telle ou telle affaire.
-  <br/> Les données qui ont été récupérées avec Cordial sont plus importantes que les données récupérées avec Treetagger mais les coocurences trouvaient ne trouve pas les mot <b>scandale</b> et cas</b> contrairement à la sortie Treetagger. </p>
+  <br/> Les données qui ont été récupérées avec Cordial sont plus importantes que les données récupérées avec Treetagger mais les cooccurrences trouvaient ne trouve pas les mots <b>scandale</b> et <b>cas</b> contrairement à la sortie Treetagger. </p>
 
 
   <p><b><em> Le motif "Fillon" </em></b></p>
 
     <%= image_tag 'margaux/graphes/une-fillon-tree.png' %>
-	<p> Les coocurences du motif <b> Fillon</b> sont surtout accès sur l'affaire Fillon qui a marqué cette année 2017 et qui est le cooccurrent le plus fréquent du graphe. C'est ainsi que les coocurrents de "Fillon" sont des mots tels que "couple", "maison", "époux". </p>
+	<p> Les cooccurrences du motif <b> Fillon</b> sont surtout accès sur L'affaire Fillon qui a marqué cette année 2017 et qui est le cooccurrent le plus fréquent du graphe. C'est ainsi que les coocurrents de "Fillon" sont des mots tels que "couple", "maison", "époux". </p>
 
 
   <p><b><em> Le motif "Macron" </em></b></p>
@@ -863,7 +859,7 @@ while (my $ligne=shift(@lignes)) {
 <%= image_tag 'margaux/graphes/une-macron-tree.png' %>
 <p> Les coocurrents associés avec le motif <b> Macron </b> nous permet d'obtenir un graphe très complet.
 <br/> En effet, on retrouve tout ce qui permet de définir Emmanuel Macron dans sa manière de présider. Ce qui font de lui le président qu'il est.
-<br/> Ainsi, on obtient "monarque", "président", "gouvernement", "proeuropéen" mais aussi "couple" qui met en valeur la dimension de couple présidentiel qu'il met en avant.</p>
+<br/> Ainsi, on obtient "monarque", "président", "gouvernement", "proeuropéen" mais aussi "couple" qui met en valeur la dimension de couple présidentiel, qu'il met en avant.</p>
 
  <h3> Le motif : Rubrique Politique </h3>
 
@@ -873,10 +869,10 @@ while (my $ligne=shift(@lignes)) {
 
    <p> Tout d'abord, ce graphe est extrait du patron NOM ADJ.
    <br/> Dans la rubrique Politique, les cooccurrents les plus récurrents sont "femmes politiques" et "femmes noires".
-<br/> On observe ainsi que dans la rubrique politique, le mot "femme" est utilisé en décrivant sa couleur de peau plutôt que de sa fonction.</p>
+<br/> On observe ainsi que dans la rubrique Politique, le mot "femme" est utilisé en décrivant sa couleur de peau plutôt que de sa fonction.</p>
    <%= image_tag 'margaux/graphes/femme-pol-npn.png' %>
 
-   <p> Avec le patron morphosyntaxique NOM PREP NOM, on observe que dans le rubrique Politique, les coocurrents les plus présents sont des coocurents qui concerne le couple. Les mots "homme" et "femme" sont utilisés ensemble ainsi que les mots "couple" et "femme".
+   <p> Avec le patron morphosyntaxique NOM PREP NOM, on observe que dans le rubrique Politique, les coocurrents les plus présents sont des coocurents qui concernent le couple. Les mots "homme" et "femme" sont utilisés ensemble ainsi que les mots "couple" et "femme".
    <br/> On retrouve également, par 2 fois, la cooccurrence "femme en situation".</p>
 
 
@@ -897,7 +893,7 @@ while (my $ligne=shift(@lignes)) {
    <p><b><em> Le motif "Fillon" </em></b></p>
 
 <%= image_tag 'margaux/graphes/politique-fillon-tree.png' %>
-<p> On retrouve les mêmes coocurences que dans la rubrique précédente concernant les affaires Fillon.
+<p> On retrouve les mêmes cooccurrences que dans la rubrique précédente concernant les affaires Fillon.
 <br/> Grâce aux cooccurrences, on remarque que le fait que François Fillon est été candidat aux présidentielles 2017 n'a été que peu évoqué. Mais la cooccurrence "affaire Fillon" se retrouve plus de 20 fois dans la rubrique Politique.</p>
 
 
@@ -953,30 +949,30 @@ Cela nous montre l'importance de la fonction de l'homme dans la société actuel
 
 <h3 id="conclusion"> Conclusion </h3>
 
-<p> Mon travail ce porte sur deux aspects:</p>
-<p> Le premier est la volonté de montrer avec quelques motifs, la différence des données obtenues avec les deux solutions observées avec le langage <b> Perl </b>.
-<br/> Nous avons pu observer que malgré le nombre de données plus importantes avec la sortie Treetagger, celui-ci tagger très différemment comparé au logiciel Cordial.
-<br/> Les données ressorties avec Cordial semblaint refléter plus les actualités de l'année 2017. Cela est du à la différence du tag selon les deux logiciels.
-<br/> Treetagger étant moins précis que Cordial, certaines données deviennent alors difficile à retrouver lorsque l'on recherche un motif précis. </p>
+<p> Mon travail porte sur deux aspects:</p>
+<p> Le premier est la volonté de montrer avec quelques motifs, la différence des données obtenues avec les deux solutions observées, avec le langage <b> Perl </b>.
+<br/> Nous avons pu observer que malgré le nombre de données plus importantes avec la sortie Treetagger, celui-ci tagge très différemment comparé au logiciel Cordial.
+<br/> Les données ressorties avec Cordial semblaient refléter plus les actualités de l'année 2017. Cela est dû à la différence du tag selon les deux logiciels.
+<br/> Treetagger étant moins précis que Cordial, certaines données deviennent alors difficiles à retrouver lorsque l'on recherche un motif précis. </p>
 
 <p> Le deuxième aspect que j'ai voulu observer est un aspect sociolinguistique. L'utilisation des mots et ce que cela montre du motif choisi.
 
 <br/><br/> Nous avons pu observer alors les différences de verbes entre les noms <b> gauche </b> et <b>droite</b> par exemple.
-<br/>Cela permet d'observer comment un site d'information donne une image de tel ou tel partis lors d'elections.
+<br/>Cela permet d'observer comment un site d'information donne une image de tel ou tel parti lors d'elections.
 
 <br/><br/>Avec les motifs <b> Macron</b> et <b> Fillon </b>, les graphes nous ont permis de mettre en valeur comment le choix des mots permet d'effectuer le portrait de tel ou tel personne.
-<br/> Lorsqu'on observe les coocurrences, cela reflète la façon dont les personnes sont perçus.
-Ainsi, le président Emmanuel Macron possède des cooccurents qui reflète toute sa présidence depuis qu'il était candidat aux élections jusqu'à son gouvernement et ses actions en tant que président.
-<br/> Pour François Fillon, qui fût soupçonné d'emploi fictif alors qu'il était candidat, on a pu observer que les seuls cooccurents que l'on retrouve concerne l'affaire Fille et non son statut de candidat aux présidentielles.
-Comme si il avait abandonné, ce qui ne fût pas le cas.
+<br/> Lorsqu'on observe les cooccurrences, cela reflète la façon dont les personnes sont perçues.
+Ainsi, le président Emmanuel Macron possède des cooccurents qui reflètent toute sa présidence depuis qu'il était candidat aux élections jusqu'à son gouvernement et ses actions en tant que président.
+<br/> Pour François Fillon, qui fût soupçonné d'emploi fictif alors qu'il était candidat, on a pu observer que les seuls cooccurrents que l'on retrouve concernent L'affaire Fillon et non son statut de candidat aux présidentielles.
+Comme s'il avait abandonné, ce qui ne fût pas le cas.
 
-<br/><br/>Avec le motif concernant les mots <b> affaire</b>, <b> cas </b> et <b> scandale </b>, on peut observer le nombre de scandale et affaire qu'il y a eu pendant l'année 2017.
+<br/><br/>Avec le motif concernant les mots <b> affaire</b>, <b> cas </b> et <b> scandale </b>, on peut observer le nombre de scandales et affaires qu'il y a eu pendant l'année 2017.
 <br/> L'année 2017 a permis de pouvoir liberer une certaine parole. Cela sera montré dans les années suivantes.
-<br/> Mais il est important de  montrer quelle affaire à permis de libérer telle ou telle parole.
+<br/> Mais il est important de  montrer quelle affaire a permis de libérer telle ou telle parole.
 
 <br/><br/> On peut observer également avec les mots <b>homme</b> et <b>femme</b>, que l'affaire Weinstein a permis de faire évoluer les idées.
 <br/> C'est ainsi que l'on retrouve beaucoup de vocabulaire concernant la lutte.
 <br/>Mais on retrouve tout de même, des cooccurrences reflétant l'idée d'une femme "douce", "faible".
-<br/> Les femmes sont encore très peu représentées dans le langage journalistique lorsque l'on évoque des domaines précis tels que la politiques</p>
+<br/> Les femmes sont encore très peu représentées dans le langage journalistique lorsque l'on évoque des domaines précis tels que la politique</p>
 
 <p> Je vous invite à présent à vous rendre sur la <%= link_to("conclusion générale", "analyse.html",) %> de notre projet. </p>
