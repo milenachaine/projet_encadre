@@ -858,14 +858,27 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
     <td><a href="assets/milena/perl/3224/TREETAGGER_VER_DET_NOM_ADJ.txt">TXT</a></td>
   </tr>
 </table></div>
+<p>On a donc obtenu nos fichiers, après avoir testé plusieurs méthodes d'extraction. Ici, celle qui est la plus adaptée à nos besoins est celle du script perl : il permet de traiter un grand nombre de patrons rapidement, et bien qu'il ne permette de raffiner la présentation des données comme XSLT, ceci n'est pas un problème ici puisque la BAO4 constituera justement le travail de mise en forme de ces données.</p>
 
 <%= partial "partials/h3", :locals => { :raccourci => "bao4", :titre => "Boîte à outils 4 : création de graphes"} %>
 <%= partial "partials/onglets_milena" %>
 
 <%= image_tag 'schema/bao_schema_4.png' %>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Maintenant qu'on a récupéré nos données, on peut essayer de les interpréter avec des graphes. On effectue ce travail avec un programme dédié récupéré en cours, qui s'utilise sur Mac sous ce format :</p>
+<figure>
+<%= image_tag 'milena/graphe_ex.png' %>
+<figcaption>chemin-absolu-vers-le-programme encodage fichier-a-traiter fichier-de-motif</figcaption>
+</figure>
+<p>Le fichier de motif doit se présenter de cette façon :</p>
+<%= image_tag 'milena/motif_ex.png' %>
+
+<p>Ici on doit se demander : que cherche-t-on à analyser avec ces données ? Je voulais trouver des exemples de différence d'analyse syntaxique entre Cordial et Treetagger, mais également choisir des motifs qui apporteraient des informations sur les rubriques choisies. Cette analyse n'est bien sûr pas exhaustive, et une présentation visuelle permet également d'influencer la perception des résultats, mais on peut quand même percevoir des indices qui pourraient aider à la formation d'une analyse plus complexe. Une explication plus détaillée des choix que nous avons effectués ensemble au cours de notre recherche en disponible dans la <%= link_to("page de conclusion", "analyse.html",) %>.</p>
+<div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %>Vous pouvez cliquer sur les graphes ci-dessous pour les élargir. Il est également possible de <b><a href="assets/milena/graphes_milena.zip" download>télécharger une archive contenant tous les graphes obtenus</a></b> pour une lecture plus aisée.</p></div>
 <h4 id="graphe_affaire">THÈME 1 : affaires et scandales</h4>
 
+<p>Une des formations linguistiques que je souhaitais analyser dans mes rubriques est les groupes nominaux de type "déterminant-nom commun-nom propre" qui font référence à des scandales ou des affaires connues dans l'opinion publique. Je m'attendais notamment à retrouver un grand nombre de termes autour des affaires Fillon et Weinstein, mais j'ai été surprise de retrouver certaines formations.</p>
+<p>J'ai choisi une expression régulière qui recherche les patrons contenant les termes "scandale", "affaire" et "cas", ainsi que les termes terminant par -gate (ex. Watergate). J'ai effectué cette recherche dans mes trois rubriques, sur les résultats étiquetés par Cordial et Treetagger.</p>
+<p>On constate directement une grosse différence entre Cordial et Treetagger : Treetagger ne considère pas le l apostrophe comme un article. Tous les termes du type "l'affaire" sont donc ignorés dans notre patron. En règle générale, Treetagger est effectivement moins précis et surtout moins adapté aux spécificités du français que Cordial : cela s'explique par le fait que Cordial est un correcteur orthographique du français, alors que Treetagger est un outil beaucoup plus général qui bénéficie simplement d'une adaptation francophone.</p>
 <figure>
 <%= image_tag 'milena/graphes/affaire/3210_affaire_cordial.png' %>
 <figcaption>Résultats avec Cordial sur la rubrique 3210</figcaption>
@@ -874,6 +887,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/affaire/3210_affaire_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3210</figcaption>
 </figure>
+<p>Dans la rubrique "International", on retrouve, sans grande surprise, des évènements d'envergure internationale : "l'affaire Weinstein" est le motif revenant le plus souvent. On retrouve également les Panama papers, à la révélation desquels la rédaction du Monde a participé.</p>
 <figure>
 <%= image_tag 'milena/graphes/affaire/3214_affaire_cordial.png' %>
 <figcaption>Résultats avec Cordial sur la rubrique 3214</figcaption>
@@ -882,6 +896,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/affaire/3214_affaire_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3214</figcaption>
 </figure>
+<p>La rubrique "Europe" est en partie imbriquée dans la rubrique International dans l'organisation du journal, et une partie des articles trouvés dans cette dernière apparaissent dans les deux rubriques. On note cependant que les noms mentionnés ici ont une résonance plus européenne : l'affaire Tariq Ramadan qui a touché principalement la France et le Royaume, et les affaires Gürtel et Puidgemont qui se déroulent en Espagne et en Catalogne.</p>
 <figure>
 <%= image_tag 'milena/graphes/affaire/3224_affaire_cordial.png' %>
 <figcaption>Résultats avec Cordial sur la rubrique 3224</figcaption>
@@ -890,6 +905,9 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= image_tag 'milena/graphes/affaire/3224_affaire_treetagger.png' %>
 <figcaption>Résultats avec Treetagger sur la rubrique 3224</figcaption>
 </figure>
+<p>La rubrique "Société" est une rubrique assez large qui a tendance à reprendre les évènements à la une sous un angle différent. On notera l'ensemble des termes liés à l'affaire Fillon (qui est devenue "les affaires Fillon" et "l'affaire Penelope Fillon") ; cependant, ce motif a été analysé plus en détail par Margaux dans la rubrique "Politique".</p>
+<p>On note que les évènements discutés ici ont principalement une portée française, à l'exception de l'affaire Weinstein, qui revient le plus souvent, et bien plus souvent que dans les rubriques généralistes vues plus haut. Le reste des termes concerne en partie des évènements politiques (Fillon, Cahuzac...), mais on note qu'un grand nombre des affaires mentionnées dans la rubrique "Société" sont, au sens large, des "faits divers" : des évènements ayant choqué l'opinion et souvent lancé des débats de société. Les meilleurs exemples ici sont probablement les affaires Grégory et Maëlys, l'affaire Jacqueline Sauvage et l'affaire Théo, dont le déroulement avait alimenté des débats sur, respectivement, les erreurs judiciaires, les violences domestiques et les violences policières.</p>
+<p>Que l'affaire Weinstein soit omniprésente dans ce graphe révèle l'angle choisi par le Monde pour la traiter : un sujet de société qui alimenta ensuite un mouvement de protestation et un débat sur la notion de harcèlement sexuel.</p>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
@@ -928,4 +946,4 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
 <%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion et analyse"} %>
 <%= partial "partials/onglets_milena" %>
 
-<p>bip bop</p>
+<p><%= link_to("Conclusion générale", "analyse.html",) %></p>
