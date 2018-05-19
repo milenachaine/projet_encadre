@@ -772,19 +772,36 @@ while (my $ligne=shift(@lignes)) {
  <p> Comme pour la rubrique étudiée précédemment, on observe que la sortie Treetagger ne trouve que le mot "affaire" et ses cooccurents.
  <br/> Les deux affaires que l'on trouve le plus sont "affaire Grégory" et "affaire Fillon".
 
-  <%= image_tag 'margaux/graphes/pol-scandale-cord.png' %>
-  <p>
 
    <p><b><em> Le motif "Fillon" </em></b></p>
 
 <%= image_tag 'margaux/graphes/politique-fillon-tree.png' %>
+<p> On retrouve les mêmes coocurences que dans la rubrique précédente concernant les affaires Fillon. 
+<br/> Grâce aux cooccurences, on remarque que le fait que François Fillon est été candidat aux présidentielles 2017 n'a été que peu évoqué. Mais la cooccurence "affaire Fillon" se retrouve plus de 20 fois dans la rubrique Politique.</p>
+
 
    <p><b><em> Le motif "Macron" </em></b></p>
 
 <%= image_tag 'margaux/graphes/politique-macron-tree.png' %>
+<p> Dans la rubrique Politique, les cooccurents sont encore une fois représentatif de la présidence d'Emmanuel Macron 
+<br/> On retrouve des cooccurents concernant son élection ("candidats","candidat",président"), sur ses relations internationales ("Poutine", "duo", "rencontre"), mais aussi sur sa façon de présider le pays ("méthode","ministre","Philippe", "réformes", "ordonnance"). </p>
+
 
 
 <p><b><em> Le motif "gauche/droite" </em></b></p>
+<%= image_tag 'margaux/graphes/politique-gd-tree-1.png' %>
+<p> Le graphe sur les motifs <b> gauche </b> et <b> droite </b> est très intéréssant à analyser. 
+<br/> Vous pouvez observer sur la droite, toutes les cooccurences du mot <b>droite</b>, sur la gauche toutes les cooccurences du mot <b>gauche</b> et au centre toutes les cooccurences concernant les deux motifs <b>gauche</b> et <b> droite</b>. 
+C'est le patron morphosyntaxique NOM VER qui a été utilisé afin d'observer les verbes les plus utilisés pour l'un ou l'autre des mots. 
+<br/> Pour la droite, on observe des verbes qui donnent une impression de grandes actions. La droite "hérite","construit","gagne", "consacre", "conforte". 
+<br/> Alors que la gauche, quand à elle, "occupe, "affirme", "revendique", "veut", "dénonce". Cela donne l'impression que la gauche utilise les mots et la droite les actions. 
+<br/> Les données concernant la droite sont également plus nombreuses. </p>
+
+<%= image_tag 'margaux/graphes/politique-gd-tree-2.png' %>
+<p> Dans ce deuxième graphe concernant les mots <b>droite</b> et <b> gauche</b> est effectué à partir du patron morphosyntaxique NOM ADJ. 
+<br/> On peut voir sur le côté gauche du graphe que une des cooccurences reflète le nombre de candidat par partis.
+<br/> On peut voir deux coocurrences qui représente chacun des parties des présidentielles 2017. On observe la cooccurence "droite macroniste" d'un côté et "gauche mélenchoniste" de l'autre. 
+<br/> On peut également que la cooccurence "extrême droite" est présente 64 fois. Alors que la cooccurence "extrême gauche" n'est présente qu'une fois dans la rubrique Politique. </p>
 
 
   <h3> Le motif : Rubrique  Culture </h3>
@@ -792,7 +809,16 @@ while (my $ligne=shift(@lignes)) {
   <p><b><em> Le motif [Ff]emmes? </em></b></p>
 
     <%= image_tag 'margaux/graphes/femme-cult.png' %>
+	<p> Pour le patron morphosyntaxique NOM ADJ, on observe que le mot femme, dans la rubrique culture, est encore utilisé avec des mots tels que "douce", "coquette", "fragile",  ou encore "féline".
+	<br/> Les cooccurences les plus utilisées sont "femme fantastique" et "femme douce". Alors que des cooccurences telles que " femmes artistes", "femmes expertes" ou encore "femmes d'affaires" ne sont évoqués qu'une fois. 
+	<br/> La rubrique Culture évoque encore la femme par rapport aux qualités qu'on lui demandes de posséder dans la société. <p>
+	
+	
+	
+	
 	<%= image_tag 'margaux/graphes/femme-cult-npn.png' %>
+	<p> Sur ce graphe issus du patron morphosyntaxique NOM PREP NOM, on peut voir que la cooccurence la plus fréquenre est le mot "femme" avec la préposition de 
+	
 
    <p><b><em> Le motif [Hh]ommes? </em></b></p>
 
