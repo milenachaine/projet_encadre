@@ -364,7 +364,7 @@ Il est à noter que seul le fichier d’output XML est étiqueté morphosyntaxiq
 Les deux, seront par la suite utilisés par la BAO3 pour en extraire, à partir de patrons morpho-syntaxiques prédéfinis, les éléments lexicalisés qui y sont associés.
 </p></div>
 
-  <p><div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %> Les résultats obtenus par l'étiquetage des fichiers XML, <b><a href="assets/ferial/rubriques_etiquetees_tagger.zip" download>sont téléchargeables ici</a></b> et ceux obtenus par l'étiquetage des fichiers TXT par Cordial<b><a href="assets/ferial/rebriques_etiquetees_cordial" download> sont téléchargeables ici</a></b> .</p></div>
+  <p><div class="explication"><p><%= image_tag 'sheet_transparent_32px.png', :class => "icon" %> Les résultats obtenus par l'étiquetage des fichiers XML, <b><a href="assets/ferial/rubriques_etiquetees_tagger.zip" download>sont téléchargeables ici</a></b><br/> et ceux obtenus par l'étiquetage des fichiers TXT par Cordial<b><a href="assets/ferial/rebriques_etiquetees_cordial" download> sont téléchargeables ici</a></b> .</p></div>
 <center><p>Les fichiers XML étiquetés par TreeTagger se présentent ainsi :</p></center>
 <center><%= image_tag 'ferial/3232_tagger.png' %></center>
 <center><p>Les fichier TXT étiquetés par Cordial se présentent ainsi :</p></center>
@@ -1129,8 +1129,8 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*e
  <%= partial "partials/h3", :locals => { :raccourci => "analyse2", :titre => "Analyse 2"} %>
  <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <div class="explication"><p>Ce que l'on observe en premier est que le nombre des cooccurrents d'expliquer est plus élevé que celui d'estimer (explique, expliquent). Par ailleurs, le rôle du verbe "estimer" semble être d'introduire des noms propres ou des noms propres avec la profession de la personne dont les propos sont rapportés. Quant au rôle du verbe "expliquer", il semble se résumer à introduire exclusivement les professions des locuteurs. En effet, on ne relève aucun nom propre lié à ce verbe. <br/>
-	 Cela pourrait s'expliquer par la prise de distance, donc l'objectivité, exprimée par le verbe "expliquer", et par la prise de position et l'affirmation de la subjectivité exprimées par le verbe "extimer".
+ <div class="explication"><p>Ce que l'on observe en premier est que le nombre des cooccurrents d'expliquer est plus élevé que celui d'estimer (explique, expliquent). Par ailleurs, le rôle du verbe "estimer" semble être d'introduire des noms propres ou des noms propres avec la profession de la personne dont les propos sont rapportés. Quant au rôle du verbe "expliquer", il semble se résumer à introduire exclusivement  des locuteurs en les qualifiant par leurs professions. En effet, on ne relève aucun nom propre lié à ce verbe. <br/>
+	 Cela pourrait s'expliquer par la prise de distance, donc l'objectivité, exprimée par le verbe "expliquer", et par la prise de position, comme pour affirmer la subjectivité exprimée par le verbe "estimer".
 	 
  </p></div><br/><br/><br/>
  
@@ -1155,24 +1155,18 @@ Le choix de la préposition relève du registre qu'on pense être plus soutenu d
  <%= partial "partials/h3", :locals => { :raccourci => "analyse3", :titre => "Analyse 3"} %>
  <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <div class="explication"><p> L'usage de la préposition 'à' à est codifié syntaxiqument. En effet, elle est employée pour parler d’une tâche à effectuer, d'une description d'un lieu, d'une destination à des objets, d'une conséquence, de l'expression de la manière, de l'expression temporelle et spaciale, etc. Dans ce cas et comme il a été souligné plus haut, on relève un emploi non-littéral et plus abstrait au vu du registre et du thème littéraire caratérisant cette rubrique: <em>hymne à la vie, hommage à la langue, antidote à la grisaille,etc. </em>
+ <div class="explication"><p> L'usage de la préposition 'à' à est codifié syntaxiqument. En effet, elle est employée pour parler d’une tâche à effectuer, d'une description d'un lieu, d'une destination à des objets, d'une conséquence, de l'expression de la manière, de l'expression temporelle et spaciale, etc. Or dans ce ce cas et comme il a été souligné plus haut, on relève un emploi non-littéral et plus abstrait au vu du registre et du thème littéraire caratérisant cette rubrique: <em>hymne à la vie, hommage à la langue, antidote à la grisaille,etc. </em>
 	 
  </p></div><br/><br/><br/>
  
  <%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion"} %>
- <%= partial "partials/onglets_bao_ferial" %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
  
- <p></p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- 
+ <p>Tout d'abord, l'analyse de chaque motif en fonction de chaque rubrique a permis, d'une part, de mettre en évidence l'environnement lexical et sémantique de ceux-ci. D'autre part, elle a permis également de souligner leur comportement syntaxique dans un contexte journalistique spécifique. Si pour deux motifs l'hypothèse de départ a été invalidée, le reste des motifs a fourni des résultats plutôt satisfaisants. Cela peut s'expliquer par un mauvais choix du patron ou par un mauvais étiquetage de certains syntagmes. En effet, en dépit de la précision dont Cordial fait preuve, Il va avoir plus de difficulté à reconnaître certains syntagmes et les annotera comme NOM ADJ. Tandis que TreeTagger peut s'avèrer plus precis dans son étiquetage pour certains syntagmes comme <em>"L'affaire Weinstein"</em> qui sera annotée comme une seule entité. Cela est probablement dû à la version du logiciel Cordial qui nous été fournie (datant de 1999).<br/> <br/> 
+ Par ailleurs, l'observation du comportement des motifs avec les graphes ne peut être suffisante à elle seule. Il manque donc une analyse plus poussée et une exploration textométrique plus détaillée qui permettrait l'observation des contextes droit et gauche sous forme de concordancier avec iTrameur ou Lexico. <br/><br/> 
+Enfin, j'ai pris beaucoup de plaisir à réaliser ce travail grâce à la manipulation des différentes boîtes à outils et grâce au travail collectif effectué en vue de la réalisation de ce site avec un nouveau langage de programmation.   </p>
+
  
  
  
