@@ -23,11 +23,16 @@ layout: layout
 
 <h3> ANALYSE </h3>
 
-<p> Pour ce projet, nous avons décidé d'utiliser l'actualité de l'année 2017 afin de choisir nos motifs et d'effectuer nos graphes. 
+<p> Pour ce projet, nous avons décidé d'utiliser l'actualité de l'année 2017 afin de choisir nos motifs et d'effectuer nos graphes.
 <br/> Nous nous sommes inspirées de plusieurs grands événements de l'année 2017 afin de réaliser nos analyses. </p>
+<<<<<<< Updated upstream
 
 <p>Tout d'abord, du 23 avril 2017 au 7 mai 2017 a eu lieu la onzième élection présidentielle de la Ve République qui a été emplie de beaucoup de rebondissements. 
 </br>Ainsi, <b>L'affaire Fillon</b> a pris une place importante dans ces élections. Appelée aussi l'affaire Pénélope Fillon ou Penelopegate, cette affaire concerne François Fillon, candidat de la droite et du centre, et son épouse Pénélope Fillon. 
+=======
+<p>Tout d'abord, du 23 avril 2017 au 7 mai 2017 a eu lieu la onzième élection présidentielle de la Ve République qui a été emplie de beaucoup de rebondissements.
+</br>Ainsi, l'affaire Fillon a pris une place importante dans ces élections. Appelée aussi l'affaire Pénélope Fillon ou Penelopegate, cette affaire concerne François Fillon, candidat de la droite et du centre, et son épouse Pénélope Fillon.
+>>>>>>> Stashed changes
 </br>Elle porte sur des soupçons d'emplois fictifs. (motifs: Fillon - scandale - affaire)</p>
 
 <p> Mais surtout, nous avons vu des débats importants pour ces présidentiellesa ont été Macron, election, mouvement en marche, insoumis, mélenchon, insoumis: (motifs: gauche - droite - politiciens)</p>
@@ -35,86 +40,130 @@ layout: layout
 <p> Affaire Weinstein : différents hashtags: présente un intéret plus important pour la population sur la condition féminine. Mouvement balancetonporc, Metoo:(motifs: femme - homme - mouvement - scandale )</p>
 <p> Brexit (motifs: brexit - eu)</p>
 
-<div class= "tableau"><table style="float:center">
+<div class= "tableau"><table border="1px" color="white" style="float:center">
   <tr>
-    <th colspan="1">Prénoms</th>
-    <th>Milena Chaîne</th>
-    <th>Ferial Yahiaoui</th>
-    <th>Margaux Duhayon</th>
-  </tr>
-  <tr>
-  <th rowspan="2">DETERMINANT - NOM COMMUN - NOM PROPRE</th>
-  <td>Cordial</td>
-  <td><a href="assets/milena/perl/3210/CORDIAL_DET_NC_NP.txt">TXT</a></td>
-  <td><a href="assets/milena/perl/3214/CORDIAL_DET_NC_NP.txt">TXT</a></td>
-  <td><a href="assets/milena/perl/3224/CORDIAL_DET_NC_NP.txt">TXT</a></td>
+    <th rowspan="2">Motifs recherchés</th>
+    <th colspan="3">Milena Chaîne</th>
+    <th colspan="3">Margaux Duhayon</th>
+    <th colspan="3">Ferial Yahiaoui</th>
   </tr>
   <tr>
-    <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT, <a href="assets/milena/xslt/exercice12_2_2.html">HTML</a></td>
-    <td>TXT</td>
+    <td>3210 (International)</td>
+    <td>3214 (Europe)</td>
+    <td>3224 (Société)</td>
+    <td>823353 (Politique)</td>
+    <td>3208 (Une)</td>
+    <td>3246 (Culture)</td>
+    <td>3476 (Cinéma)</td>
+    <td>3232 (Idées)</td>
+    <td>3260 (Livres)</td>
   </tr>
   <tr>
-  <th rowspan="2">DETERMINANT - NOM COMMUN - DETERMINANT - NOM PROPRE</th>
-  <td>Cordial</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  <td>TXT</td>
+  <th>(scandales?)|(affaires? )|(cas)|(.*gate/b)</th>
+    <td>✓</td>
+    <td>✓</td>
+    <td>✓</td>
+    <td>✓</td>
+    <td>✓</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  <tr>
+    <tr>
+    <th>Macron</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>✓</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    <tr>
+      <tr>
+      <th>Fillon</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>✓</td>
+        <td>✓</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      <tr>
+        <tr>
+        <th>(gauche)|(droite)</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>✓</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        <tr>
+          <tr>
+          <th>[Hh]ommes?/[Ff]emmes? </th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✓</td>
+            <td>✓</td>
+            <td>✓</td>
+            <td>✓</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+  <th>*estime?/.*explique.*</th>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>✓</td>
+  <td></td>
   </tr>
   <tr>
-    <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT</td>
-    <td>TXT</td>
-  </tr>
-  <tr>
-  <th rowspan="2">DETERMINANT - NOM - ADJECTIF</th>
-  <td>Cordial</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  </tr>
-  <tr>
-    <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT</td>
-    <td>TXT</td>
-  </tr>
-  <th rowspan="2">DETERMINANT - ADJECTIF - NOM</th>
-  <td>Cordial</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  <td>TXT (féminin), TXT (masculin), TXT(tous)</td>
-  </tr>
-  <tr>
-    <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT</td>
-    <td>TXT</td>
-  </tr>
-  <th rowspan="2">NOM - ADJECTIF</th>
-  <td>Cordial</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  </tr>
-  <tr>
-    <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT, <a href="assets/milena/xslt/exercice12_2_1.html">HTML</a></td>
-    <td>TXT</td>
-  </tr>
-  <th rowspan="2">VERBE (INFINITIF) - DETERMINANT - NOM - ADJECTIF</th>
-  <td>Cordial</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  <td>TXT</td>
-  </tr>
-  <tr>
-    <td>Treetagger</td>
-    <td>TXT</td>
-    <td>TXT, <a href="assets/milena/xslt/exercice12_2_3.html">HTML</a></td>
-    <td>TXT</td>
-  </tr>
+<th>\bà\b</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>✓</td>
+</tr>
+<tr>
+<th>mouvements?</th>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th>européen(ne)?s?</th>
+<td></td>
+<td>✓</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
 </table></div>
