@@ -1071,9 +1071,9 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
  
   <%= image_tag 'schema/bao_schema_4.png' %><br/><br/>
  
- 	<p>Une fois les éléments obtenus et les résultats comparés, on utilisera les occurrences les plus pertinentes produites par la BAO3 pour en analyser les coocurrents pour chaque rubrique et selon les thèmes choisis en visualisant les graphes générés par un programme fourni par M.Serge Fleury.
+ 	<p>Une fois les éléments obtenus et les résultats comparés, on utilisera les occurrences les plus pertinentes produites par la BAO3 pour en analyser les cooccurrents pour chaque rubrique et selon les thèmes choisis en visualisant les graphes générés par un programme fourni par M.Serge Fleury.
 
- <br/>Ce programme demande plusieurs arguments: "l'encodage du fichier" + le fichier des patrons marphosyntaxiques extraits + fichier du motif recherché sous la forme de: MOTIF=Regex avec motif recherché.
+ <br/>Ce programme demande plusieurs arguments: "l'encodage des fichiers" + le fichier des patrons marphosyntaxiques extraits + fichier du motif recherché sous la forme de: MOTIF=Regex avec motif recherché.
  </p> <br/><br/>
  
  Rubrique 3476<em> Cinéma</em>.<br/><br/>
@@ -1081,7 +1081,7 @@ return <NOMADJ>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}</NOMADJ> }
  Patron: <b>NOM_ADJ</b><br/>
  Motif: <b>(f|F)emmes? / (h|H)ommes?</b><br/>
 
-<p>Ce choix est motivé par l'actualité qui a marqué le monde du cinéma en 2017, telle que <em>l'Affaire Weinstein</em> où des actrices américaines ont dénoncé publiquement les agressions sexuelles/viols dont elles ont été victimes et dont l'auteur n'est d'autre que le producteur américain Harvey Weinstein.
+<p>Ce choix est motivé par l'actualité qui a marqué le monde du cinéma en 2017, telle que <em>l'Affaire Weinstein</em> où des actrices américaines ont pu dénoncer publiquement les agressions sexuelles/viols dont elles ont été victimes et dont l'auteur n'est d'autre que le producteur américain Harvey Weinstein.
 Cette affaire s'est étendue partout ailleurs dans le reste du monde, permettant ainsi à des actrices de lever l'omerta sur les cas d'agression et de harcèlement sexuels commis par les hommes de leur milieu professionnel.
 On s'attend donc à avoir un environnement linguistique particulier autour des deux entités.
 </p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(f|F)emmes?</b><br/>
@@ -1092,10 +1092,10 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|
 
 <%= image_tag 'ferial/graphes/homme.s.cine-adj-nom.png' %><br/><br/>
 
- <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse1", :titre => "Analyse 1"} %>
  <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <div class="explication"><p> L'affichage des deux graphes ne reflète pas tout à fait ce quoi on s'attendait, si ce n'est 1 occurrence pour agissements d'hommes et 1 occurrence pour viol de femmes. Toutefois, nous remraquons bien les 
+ <div class="explication"><p> L'affichage des deux graphes ne reflète finalement pas exactement ce quoi on s'attendait, si ce n'est 1 occurrence pour agissements d'hommes et 1 occurrence pour viol de femmes. Toutefois, nous notons bien que les cooccurrents des deux entités renforcent bien l'idée des rôles du genre attribués aux deux sexes par l'imaginaire collectif. En effet, le cooccurrent le plus important pour 'femme' est 'douce' (10), tandis que pour 'homme', 'intègre' arrive en première position avec (5) occurrences. De la même façon, le nombre de cooccurrents péjoratifs est plus élevé autour de 'femme.s' (jolies, en cuisine, coquettes, excommuniée) qu'autour d''homme.s'(exentrique).
   
 
  </p></div><br/><br/><br/>
@@ -1114,9 +1114,11 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|
 Pour le vérifier, nous avons compté et trié les occurrences grâce aux commandes UNIX. Les résultats affichent les verbes « estime » et « explique » comme les premiers dans le classement des verbes avec le nombre suivant:<br/><br/>
 
 414 estime<br/>
-351 explique
+351 explique<br/><br/>
 
-</p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*estime?</b><br/>
+La forme que prend le patron avec le verbe "estimer" est NOM VER KON, et celle avec le verbe "expliquer" est VER DET NOM. Le but derrière ce choix, est d'observer qui "estime" et qui "explique". </p> 
+
+<br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*estime?</b><br/>
 
 <%= image_tag 'ferial/graphes/estime.s-idees.png' %><br/><br/>
 
@@ -1124,15 +1126,14 @@ Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*e
 
 <%= image_tag 'ferial/graphes/explique.ver.idees.png' %><br/><br/>
 
- <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
- <%= partial "partials/onglets_bao_ferial" %>
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse2", :titre => "Analyse 2"} %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <p>Bullshit</p>
- <p> Bullshit</p>
+ <div class="explication"><p>Ce que l'on observe en premier est que le nombre des cooccurrents d'expliquer est plus élevé que celui d'estimer (explique, expliquent). Par ailleurs, le rôle du verbe "estimer" semble être d'introduire des noms propres ou des noms propres avec la profession de la personne dont les propos sont rapportés. Quant au rôle du verbe "expliquer", il semble se résumer à introduire exclusivement les professions des locuteurs. En effet, on ne relève aucun nom propre lié à ce verbe. <br/>
+	 Cela pourrait s'expliquer par la prise de distance, donc l'objectivité, exprimée par le verbe "expliquer", et par la prise de position et l'affirmation de la subjectivité exprimées par le verbe "extimer".
+	 
+ </p></div><br/><br/><br/>
  
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
  
  
  <br/> - Rubrique 3260 <em>Livres</em>.<br/><br/>
@@ -1151,24 +1152,18 @@ Le choix de la préposition relève du registre qu'on pense être plus soutenu d
 
 
  
- <%= partial "partials/h3", :locals => { :raccourci => "analyse", :titre => "Analyse"} %>
- <%= partial "partials/onglets_bao_ferial" %>
+ <%= partial "partials/h3", :locals => { :raccourci => "analyse3", :titre => "Analyse 3"} %>
+ <%= partial "partials/onglets_bao_ferial" %><br/><br/>
  
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
- <p>Bullshit</p>
- <p> Bullshit</p>
- <p>Bullshit</p>
+ <div class="explication"><p> L'usage de la préposition 'à' à est codifié syntaxiqument. En effet, elle est employée pour parler d’une tâche à effectuer, d'une description d'un lieu, d'une destination à des objets, d'une conséquence, de l'expression de la manière, de l'expression temporelle et spaciale, etc. Dans ce cas et comme il a été souligné plus haut, on relève un emploi non-littéral et plus abstrait au vu du registre et du thème littéraire caratérisant cette rubrique: <em>hymne à la vie, hommage à la langue, antidote à la grisaille,etc. </em>
+	 
+ </p></div><br/><br/><br/>
  
  <%= partial "partials/h3", :locals => { :raccourci => "conclu", :titre => "Conclusion"} %>
  <%= partial "partials/onglets_bao_ferial" %>
  
  
- <p>Bullshit</p>
+ <p></p>
  <p> Bullshit</p>
  <p>Bullshit</p>
  <p>Bullshit</p>
