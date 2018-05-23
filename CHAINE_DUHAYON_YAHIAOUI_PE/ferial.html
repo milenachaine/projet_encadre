@@ -1,0 +1,1418 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+  <title>Projet BAO - Ferial Yahiaoui</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="stylesheets/ferial.css" rel="stylesheet" />
+  <link href="stylesheets/highlight_ferial.css" rel="stylesheet" />
+</head>
+
+<body>
+<!-- Header et logo-->
+  <!-- logo -->
+<div id ="logo">
+<a href="http://www.tal.univ-paris3.fr/plurital/">      <img src="images/vintage-mechanics-tool-box.jpg" alt="Vintage mechanics tool box" />
+
+</a></div>
+
+  <!-- titre -->
+<div id ="header-wrapper">
+  <header id ="header">
+    <div class="row">
+      <h1>Projet BAO</h1>
+    </div>
+  </header>
+</div>
+
+  <!-- onglets généraux -->
+<section id ="onglets">
+  <aside>
+    <div class="row">
+    <a href="./">Accueil</a>
+    <a href="milena.html">Milena Chaîne</a>
+    <a href="margaux.html">Margaux Duhayon</a>
+    <a href="ferial.html">Ferial Yahiaoui</a>
+    <a href="analyse.html">Synthèse</a>
+    <a href="https://github.com/milenachaine/projet_encadre">GitHub</a>
+    </div>
+    <h2>Ferial Yahiaoui</h2>
+  </aside>
+</section>
+
+
+<!-- Reste de la page-->
+  <div id ="content-wrapper">
+    <div id ="content">
+      
+
+<p>Bienvenue sur ma page.</p>
+<p>J'ai pour ma part travaillé sur les rubriques suivantes:<br/>
+<br/> - La rubrique 3476 qui est la rubrique <em>Cinéma</em>.
+<br/> - La rubrique 3232 qui est la rubrique <em>Idées</em>.
+<br/> - la rubrique 3260  qui est la rubrique <em>Livres</em>.</p>
+
+<p>Le choix des rubriques s'est fait en fonction des thèmes pouvant être liés les uns aux autres. Etant donné qu'il est question de l'actualité de l'année 2017 concernant le cinéma et les livres, mais aussi au sujet des interviews et des tribunes (rubrique Idées) ayant été rapportées par le journal Le Monde tout au long de l'année ; et par souci de pertinence dans le choix des motifs à la dernière étape du projet, un parallèle sera fait entre les résultats obtenus et nos recherches concernant tout ce qui a pu marqué l'actualité au courant de cette année autour de ces thèmes.</p>
+
+<p>Cette page contient les différentes Boîtes à Outils, leurs explications, les résultats obtenus, ainsi que les analyses qui en découlent.</p>
+<p>Tous les scripts sont visibles sur la page elle-même et téléchargeables. Pour naviguer entre les différentes boîtes à outils, vous pouvez utiliser la barre d'onglets ci-dessous.</p>
+
+<p>Bonne visite !</p>
+
+
+
+<!-- titre h3 (+ raccourci) -->
+<h3 id="bao1_2">
+  Boîtes à outils 1 et 2 : Parcours, filtrage, création et étiquetage des fichiers créés
+</h3>
+
+<section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+
+
+
+
+
+	<img src="images/schema/bao_schema_1_2.png" alt="Bao schema 1 2" />
+
+	<p>La deuxième BAO utilise les résultats de la première. En effet, la BAO1 s’occupe d’extraire le texte de chaque rubrique en récupérant le titre et la description de celles-ci, sous deux formats : un texte brut + un fichier XML. Tout cela en parcourant l’arborescence du fils RSS jusqu’au traitement de toutes les rubriques. Ensuite, la BAO2 récupère les fichiers XML pour les étiqueter morphosyntaxiquement grâce à l’annotateur « TreeTagger ».
+<br/>
+Que faire de nos fichiers au format TXT?<br/>
+Après les avoir converti en ISO 8859-15, on les passe à l’annotateur « Cordial » qui les étiquètera morphosyntaxiquement.<br/>
+Ce sont ces fichiers étiquetés par deux annotateur différents qui seront utilisés par la BAO3.<br/>
+Ci-dessous, le programme en question:
+
+</p>
+
+
+<label>
+
+<!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/BAO2_extrac_etiq_utf.pl" download>(télécharger ↓)</a></p>
+
+<div class="highlight"><pre class="highlight perl"><code>
+<span class="c1">#!/usr/bin/perl</span>
+
+<span class="s">&lt;&lt;DOC;
+usage : perl BAO2_extrac_etiq.pl Library numéro de la rubrique
+Par exemple : perl BAO2_extrac_etiq.pl Library 3208
+Le programme prend en entrée le nom du répertoire contenant les fichiers à traiter et le numéro de la rubrique à traiter
+DOC
+</span>
+ <span class="c1">#-----------------------------------------------------------</span>
+
+ <span class="c1"># recupère le nom du répertoire racine</span>
+
+ <span class="k">my</span> <span class="nv">$rep</span><span class="o">=</span><span class="s">"$ARGV[0]"</span><span class="p">;</span>
+
+ <span class="c1"># recupère le nom de la rubrique</span>
+
+ <span class="k">my</span> <span class="nv">$rubrique</span> <span class="o">=</span> <span class="s">"$ARGV[1]"</span><span class="p">;</span>
+
+ <span class="c1"># initialise</span>
+
+ <span class="k">my</span> <span class="nv">%dico</span><span class="o">=</span><span class="p">();</span>
+
+ <span class="nv">$rep</span><span class="o">=~</span> <span class="sr">s/[\/]$//</span><span class="p">;</span> <span class="c1"># assure que le nom du répertoire ne se termine pas par un "/"</span>
+
+ <span class="nv">$encodage</span> <span class="o">=</span> <span class="s">"utf-8"</span><span class="p">;</span>
+
+ <span class="c1"># initialisele  compteur de fichichiers à 1</span>
+
+ <span class="k">my</span> <span class="nv">$compteurfile</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+
+ <span class="c1"># initialisation du compteur d items à 0</span>
+
+ <span class="k">my</span> <span class="nv">$compteuritem</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+
+ <span class="c1"># initialise les fichiers d output</span>
+
+ <span class="k">my</span> <span class="nv">$output1</span><span class="o">=</span><span class="nv">$rubrique</span><span class="o">.</span><span class="s">".xml"</span><span class="p">;</span> <span class="c1"># initialisation du fichier d output XML</span>
+ <span class="k">my</span> <span class="nv">$output2</span><span class="o">=</span><span class="nv">$rubrique</span><span class="o">.</span><span class="s">".txt"</span><span class="p">;</span> <span class="c1"># initialisation du fichier d output TXT</span>
+
+ <span class="c1"># ouvre les fichiers d output</span>
+
+ <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">open</span> <span class="p">(</span><span class="nv">FILEOUT</span><span class="p">,</span> <span class="s">"&gt;:encoding($encodage)"</span><span class="p">,</span> <span class="nv">$output1</span><span class="p">))</span> <span class="p">{</span> <span class="nb">die</span> <span class="s">"Pb à l'ouverture du fichier $output1"</span> <span class="p">};</span>
+ <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">open</span> <span class="p">(</span><span class="nv">FILEOUT2</span><span class="p">,</span> <span class="s">"&gt;:encoding($encodage)"</span><span class="p">,</span> <span class="nv">$output2</span><span class="p">))</span> <span class="p">{</span> <span class="nb">die</span> <span class="s">"Pb à l'ouverture du fichier $output2"</span> <span class="p">};</span>
+
+ <span class="c1"># écris l entête du fichier d output XML</span>
+
+ <span class="k">print</span> <span class="nv">FILEOUT</span> <span class="s">"&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?&gt;\n"</span><span class="p">;</span>
+ <span class="k">print</span> <span class="nv">FILEOUT</span> <span class="s">"&lt;PARCOURS&gt;\n"</span><span class="p">;</span>
+ <span class="k">print</span> <span class="nv">FILEOUT</span> <span class="s">"&lt;NOM&gt;Ferial Yahiaoui&lt;/NOM&gt;\n"</span><span class="p">;</span>
+ <span class="k">print</span> <span class="nv">FILEOUT</span> <span class="s">"&lt;FILTRAGE&gt;\n"</span><span class="p">;</span>
+
+
+<span class="c1"># lance la récursion...elle se terminera après examen de toute l arborescence</span>
+
+ <span class="c1">#----------------------------------------</span>
+ <span class="o">&amp;</span><span class="nv">parcoursarborescencefichiers</span><span class="p">(</span><span class="nv">$rep</span><span class="p">);</span>
+ <span class="c1">#----------------------------------------</span>
+
+<span class="c1"># réouvre le fichier d output XML et écris les balises fermantes</span>
+
+ <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">open</span> <span class="p">(</span><span class="nv">FILEOUT</span><span class="p">,</span> <span class="s">"&gt;&gt;:encoding($encodage)"</span><span class="p">,</span> <span class="nv">$output1</span><span class="p">))</span> <span class="p">{</span> <span class="nb">die</span> <span class="s">"Pb à l'ouverture du fichier $output1"</span> <span class="p">};</span>
+
+ <span class="k">print</span> <span class="nv">FILEOUT</span> <span class="s">"\n&lt;/FILTRAGE&gt;\n"</span><span class="p">;</span>
+ <span class="k">print</span> <span class="nv">FILEOUT</span> <span class="s">"&lt;/PARCOURS&gt;\n"</span><span class="p">;</span>
+
+<span class="c1"># ferme le fichier XML</span>
+
+ <span class="nb">close</span><span class="p">(</span><span class="nv">FILEOUT</span><span class="p">);</span>
+
+
+ <span class="nb">exit</span><span class="p">;</span>
+ <span class="c1">#----------------------------------------------</span>
+
+ <span class="c1"># définis le sous-programme responsable de parcourir le répertoire</span>
+
+ <span class="k">sub </span><span class="nf">parcoursarborescencefichiers</span> <span class="p">{</span>
+
+	 <span class="c1"># récupère le répertoire</span>
+
+     <span class="k">my</span> <span class="nv">$path</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
+
+	 <span class="c1"># ouvre le répertorie reçu en argument, donc $path</span>
+
+     <span class="nb">opendir</span><span class="p">(</span><span class="nv">DIR</span><span class="p">,</span> <span class="nv">$path</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">"can't open $path: $!\n"</span><span class="p">;</span>
+
+	 <span class="c1"># lis le repertoire, readdir renvoit une liste, celle des fichiers à l intérieur de DIR, on les met dans un listes # ne traite pas./, courant../ précédent sinon, on se retrouve dans une boucle</span>
+
+     <span class="k">my</span> <span class="nv">@files</span> <span class="o">=</span> <span class="nb">readdir</span><span class="p">(</span><span class="nv">DIR</span><span class="p">);</span>
+     <span class="nb">closedir</span><span class="p">(</span><span class="nv">DIR</span><span class="p">);</span>
+     <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$file</span> <span class="p">(</span><span class="nv">@files</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># la liste obtenue est relative au répertoire ouvert</span>
+     <span class="k">next</span> <span class="k">if</span> <span class="nv">$file</span> <span class="o">=~</span> <span class="sr">/^\.\.?$/</span><span class="p">;</span> <span class="c1"># next: passe au prochain élément si l actuel ne correspond pas à celui chérché</span>
+     <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$path</span><span class="o">.</span><span class="s">"/"</span><span class="o">.</span><span class="nv">$file</span><span class="p">;</span>
+
+	<span class="c1"># vrai si l objet est un répertoire</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="o">-</span><span class="nv">d</span> <span class="nv">$file</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">print</span> <span class="s">"&lt;NOUVEAU REPERTOIRE&gt; ==&gt; "</span><span class="p">,</span><span class="nv">$file</span><span class="p">,</span><span class="s">"\n"</span><span class="p">;</span>
+
+		   <span class="c1"># récurse!</span>
+
+       <span class="o">&amp;</span><span class="nv">parcoursarborescencefichiers</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+       <span class="k">print</span> <span class="s">"&lt;FIN REPERTOIRE&gt; ==&gt; "</span><span class="p">,</span><span class="nv">$file</span><span class="p">,</span><span class="s">"\n"</span><span class="p">;</span>
+     <span class="p">}</span>
+
+	 <span class="c1"># vrai si l objet est un fichier</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="o">-</span><span class="nv">f</span> <span class="nv">$file</span><span class="p">)</span> <span class="p">{</span>
+
+		 <span class="c1"># si le fichier en question correspond à ce pattern</span>
+
+       <span class="k">if</span><span class="p">(</span><span class="nv">$file</span> <span class="o">=~</span><span class="sr">/$rubrique.+\.xml$/</span><span class="p">)</span>
+       <span class="p">{</span>
+         <span class="k">print</span> <span class="s">"&lt;"</span><span class="p">,</span><span class="nv">$compteurfile</span><span class="o">++</span><span class="p">,</span><span class="s">"&gt; ==&gt; "</span><span class="p">,</span><span class="nv">$file</span><span class="p">,</span><span class="s">"\n"</span><span class="p">;</span>
+
+		 <span class="c1">#  alors, ouvre le fichier de la rubrique pour</span>
+
+         <span class="nb">open</span> <span class="p">(</span><span class="nv">FIC</span><span class="p">,</span> <span class="s">"&lt;encoding($encodage)"</span><span class="p">,</span> <span class="nv">$file</span><span class="p">);</span>
+
+		 <span class="c1"># intialise varaibale texte à une chaîne vide</span>
+
+         <span class="k">my</span> <span class="nv">$texte</span><span class="o">=</span><span class="s">""</span><span class="p">;</span>
+
+		 <span class="c1"># tant que la variable ligne prend comme valeur l ensemble du texte</span>
+
+         <span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$ligne</span> <span class="o">=</span> <span class="sr">&lt;FIC&gt;</span><span class="p">){</span>
+
+		   <span class="c1"># supprime les retours à la ligne</span>
+
+           <span class="nb">chomp</span> <span class="nv">$ligne</span><span class="p">;</span>
+
+		   <span class="c1"># nettoie la ligne du retour chariot</span>
+
+           <span class="nv">$ligne</span> <span class="o">=~</span> <span class="sr">s/\r//g</span><span class="p">;</span>
+
+		   <span class="c1"># concatène l ensemble du texte</span>
+
+           <span class="nv">$texte</span> <span class="o">=</span> <span class="nv">$texte</span> <span class="o">.</span> <span class="nv">$ligne</span><span class="p">;</span>
+
+       <span class="p">}</span>
+
+       <span class="nb">close</span> <span class="nv">FIC</span><span class="p">;</span>
+
+
+       <span class="c1"># nettoie le texte</span>
+
+       <span class="nv">$texte</span> <span class="o">=~</span> <span class="sr">s/&gt;\s+&lt;/&gt;&lt;/g</span><span class="p">;</span>
+
+	   <span class="c1"># tant que le texte recherché correspond à ce match</span>
+
+       <span class="k">while</span><span class="p">(</span><span class="nv">$texte</span><span class="o">=~</span>
+       <span class="sr">m/&lt;item&gt;.*?&lt;title&gt;([^&lt;]*?)&lt;\/title&gt;.*?&lt;description&gt;([^&lt;]*?)&lt;\/description&gt;/g</span><span class="p">)</span>
+       <span class="p">{</span>
+
+		<span class="c1"># stocke les titres dans la variable $titre</span>
+         <span class="k">my</span> <span class="nv">$titre</span> <span class="o">=</span> <span class="nv">$1</span><span class="p">;</span>
+
+		 <span class="c1"># stocke les descriptions dans la variable $description</span>
+
+         <span class="k">my</span> <span class="nv">$description</span> <span class="o">=</span> <span class="nv">$2</span><span class="p">;</span>
+
+
+         <span class="p">(</span><span class="nv">$titre</span><span class="p">,</span> <span class="nv">$description</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">nettoyage</span><span class="p">(</span><span class="nv">$titre</span><span class="p">,</span> <span class="nv">$description</span><span class="p">);</span> <span class="c1"># appel du sous-programme nettoyage</span>
+         <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nb">exists</span> <span class="nv">$dico</span> <span class="p">{</span><span class="nv">$titre</span><span class="p">}))</span> <span class="c1"># ne prends pas en compte les titres redondants</span>
+         <span class="p">{</span>
+           <span class="nv">$dico</span><span class="p">{</span><span class="nv">$titre</span><span class="p">}</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+           <span class="k">print</span> <span class="nv">FILEOUT2</span> <span class="s">"$titre.\n$description\n\n"</span><span class="p">;</span>
+
+
+           <span class="nv">$compteurItem</span><span class="o">++</span><span class="p">;</span>
+
+		   <span class="c1"># initialisation des variables contenant les titres + descriptions étiquetés</span>
+
+           <span class="k">my</span> <span class="p">(</span><span class="nv">$titre_etiq</span><span class="p">,</span> <span class="nv">$description_etiq</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">etiquetage</span><span class="p">(</span><span class="nv">$titre</span><span class="p">,</span> <span class="nv">$description</span><span class="p">);</span>
+
+		   <span class="c1"># écris dans l'output XML le contenu étiqueté</span>
+
+           <span class="k">print</span> <span class="nv">FILEOUT</span> <span class="s">"&lt;item number=\"$compteurItem\"&gt;\n&lt;titre&gt;$titre_etiq&lt;/titre&gt;\n&lt;description&gt;$description_etiq&lt;/description&gt;\n&lt;/item&gt;\n"</span><span class="p">;</span>
+
+         <span class="p">}</span>
+
+       <span class="p">}</span>
+
+       <span class="p">}</span>
+
+
+
+     <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="c1"># définition du sous-programme nettoyage</span>
+
+ <span class="k">sub </span><span class="nf">nettoyage</span> <span class="p">{</span>
+
+   <span class="c1"># @_ c'est une liste</span>
+   <span class="c1"># my $var1 = $_[0];</span>
+
+   <span class="k">my</span> <span class="nv">$var1</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>   <span class="c1"># shift supprime le premier élément et le recupère dans une variable</span>
+   <span class="k">my</span> <span class="nv">$var2</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
+
+   <span class="c1"># $var1 et $var2 prennennet respectivement les valeurs des titres et descriptions</span>
+
+   <span class="c1"># nettoie les titres + descriptions des entités HTML</span>
+
+     <span class="nv">$var1</span> <span class="o">=~</span><span class="sr">s/&amp;lt;.+?&amp;gt;//g</span><span class="p">;</span>
+     <span class="nv">$var2</span> <span class="o">=~</span><span class="sr">s/&amp;lt;.+?&amp;gt;//g</span><span class="p">;</span>
+     <span class="nv">$var1</span> <span class="o">=~</span><span class="sr">s/&amp;amp;/et/g</span><span class="p">;</span>
+     <span class="nv">$var2</span> <span class="o">=~</span><span class="sr">s/&amp;amp;/et/g</span><span class="p">;</span>
+     <span class="nv">$var1</span><span class="o">=~</span><span class="sr">s/\?\.$/\?/</span><span class="p">;</span>
+
+   <span class="k">return</span> <span class="nv">$var1</span><span class="p">,</span><span class="nv">$var2</span><span class="p">;</span>
+
+ <span class="p">}</span>
+ <span class="c1">#----------------------------------------------</span>
+
+ <span class="c1"># définition du sous-programme étiquetage</span>
+
+ <span class="k">sub </span><span class="nf">etiquetage</span> <span class="p">{</span>
+
+   <span class="k">my</span> <span class="nv">$var1</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span> <span class="c1"># l'input est le titre et la description</span>
+   <span class="k">my</span> <span class="nv">$var2</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
+
+   <span class="c1">#-------------------titre</span>
+
+   <span class="nb">open</span><span class="p">(</span><span class="nv">OUT</span><span class="p">,</span> <span class="s">"&gt;:encoding(utf8)"</span><span class="p">,</span> <span class="s">"titre_tmp.txt"</span><span class="p">);</span>
+   <span class="k">print</span> <span class="nv">OUT</span> <span class="nv">$var1</span><span class="p">;</span>
+
+   <span class="nb">close</span> <span class="nv">OUT</span><span class="p">;</span>
+
+  <span class="c1"># system permet de lancer une commande de notre système d exploitation, ici une commande bash</span>
+  <span class="c1"># la première permettant de segmenter les titres en tokens et de les passer à l annotateur TreeTagger</span>
+
+   <span class="nb">system</span><span class="p">(</span><span class="s">"perl tokenise-utf8.pl titre_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par &gt; titre_tmp_etiq.txt"</span><span class="p">);</span> <span class="c1"># resultat envoyé dans des fichiers temporaires permattant de stocker chaque titre traité</span>
+
+   <span class="c1"># la seconde commande permet de trasnformer le résultat de l'étiquetage en fichier XML</span>
+
+   <span class="nb">system</span><span class="p">(</span><span class="s">"perl treetagger2xml-utf8.pl titre_tmp_etiq.txt utf8"</span><span class="p">);</span>
+
+   <span class="c1"># le mode slurp permet de lire, localement, le texte d une traite</span>
+
+   <span class="nb">local</span> <span class="vg">$/</span><span class="o">=</span><span class="nb">undef</span><span class="p">;</span>
+
+   <span class="nb">open</span> <span class="p">(</span><span class="nv">FIC</span><span class="p">,</span> <span class="s">"&lt;:encoding(utf8)"</span><span class="p">,</span> <span class="s">"titre_tmp_etiq.txt.xml"</span><span class="p">);</span>
+   <span class="k">my</span> <span class="nv">$titre_retour</span><span class="o">=</span><span class="sr">&lt;FIC&gt;</span><span class="p">;</span>
+   <span class="nv">$titre_retour</span><span class="o">=~</span><span class="sr">s/&lt;\?xml version="1\.0" encoding="utf-8" standalone="no"\?&gt;\n//</span><span class="p">;</span>
+
+   <span class="c1">#------------------------------------------description</span>
+
+   <span class="nb">open</span><span class="p">(</span><span class="nv">OUT</span><span class="p">,</span> <span class="s">"&gt;:encoding(utf8)"</span><span class="p">,</span> <span class="s">"description_tmp.txt"</span><span class="p">);</span>
+   <span class="k">print</span> <span class="nv">OUT</span> <span class="nv">$var2</span><span class="p">;</span>
+
+
+   <span class="nb">close</span> <span class="nv">OUT</span><span class="p">;</span>
+
+   <span class="nb">system</span><span class="p">(</span><span class="s">"perl tokenise-utf8.pl description_tmp.txt | ./tree-tagger/bin/tree-tagger -lemma -token -no-unknown ./tree-tagger/lib/french-utf8.par
+    &gt; description_tmp_etiq.txt"</span><span class="p">);</span> <span class="c1"># resultat envoyé dans des fichiers temporaires permattnt de stocker chaque description traitée</span>
+
+   <span class="nb">system</span><span class="p">(</span><span class="s">"perl treetagger2xml-utf8.pl description_tmp_etiq.txt utf8"</span><span class="p">);</span>
+   <span class="vg">$/</span><span class="o">=</span><span class="nb">undef</span><span class="p">;</span>
+   <span class="nb">open</span> <span class="p">(</span><span class="nv">FIC</span><span class="p">,</span> <span class="s">"&lt;:encoding(utf8)"</span><span class="p">,</span> <span class="s">"description_tmp_etiq.txt.xml"</span><span class="p">);</span>
+   <span class="k">my</span> <span class="nv">$description_retour</span><span class="o">=</span><span class="sr">&lt;FIC&gt;</span><span class="p">;</span>
+   <span class="nv">$description_retour</span><span class="o">=~</span><span class="sr">s/&lt;\?xml version="1\.0" encoding="utf-8" standalone="no"\?&gt;\n//</span><span class="p">;</span>
+
+   <span class="k">return</span> <span class="nv">$titre_retour</span><span class="p">,</span> <span class="nv">$description_retour</span><span class="p">;</span>
+
+
+
+ <span class="p">}</span>
+
+
+
+ <span class="p">}</span>
+
+</code></pre></div></label>
+
+ <p><div class="explication"><img src="images/cog_transparent_32px.png" class="icon" alt="Cog transparent 32px" />Ce programme se compose de quatre blocs: dont 3 sous-programmes où certais sont imbriqués les unes dans les autres.<br/><br/>
+
+
+bloc1: <br/>
+
+	 Le lancement du du programme requiert deux arguments qui sont le nom du répertoire contenant l’ensemble du fils RSS ainsi que le numéro de la rubrique choisie dont le texte doit être extrait. Il va ensuite initialiser les différents fichiers de sortie, de parcourir l’arborescence, donc le répertoire du fils RSS et d’en extraire le contenu ciblé.<br/><br/>
+
+
+bloc2:<br/>
+
+	La fonction récursive parcoursarboresence est définie et prend, s’il correspond à un répertoire, le premier élément, en l’occurrence le répertoire « Library » contenant les fichiers des rubriques.
+Elle fait elle-même appel au sous-programme etiquetage pour initialiser les variables contenant les titres et descriptions « nettoyés » par un autre sous-programme, nettoyage. <br/><br/>
+
+bloc3: <br/>
+
+	La fonction nettoyage est définie par la suppression des balises HTML et par le remplacement des entités HTML par leurs correspondants textuels.<br/>
+
+bloc4: <br/>
+
+	pour chaque token (mot) nous obtenons sa catégorie morphosyntaxique et son lemme. La fonction étiquetage est définie par l’appel des programmes Perl responsables de la segmentation du texte, de son annotation, ainsi que de sa transformation en fichier XML. Ce dernier sera formé de balises indiquant pour chaque token sa catégorie morpho-syntaxique et son lemme.<br/>
+
+Il est à noter que seul le fichier d’output XML est étiqueté morphosyntaxiquement par TreeTagger dans ce programme. Le fichier d’output TXT sera, quant à lui, étiqueté séparément par Cordial.<br/>
+
+Les deux, seront par la suite utilisés par la BAO3 pour en extraire, à partir de patrons morpho-syntaxiques prédéfinis, les éléments lexicalisés qui y sont associés.
+</p></div>
+
+  <p><div class="explication"><p><img src="images/sheet_transparent_32px.png" class="icon" alt="Sheet transparent 32px" /> Les résultats obtenus par l'étiquetage des fichiers XML, <b><a href="assets/ferial/rubriques_etiquetees_tagger.zip" download>sont téléchargeables ici</a></b><br/> et ceux obtenus par l'étiquetage des fichiers TXT par Cordial<b><a href="assets/ferial/rebriques_etiquetees_cordial" download> sont téléchargeables ici</a></b> .</p></div>
+<center><p>Les fichiers XML étiquetés par TreeTagger se présentent ainsi :</p></center>
+<center><img src="images/ferial/3232_tagger.png" alt="3232 tagger" /></center>
+<center><p>Les fichier TXT étiquetés par Cordial se présentent ainsi :</p></center>
+<center><img src="images/ferial/3232_cordial.png" alt="3232 cordial" /></center>
+
+
+
+
+
+ <!-- titre h3 (+ raccourci) -->
+<h3 id="bao3">
+  Boîte à outils 3 : Extraction des patrons morphosyntaxiques
+</h3>
+
+ <section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+
+
+
+
+  	<img src="images/schema/bao_schema_3.png" alt="Bao schema 3" />
+
+  	<p>L’objectif de la BAO3 est d’extraire, selon des patrons morphosyntaxiques donnés, les éléments lexicalisés correspondants et ce, grâce à plusieurs solutions proposées, en fonction des fichiers annotés à exploiter (fichiers TXT et XML étiquetés).
+
+
+
+  </p>
+
+
+
+
+ <h4><B>1) Solutions Perl permettant l'extraction de patrons morphosyntaxiques à partir des fichiers TXT étiquetés par "Cordial" </B></h4>
+
+<div class="explication"><p>	Les données des fichiers taggés par Cordial se structurent en 3 colonnes:<br/><br/>
+					<ul>
+
+					<li>1. le token</li><br/>
+					<li>2. son lemme</li><br/>
+					<li>3. sa catégorie morphosyntaxique</li><br/><br/>
+
+				</ul>
+
+Par exemple: rentabilité	rentabilité	NCFS<br/>
+
+<br/>Les deux programmes prennent plusieurs arguments: le fichier taggé et la liste des éléments constitutifs du patron (exprimé chacun par exemple sur la forme d'une regexp).<br/>
+
+Les programmes doivent retrouner des éléments lexicalisés correpsondant aux patrons indiqués.
+</p></div><br/><br/>
+
+
+
+
+
+ <img src="images/cog_transparent_32px.png" class="icon" alt="Cog transparent 32px" /><B>1.1) Premier programme Perl</B>
+
+
+ <div class="explication"><p> Cette solution permet de comparer des chaînes de caractères avec une suite de POS grâce à une expression régulière. L'inconvénient qu'elle présente c'est qu'il faut à chaque fois changer l'argument du fichier de patron recherché visé.
+
+ </p></div><br/><br/>
+
+
+ <label>
+
+<!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/BAO3_patrons_utf" download>(télécharger ↓)</a></p>
+
+<div class="highlight"><pre class="highlight perl"><code>
+  <span class="c1">#!/usr/bin/perl</span>
+
+ <span class="o">&lt;&lt;</span><span class="nv">DOC</span><span class="p">;</span>
+ <span class="nv">usage</span> <span class="p">:</span> <span class="nv">perl</span> <span class="nv">BAO3_patrons</span><span class="o">.</span><span class="nv">pl</span> <span class="nv">rubrique_utf</span><span class="o">.</span><span class="nv">cnr</span> <span class="nv">patrons</span><span class="o">.</span><span class="nv">txt</span>
+ <span class="nv">Par</span> <span class="nv">exemple</span> <span class="p">:</span> <span class="nv">perl</span> <span class="nv">BAO3_patrons</span><span class="o">.</span><span class="nv">pl</span> <span class="mi">3208</span><span class="nv">_utf</span><span class="o">.</span><span class="nv">cnr</span> <span class="nv">patrons</span><span class="o">.</span><span class="nv">txt</span>
+ <span class="nv">Le</span> <span class="nv">programme</span> <span class="nv">prend</span> <span class="nv">en</span> <span class="nv">entree</span> <span class="nv">la</span> <span class="nv">sortie</span> <span class="nv">Cordial</span> <span class="nv">la</span> <span class="nv">rubrique</span> <span class="nv">etiquetee</span> <span class="nv">et</span> <span class="nv">des</span> <span class="nv">patrons</span> <span class="nv">morphosyntaxiques</span> <span class="nv">a</span> <span class="nv">extraire</span> <span class="nv">correspondant</span> <span class="nv">a</span> <span class="nv">l</span> <span class="nv">expression</span> <span class="nv">reguliere</span> <span class="p">(</span><span class="nv">exemple</span> <span class="p">:</span> <span class="nv">NC</span><span class="o">..</span> <span class="nv">PREP</span> <span class="nv">NC</span><span class="o">..</span><span class="p">)</span>
+ <span class="nv">DOC</span>
+
+
+ <span class="c1">#----------------------------------------</span>
+ <span class="k">use</span> <span class="nv">utf8</span><span class="p">;</span>
+ <span class="nb">binmode</span> <span class="bp">STDOUT</span><span class="p">,</span> <span class="s">":utf8"</span><span class="p">;</span>
+ <span class="k">my</span> <span class="nv">$chaine</span><span class="o">=</span><span class="s">""</span><span class="p">;</span>
+ <span class="nb">open</span> <span class="p">(</span><span class="nv">FIC</span><span class="p">,</span> <span class="s">"&lt;:encoding(utf8)"</span><span class="p">,</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+
+ <span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$ligne</span><span class="o">=</span><span class="sr">&lt;FIC&gt;</span><span class="p">)</span> <span class="p">{</span>
+
+ 	<span class="nb">chomp</span> <span class="nv">$ligne</span><span class="p">;</span>
+ 	<span class="nv">$ligne</span><span class="o">=~</span><span class="sr">s/\r//g</span><span class="p">;</span>
+
+ 	<span class="c1">#print $ligne;</span>
+
+ 	<span class="k">if</span> <span class="p">((</span><span class="nv">$ligne</span><span class="o">=~</span><span class="sr">/^(.+?)\t.+?\t(.+?)$/</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nv">$ligne</span> <span class="o">!~</span><span class="sr">/PCTFORTE/</span><span class="p">))</span> <span class="p">{</span>
+
+ 		<span class="k">my</span> <span class="nv">$f</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span>
+
+ 		<span class="k">my</span> <span class="nv">$c</span><span class="o">=</span><span class="nv">$2</span><span class="p">;</span>
+
+		<span class="nv">$f</span><span class="o">=~</span><span class="sr">s/ /#/g</span><span class="p">;</span>
+
+
+
+
+ 	<span class="nv">$chaine</span> <span class="o">=</span> <span class="nv">$chaine</span> <span class="o">.</span> <span class="nv">$c</span><span class="o">.</span><span class="s">"_"</span><span class="o">.</span><span class="nv">$f</span><span class="o">.</span><span class="s">" "</span><span class="p">;</span>
+ 	<span class="c1">#$chaine = $chaine . $c."_".$f." ";</span>
+ 	<span class="c1">#print $chaine;</span>
+
+ 	<span class="c1"># print $chaine;</span>
+ 	<span class="c1"># $continu=&lt;STDIN&gt;;</span>
+
+
+ 	<span class="p">}</span>
+ 	<span class="k">else</span> <span class="p">{</span>
+ 		<span class="c1">#print $chaine;</span>
+ 		<span class="c1">#$continu=&lt;STDIN&gt;;</span>
+ 		<span class="nb">open</span><span class="p">(</span><span class="nv">TERM</span><span class="p">,</span><span class="nv">$ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+ 		<span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$terme</span><span class="o">=</span><span class="sr">&lt;TERM&gt;</span><span class="p">){</span>
+
+ 			<span class="nb">chomp</span><span class="p">(</span><span class="nv">$terme</span><span class="p">);</span>
+ 			<span class="nv">$terme</span><span class="o">=~</span><span class="sr">s/([^ ]+)/$1_\[\^ \]+/g</span><span class="p">;</span>
+
+
+ 			<span class="k">while</span> <span class="p">(</span><span class="nv">$chaine</span><span class="o">=~</span><span class="sr">/$terme/g</span><span class="p">){</span>
+
+ 				<span class="k">my</span> <span class="nv">$correspondance</span><span class="o">=</span><span class="vg">$&amp;</span><span class="p">;</span>
+ 				<span class="nv">$correspondance</span><span class="o">=~</span><span class="sr">s/[A-Z]+_//g</span><span class="p">;</span>
+ 				<span class="nv">$correspondance</span><span class="o">=~</span><span class="sr">s/#/ /g</span><span class="p">;</span>
+ 				<span class="k">print</span> <span class="nv">$correspondance</span><span class="p">,</span> <span class="s">"\n"</span><span class="p">;</span>
+ 			<span class="p">}</span>
+
+ 		<span class="p">}</span>
+ 		<span class="nb">close</span><span class="p">(</span><span class="nv">TERM</span><span class="p">);</span>
+ 		<span class="nv">$chaine</span><span class="o">=</span><span class="s">""</span><span class="p">;</span>
+ 	<span class="p">}</span>
+
+
+ 	<span class="p">}</span>
+
+ <span class="nb">close</span> <span class="p">(</span><span class="nv">FIC</span><span class="p">);</span>
+
+</code></pre></div>   </label>
+
+
+<br/><br/>  <img src="images/cog_transparent_32px.png" class="icon" alt="Cog transparent 32px" /><B>1.2) Deuxième programme Perl (programme N-grammes)</B>
+
+  <div class="explication"><p>	Pour cette solution, j'ai opté pour celle proposée par Axel Court. En effet, des tables de hachage sont utilisées dans ce script qui consiste à chercher chaque patron devenant la clé d'un %hash. Au fur et à mesure qu'un patron est reconnu, il est ajouté à la liste des valeurs de cette clé. Chaque clé stockée dans une table de hachage est un objet unique, et sa valeur peut être représentée par une chaîne de caractères ($string) ou une liste (@liste). Dans notre cas, des @tableaux sont stockés dans une %hash. Cette option est avantageuse dans le sens où il est plus rapide de vérifier si les éléments constitutifs d'un patron de POS du fichier TXT étiqueté est une clé dans le tableau associatif, que de comparer deux strings. Elle présente cependant le désavantage d'exiger la précision dans la défintion des patrons recherchés, car Cordial est précis dans son annotation contrairement à TreeTagger, qui lui, ne va pas dans le détail pour indiquer le genre et le nombre, par exemple, d'un adjectif ou d'un nom.
+
+  </p></div><br/><br/>
+
+
+
+  <label>
+
+  <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/extraction-hach-ngram-cordial_utf.pl" download>(télécharger ↓)</a></p>
+
+
+<div class="highlight"><pre class="highlight perl"><code>
+ <span class="c1">#!/usr/bin/perl</span>
+
+<span class="c1">#----------------------------------</span>
+<span class="c1"># Ouverture des fichiers en lecture</span>
+<span class="c1">#----------------------------------</span>
+<span class="nb">open</span> <span class="p">(</span><span class="nv">FICTAG</span><span class="p">,</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">die</span> <span class="p">(</span><span class="s">"probleme sur ouverture de la sortie CORDIAL..."</span><span class="p">);</span>
+<span class="nb">open</span> <span class="p">(</span><span class="nv">FICPOS</span><span class="p">,</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">die</span> <span class="p">(</span><span class="s">"probleme sur ouverture du fichier des patrons..."</span><span class="p">);</span>
+<span class="c1">#----------------------------------------------------</span>
+<span class="c1"># On stocke les patrons dans une table de hachage</span>
+<span class="c1">#----------------------------------------------------</span>
+<span class="k">my</span> <span class="nv">%listedespatrons</span><span class="p">;</span>
+<span class="k">my</span> <span class="nv">@liste</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">print</span> <span class="s">"Lecture du fichier de POS\n"</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$lignepos</span> <span class="o">=</span> <span class="sr">&lt;FICPOS&gt;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">chomp</span><span class="p">(</span><span class="nv">$lignepos</span><span class="p">);</span>
+    <span class="k">my</span> <span class="nv">@patron</span> <span class="o">=</span> <span class="nb">split</span><span class="p">(</span><span class="sr">/\#/</span><span class="p">,</span> <span class="nv">$lignepos</span><span class="p">);</span>
+  <span class="c1">#------------------------------------------------------------------------------------------</span>
+  <span class="c1"># @liste gardera en mémoire le nombre de POS dont est composé chaque patron syntaxique</span>
+    <span class="nb">push</span><span class="p">(</span><span class="nv">@liste</span><span class="p">,</span> <span class="nv">$#patron</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+  <span class="c1">#------------------------------------------------------------------------------------------</span>
+  <span class="nv">$lignepos</span> <span class="o">=~</span> <span class="sr">s/#/ /g</span><span class="p">;</span>
+  <span class="c1">#-----------------------------------------------------------------------------------------------------------------</span>
+  <span class="c1"># Attention, on stocke des tableaux comme valeurs, donc initialiser ces valeurs à () et non "" !</span>
+  <span class="c1"># Sinon le script stockera la totalité des suites reconnues (soit plus de 10 000) comme valeur de chaque clé !</span>
+    <span class="nv">$listedespatrons</span><span class="p">{</span><span class="nv">$lignepos</span><span class="p">}</span> <span class="o">=</span> <span class="p">();</span>
+  <span class="c1">#-----------------------------------------------------------------------------------------------------------------</span>
+
+
+<span class="p">}</span>
+<span class="c1">#------------------------------------------------------------------------------------------------------------------------</span>
+<span class="c1"># Suppression des doublons de @patron : on obtient des valeurs uniques qui serviront à générer des n-grammes de POS</span>
+<span class="k">my</span> <span class="nv">%listengramstemp</span>  <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">,</span> <span class="mi">1</span> <span class="p">}</span> <span class="nv">@liste</span><span class="p">;</span>
+<span class="k">my</span> <span class="nv">@listedesngrams</span> <span class="o">=</span> <span class="nb">keys</span> <span class="nv">%listengramstemp</span><span class="p">;</span>
+
+
+<span class="c1">#------------------------------------------------------------------------------------------------------------------------</span>
+<span class="nb">close</span><span class="p">(</span><span class="nv">FICPOS</span><span class="p">);</span>
+<span class="c1">#---------------------------</span>
+<span class="c1"># Initialisation des listes</span>
+<span class="c1">#--------------------------</span>
+<span class="k">my</span> <span class="nv">@malignesegmentee</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">my</span> <span class="nv">@listedetokens</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">my</span> <span class="nv">@listedelemmes</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">my</span> <span class="nv">@listedepos</span> <span class="o">=</span> <span class="p">();</span>
+<span class="c1">#-------------------------------------------</span>
+<span class="c1"># Lecture du fichier de tags ligne par ligne</span>
+<span class="c1">#-------------------------------------------</span>
+<span class="k">print</span> <span class="s">"Lecture du fichier a analyser\n"</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$ligne</span> <span class="o">=</span> <span class="sr">&lt;FICTAG&gt;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">#-------------------------------------------------------------------------------------</span>
+    <span class="c1"># On ne s'occupe pas des lignes qui ne respectent pas la modèle mot tab mot tab mot</span>
+    <span class="c1">#-------------------------------------------------------------------------------------</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="nv">$ligne</span><span class="o">=~</span><span class="sr">/^[^\t]+\t[^\t]+\t[^\t]+$/</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nv">$ligne</span> <span class="o">!~</span><span class="sr">/PCTFORTE/</span><span class="p">)){</span>
+
+  <span class="c1">#-------------------------------------------</span>
+  <span class="c1"># Suppression du caractère de saut de ligne</span>
+  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$ligne</span><span class="p">);</span>
+  <span class="c1">#-------------------------------------------</span>
+  <span class="c1"># Remplissage des listes</span>
+  <span class="nv">@malignesegmentee</span> <span class="o">=</span> <span class="nb">split</span><span class="p">(</span><span class="sr">/\t/</span><span class="p">,</span> <span class="nv">$ligne</span><span class="p">);</span>
+  <span class="nb">push</span><span class="p">(</span><span class="nv">@listedetokens</span><span class="p">,</span> <span class="nv">$malignesegmentee</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="nb">push</span><span class="p">(</span><span class="nv">@listedelemmes</span><span class="p">,</span> <span class="nv">$malignesegmentee</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+  <span class="nb">push</span><span class="p">(</span><span class="nv">@listedepos</span><span class="p">,</span> <span class="nv">$malignesegmentee</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+  <span class="c1">#-------------------------------------------</span>
+
+    <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="nb">close</span><span class="p">(</span><span class="nv">FICTAG</span><span class="p">);</span>
+<span class="c1">#--------------------------------------------------------------------------------------</span>
+<span class="c1"># Génération de n-grammes de POS (en fonction du nombre de POS dans les patrons)</span>
+<span class="c1"># et recherche si chaque n-gramme généré correspond à un patron de %listedespatrons</span>
+<span class="c1">#--------------------------------------------------------------------------------------</span>
+<span class="k">print</span> <span class="s">"Recherche des patrons syntaxiques\n"</span><span class="p">;</span>
+<span class="k">foreach</span> <span class="k">my</span> <span class="nv">$n</span> <span class="p">(</span><span class="nv">@listedesngrams</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nv">$n</span> <span class="o">=</span> <span class="nv">$n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="k">my</span> <span class="nv">$j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">until</span> <span class="p">(</span><span class="nv">$j</span><span class="o">+</span><span class="nv">$n</span> <span class="o">&gt;</span> <span class="nv">$#listedepos</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">$ngram</span> <span class="o">=</span> <span class="nb">join</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="nv">@listedepos</span><span class="p">[</span><span class="nv">$j</span> <span class="o">..</span> <span class="nv">$j</span><span class="o">+</span><span class="nv">$n</span><span class="p">]);</span>
+
+    <span class="c1">#-----------------------------------------------------------------</span>
+    <span class="c1"># Si la suite de POS est reconnue comme clé de %listedespatrons</span>
+    <span class="c1"># on stocke les tokens correspondants en valeur du hash</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">exists</span> <span class="nv">$listedespatrons</span><span class="p">{</span><span class="nv">$ngram</span><span class="p">})</span> <span class="p">{</span>
+      <span class="k">my</span> <span class="nv">$motsreconnus</span> <span class="o">=</span> <span class="nb">join</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="nv">@listedetokens</span><span class="p">[</span><span class="nv">$j</span> <span class="o">..</span> <span class="nv">$j</span><span class="o">+</span><span class="nv">$n</span><span class="p">]);</span>
+      <span class="nb">push</span><span class="p">(</span><span class="nv">@</span><span class="p">{</span><span class="nv">$listedespatrons</span><span class="p">{</span><span class="nv">$ngram</span><span class="p">}},</span><span class="nv">$motsreconnus</span><span class="p">);</span>
+    <span class="c1">#-----------------------------------------------------------------</span>
+
+
+
+    <span class="p">}</span>
+    <span class="nv">$j</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">#-------------------------------------------------</span>
+<span class="c1"># Impression des résultats de l'extraction</span>
+<span class="c1">#-------------------------------------------------</span>
+<span class="k">my</span> <span class="nv">$dump</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="c1">#-------------------------------------------------</span>
+<span class="c1"># Parcours de la table de hachage</span>
+<span class="k">print</span> <span class="s">"Ecriture des resultats\n"</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span> <span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span> <span class="o">=</span> <span class="nb">each</span><span class="p">(</span><span class="nv">%listedespatrons</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$dump</span> <span class="o">.=</span> <span class="s">"------------------------\n"</span><span class="p">;</span>
+    <span class="nv">$dump</span> <span class="o">.=</span> <span class="s">"$key\n-------------------------\n"</span><span class="p">;</span>
+
+
+  <span class="c1">#--------------------------------------------------------------</span>
+  <span class="c1"># Parcours du tableau contenant les suites de mots reconnues</span>
+  <span class="c1"># qui correspondent au patron syntaxique (la clé)</span>
+    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$term</span> <span class="p">(</span><span class="nv">@$value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$dump</span> <span class="o">.=</span> <span class="nv">$term</span><span class="p">;</span>
+    <span class="nv">$dump</span> <span class="o">.=</span> <span class="s">"\n"</span><span class="p">;</span>
+
+
+  <span class="c1">#--------------------------------------------------------------</span>
+  <span class="p">}</span>
+  <span class="nv">$dump</span> <span class="o">.=</span> <span class="s">"\n\n\n"</span><span class="p">;</span>
+
+<span class="p">}</span>
+<span class="c1">#-------------------------------------------------</span>
+
+<span class="nb">open</span><span class="p">(</span><span class="nv">OUT</span><span class="p">,</span> <span class="s">"&gt;:encoding(utf8)"</span><span class="p">,</span> <span class="s">"resultat.txt"</span><span class="p">);</span>
+
+<span class="k">print</span> <span class="nv">OUT</span> <span class="nv">$dump</span><span class="p">;</span>
+<span class="nb">close</span><span class="p">(</span><span class="nv">OUT</span><span class="p">);</span>
+<span class="nb">exit</span><span class="p">;</span>
+
+</code></pre></div></label>
+
+
+
+
+   <h4><B>2) Solutions Perl + XSLT + XQuery permettant l'extraction de patrons morphosyntaxiques à partir des fichiers XML étiquetés par "TreeTagger" </B></h4>
+
+    <div class="explication"><p>	Les données des fichiers taggés par TreeTagger se structurent en 3 colonnes:<br/><br/>
+    					<ul>
+
+    					<li>1. la catégorie morphosyntaxique du token</li><br/>
+    					<li>2. son lemme</li><br/>
+    					<li>3. le token </li><br/><br/>
+
+    				</ul>
+
+    Par exemple: <label>
+
+ <div class="highlight"><pre class="highlight xml"><code><span class="nt">&lt;element&gt;&lt;data</span> <span class="na">type=</span><span class="s">"type"</span><span class="nt">&gt;</span>NOM<span class="nt">&lt;/data&gt;&lt;data</span> <span class="na">type=</span><span class="s">"lemma"</span><span class="nt">&gt;</span>l’économiste<span class="nt">&lt;/data&gt;&lt;data</span> <span class="na">type=</span><span class="s">"string"</span><span class="nt">&gt;</span>l’économiste<span class="nt">&lt;/data&gt;&lt;/element&gt;</span>
+ </code></pre></div></label>
+
+ <br/>
+
+
+    </p></div><br/><br/>
+
+
+
+     <img src="images/cog_transparent_32px.png" class="icon" alt="Cog transparent 32px" /><B>2.1) Programme Perl</B><br/><br/>
+
+
+     <br/>Les deux programmes prennent comme argument: le fichier XML taggé par TreeTagger.<br/>
+
+     Les programmes doivent retrouner des éléments lexicalisés correpsondant à la structure des fichiers des rubriques taggées.<br/><br/>
+
+   <P>2.1.1) Pour le patron NOM_ADJ</P>
+
+   <label>
+
+ <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/BAO3_solu_treetagger_NOM_ADJ_utf.pl" download>(télécharger ↓)</a></p>
+
+
+<div class="highlight"><pre class="highlight perl"><code>
+<span class="c1">#!/usr/bin/perl</span>
+
+<span class="nb">open</span><span class="p">(</span><span class="nv">FILE</span><span class="p">,</span><span class="s">"$ARGV[0]"</span><span class="p">);</span>
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># le patron cherché ici est du type "NOM_ADJ"</span>
+<span class="c1">#--------------------------------------------</span>
+<span class="k">my</span> <span class="nv">@lignes</span><span class="o">=</span><span class="sr">&lt;FILE&gt;</span><span class="p">;</span>
+<span class="nb">close</span><span class="p">(</span><span class="nv">FILE</span><span class="p">);</span>
+<span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$ligne</span><span class="o">=</span><span class="nb">shift</span><span class="p">(</span><span class="nv">@lignes</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nb">chomp</span> <span class="nv">$ligne</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$sequence</span><span class="o">=</span><span class="s">""</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$longueur</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="nv">$ligne</span> <span class="o">=~</span> <span class="sr">/&lt;element&gt;&lt;data type=\"type\"&gt;NOM&lt;\/data&gt;&lt;data type=\"lemma\"&gt;[^&lt;]+&lt;\/data&gt;&lt;data type=\"string\"&gt;([^&lt;]+)&lt;\/data&gt;&lt;\/element&gt;/</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">$forme</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span>
+    <span class="nv">$sequence</span><span class="o">.=</span><span class="nv">$forme</span><span class="p">;</span>
+    <span class="nv">$longueur</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$nextligne</span><span class="o">=</span><span class="nv">$lignes</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1"># saut de ligne dans nos fichiers XML</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="nv">$nextligne</span> <span class="o">=~</span> <span class="sr">/&lt;element&gt;&lt;data type=\"type\"&gt;ADJ&lt;\/data&gt;&lt;data type=\"lemma\"&gt;[^&lt;]+&lt;\/data&gt;&lt;data type=\"string\"&gt;([^&lt;]+)&lt;\/data&gt;&lt;\/element&gt;/</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$forme</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span>
+        <span class="nv">$sequence</span><span class="o">.=</span><span class="s">" "</span><span class="o">.</span><span class="nv">$forme</span><span class="p">;</span>
+        <span class="nv">$longueur</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$longueur</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">print</span> <span class="nv">$sequence</span><span class="p">,</span><span class="s">"\n"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+</code></pre></div></label>
+<br/><br/>
+
+
+
+    <P>2.1.2) Pour le patron NOM_PRP_NOM</P>
+
+    <label>
+
+  <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/BAO3_solu_treetagger_NOM_PREP_NOM_utf.pl" download>(télécharger ↓)</a></p>
+
+
+<div class="highlight"><pre class="highlight perl"><code>
+<span class="c1">#!/usr/bin/perl</span>
+
+<span class="nb">open</span><span class="p">(</span><span class="nv">FILE</span><span class="p">,</span><span class="s">"$ARGV[0]"</span><span class="p">);</span>
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># le patron cherché ici est du type "NOM_PRP_NOM";</span>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="k">my</span> <span class="nv">@lignes</span><span class="o">=</span><span class="sr">&lt;FILE&gt;</span><span class="p">;</span>
+<span class="nb">close</span><span class="p">(</span><span class="nv">FILE</span><span class="p">);</span>
+<span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$ligne</span><span class="o">=</span><span class="nb">shift</span><span class="p">(</span><span class="nv">@lignes</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nb">chomp</span> <span class="nv">$ligne</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$sequence</span><span class="o">=</span><span class="s">""</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$longueur</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="nv">$ligne</span> <span class="o">=~</span> <span class="sr">/&lt;element&gt;&lt;data type=\"type\"&gt;NOM&lt;\/data&gt;&lt;data type=\"lemma\"&gt;[^&lt;]+&lt;\/data&gt;&lt;data type=\"string\"&gt;([^&lt;]+)&lt;\/data&gt;&lt;\/element&gt;/</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">$forme</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span>
+    <span class="nv">$sequence</span><span class="o">.=</span><span class="nv">$forme</span><span class="p">;</span>
+    <span class="nv">$longueur</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$nextligne</span><span class="o">=</span><span class="nv">$lignes</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1"># saut de ligne dans nos fichiers XML</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="nv">$nextligne</span> <span class="o">=~</span> <span class="sr">/&lt;element&gt;&lt;data type=\"type\"&gt;PRP&lt;\/data&gt;&lt;data type=\"lemma\"&gt;[^&lt;]+&lt;\/data&gt;&lt;data type=\"string\"&gt;([^&lt;]+)&lt;\/data&gt;&lt;\/element&gt;/</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$forme</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span>
+        <span class="nv">$sequence</span><span class="o">.=</span><span class="s">" "</span><span class="o">.</span><span class="nv">$forme</span><span class="p">;</span>
+        <span class="nv">$longueur</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+
+        <span class="k">my</span> <span class="nv">$nextligne1</span><span class="o">=</span><span class="nv">$lignes</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span> <span class="c1"># saut de ligne dans nos fichiers XML</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="nv">$nextligne1</span> <span class="o">=~</span> <span class="sr">/&lt;element&gt;&lt;data type=\"type\"&gt;NOM&lt;\/data&gt;&lt;data type=\"lemma\"&gt;[^&lt;]+&lt;\/data&gt;&lt;data type=\"string\"&gt;([^&lt;]+)&lt;\/data&gt;&lt;\/element&gt;/</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">my</span> <span class="nv">$forme</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span>
+          <span class="nv">$sequence</span><span class="o">.=</span><span class="s">" "</span><span class="o">.</span><span class="nv">$forme</span><span class="p">;</span>
+          <span class="nv">$longueur</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$longueur</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+
+
+    <span class="k">print</span> <span class="nv">$sequence</span><span class="p">,</span><span class="s">"\n"</span><span class="p">;</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></label><br/><br/>
+
+
+
+
+
+   <img src="images/xsl.png" class="icon" alt="Xsl" /><B>2.2) Feuilles de Style XSL </B>
+
+
+   <div class="explication"><p>	Les feuilles de style XSL permettent également l'extraction de patrons morphosyntaxiques selon le principe des templates qui matchent avec les noeuds définis dans des requêtes.
+
+   </p></div><br/><br/>
+
+ <P>2.2.1) Pour le patron NOM_ADJ</P>
+
+   <label>
+
+ <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/NOM-ADJ_utf.xsl" download>(télécharger ↓)</a></p>
+
+
+<div class="highlight"><pre class="highlight xml"><code>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;xsl:stylesheet</span> <span class="na">xmlns:xsl=</span><span class="s">"http://www.w3.org/1999/XSL/Transform"</span>
+    <span class="na">xmlns:xs=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+    <span class="na">exclude-result-prefixes=</span><span class="s">"xs"</span>
+    <span class="na">version=</span><span class="s">"2.0"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xsl:output</span> <span class="na">method=</span><span class="s">"text"</span> <span class="na">encoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"/"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xsl:apply-templates</span> <span class="na">select=</span><span class="s">"//element"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/xsl:template&gt;</span>
+        <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"element"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;xsl:choose&gt;</span>
+                <span class="nt">&lt;xsl:when</span> <span class="na">test=</span><span class="s">"(./data[contains(text(),'NOM')]) and (following-sibling::element[1][./data[contains(text(),'ADJ')]])"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"./data[3]"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;xsl:text&gt;</span> <span class="nt">&lt;/xsl:text&gt;</span>
+                <span class="nt">&lt;/xsl:when&gt;</span>
+                <span class="nt">&lt;xsl:when</span> <span class="na">test=</span><span class="s">"(./data[contains(text(),'ADJ')]) and (preceding-sibling::element[1][./data[contains(text(),'NOM')]])"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"./data[3]"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;xsl:text&gt;</span><span class="ni">&amp;#xA;</span><span class="nt">&lt;/xsl:text&gt;</span>
+                <span class="nt">&lt;/xsl:when&gt;</span>
+            <span class="nt">&lt;/xsl:choose&gt;</span>
+        <span class="nt">&lt;/xsl:template&gt;</span>
+<span class="nt">&lt;/xsl:stylesheet&gt;</span>
+
+</code></pre></div></label><br/><br/>
+
+
+
+ <P>2.2.2) Pour le patron NOM_PREP_NOM</P>
+
+   <label>
+
+ <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/NOM-PRP-NOM_utf.xsl" download>(télécharger ↓)</a></p>
+
+
+<div class="highlight"><pre class="highlight xml"><code>
+  <span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;xsl:stylesheet</span> <span class="na">xmlns:xsl=</span><span class="s">"http://www.w3.org/1999/XSL/Transform"</span>
+    <span class="na">xmlns:xs=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+    <span class="na">exclude-result-prefixes=</span><span class="s">"xs"</span>
+    <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;xsl:output</span> <span class="na">method=</span><span class="s">"text"</span> <span class="na">encoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"/"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsl:apply-templates</span> <span class="na">select=</span><span class="s">".//article"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsl:template&gt;</span>
+    <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"article"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">"element"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"(./data[1][contains(text(),'NOM')])"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p1"</span> <span class="na">select=</span><span class="s">"./data[3]/text()"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"following-sibling::element[1][./data[1][contains(text(),'PRP')]]"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p2"</span> <span class="na">select=</span><span class="s">"following-sibling::element[1]/data[3]/text()"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"following-sibling::element[2][./data[1][contains(text(),'NOM')]]"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p3"</span> <span class="na">select=</span><span class="s">"following-sibling::element[2]/data[3]/text()"</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p1"</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;xsl:text&gt;</span> <span class="nt">&lt;/xsl:text&gt;</span>
+                        <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p2"</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;xsl:text&gt;</span> <span class="nt">&lt;/xsl:text&gt;</span>
+                        <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p3"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;xsl:text&gt;</span><span class="ni">&amp;#xA;</span><span class="nt">&lt;/xsl:text&gt;</span>
+                    <span class="nt">&lt;/xsl:if&gt;</span>
+                <span class="nt">&lt;/xsl:if&gt;</span>
+            <span class="nt">&lt;/xsl:if&gt;</span>
+        <span class="nt">&lt;/xsl:for-each&gt;</span>
+    <span class="nt">&lt;/xsl:template&gt;</span>
+<span class="nt">&lt;/xsl:stylesheet&gt;</span>
+
+</code></pre></div></label><br/><br/>
+
+
+
+ <P>2.2.3) Pour le patron DET_ADJ_NOM</P>
+
+   <label>
+
+ <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/DET-ADJ-NOM_utf.xsl" download>(télécharger ↓)</a></p>
+
+
+<div class="highlight"><pre class="highlight xml"><code>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;xsl:stylesheet</span> <span class="na">xmlns:xsl=</span><span class="s">"http://www.w3.org/1999/XSL/Transform"</span>
+    <span class="na">xmlns:xs=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+    <span class="na">exclude-result-prefixes=</span><span class="s">"xs"</span>
+    <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsl:output</span> <span class="na">method=</span><span class="s">"text"</span> <span class="na">encoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"/"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsl:apply-templates</span> <span class="na">select=</span><span class="s">".//article"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsl:template&gt;</span>
+    <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"article"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">"element"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"(./data[1][contains(text(),'PRP:det')])"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p1"</span> <span class="na">select=</span><span class="s">"./data[3]/text()"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"following-sibling::element[1][./data[1][contains(text(),'ADJ')]]"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p2"</span> <span class="na">select=</span><span class="s">"following-sibling::element[1]/data[3]/text()"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"following-sibling::element[2][./data[1][contains(text(),'NOM')]]"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p3"</span> <span class="na">select=</span><span class="s">"following-sibling::element[2]/data[3]/text()"</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p1"</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;xsl:text&gt;</span> <span class="nt">&lt;/xsl:text&gt;</span>
+                        <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p2"</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;xsl:text&gt;</span> <span class="nt">&lt;/xsl:text&gt;</span>
+                        <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p3"</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;xsl:text&gt;</span><span class="ni">&amp;#xA;</span><span class="nt">&lt;/xsl:text&gt;</span>
+                    <span class="nt">&lt;/xsl:if&gt;</span>
+                <span class="nt">&lt;/xsl:if&gt;</span>
+            <span class="nt">&lt;/xsl:if&gt;</span>
+        <span class="nt">&lt;/xsl:for-each&gt;</span>
+    <span class="nt">&lt;/xsl:template&gt;</span>
+<span class="nt">&lt;/xsl:stylesheet&gt;</span>
+
+</code></pre></div></label><br/><br/>
+
+ <P>2.2.4) Pour le patron NOM_VER_KON</P>
+
+   <label>
+
+ <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/NOM_VER_KON.xsl" download>(télécharger ↓)</a></p>
+
+
+<div class="highlight"><pre class="highlight xml"><code>
+  <span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+  <span class="nt">&lt;xsl:stylesheet</span> <span class="na">xmlns:xsl=</span><span class="s">"http://www.w3.org/1999/XSL/Transform"</span>
+      <span class="na">xmlns:xs=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+      <span class="na">exclude-result-prefixes=</span><span class="s">"xs"</span>
+      <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsl:output</span> <span class="na">method=</span><span class="s">"text"</span> <span class="na">encoding=</span><span class="s">"UTF-8"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"/"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;xsl:apply-templates</span> <span class="na">select=</span><span class="s">".//article"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/xsl:template&gt;</span>
+      <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">"article"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">"element"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"(./data[1][contains(text(),'NOM')])"</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p1"</span> <span class="na">select=</span><span class="s">"./data[3]/text()"</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"following-sibling::element[1][./data[1][contains(text(),'VER')]]"</span><span class="nt">&gt;</span>
+                      <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p2"</span> <span class="na">select=</span><span class="s">"following-sibling::element[1]/data[3]/text()"</span><span class="nt">/&gt;</span>
+                      <span class="nt">&lt;xsl:if</span> <span class="na">test=</span><span class="s">"following-sibling::element[2][./data[1][contains(text(),'KON')]]"</span><span class="nt">&gt;</span>
+                          <span class="nt">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">"p3"</span> <span class="na">select=</span><span class="s">"following-sibling::element[2]/data[3]/text()"</span><span class="nt">/&gt;</span>
+                          <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p1"</span><span class="nt">/&gt;</span>
+                          <span class="nt">&lt;xsl:text&gt;</span> <span class="nt">&lt;/xsl:text&gt;</span>
+                          <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p2"</span><span class="nt">/&gt;</span>
+                          <span class="nt">&lt;xsl:text&gt;</span> <span class="nt">&lt;/xsl:text&gt;</span>
+                          <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">"$p3"</span><span class="nt">/&gt;</span>
+                      <span class="nt">&lt;xsl:text&gt;</span><span class="ni">&amp;#xA;</span><span class="nt">&lt;/xsl:text&gt;</span>
+                      <span class="nt">&lt;/xsl:if&gt;</span>
+                  <span class="nt">&lt;/xsl:if&gt;</span>
+              <span class="nt">&lt;/xsl:if&gt;</span>
+          <span class="nt">&lt;/xsl:for-each&gt;</span>
+      <span class="nt">&lt;/xsl:template&gt;</span>
+  <span class="nt">&lt;/xsl:stylesheet&gt;</span>
+
+
+
+
+
+</code></pre></div> </label><br/><br/>
+
+
+
+  <img src="images/xquery.png" class="icon" alt="Xquery" /><B>2.3) Requêtes XQuery</B>
+
+ <P>2.3.1) Pour le patron NOM_PRP_NOM</P>
+
+   <label>
+
+ <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/NOM_PRP_NOM.xq" download>(télécharger ↓)</a></p>
+
+
+
+<div class="highlight"><pre class="highlight xml"><code><span class="nt">&lt;corpus&gt;</span> { for $art in doc("numéro_de_la_rubrique")//article
+for $elt in $art/element
+let $nextelt := $elt/following-sibling::element[1]
+let $nextelt2 := $nextelt/following-sibling::element[1]
+where $elt/data[1] = "NOM" and $nextelt/data[1] = "PRP" and $nextelt2/data[1] = "NOM"
+return <span class="nt">&lt;NOMPRPNOM&gt;</span>{$elt/data[2]/text(), " ", $nextelt/data[2]/text(), " ",$nextelt2/data[2]/text()}<span class="nt">&lt;/NOMPRPNOM&gt;</span>
+} <span class="nt">&lt;/corpus&gt;</span>
+</code></pre></div></label><br/><br/>
+
+
+
+  <P>2.3.2) Pour le patron ADJ_NOM </P><br/><br/>
+
+    <label>
+
+  <!-- lien de téléchargement (à utiliser avec la gem syntax) -->
+<input id="more" type="checkbox">
+<p id="text-more">Afficher/masquer le code <a href="assets/ferial/NOM_ADJ.xq" download>(télécharger ↓)</a></p>
+
+
+
+<div class="highlight"><pre class="highlight xml"><code><span class="nt">&lt;corpus&gt;</span> { for $art in doc("numéro_de_la_rubrique")//article
+for $elt in $art/element
+let $nextelt := $elt/following-sibling::element[1] where $elt/data[1] = "NOM" and $nextelt/data[1] = "ADJ"
+return <span class="nt">&lt;NOMADJ&gt;</span>{$elt/data[3]/text(), " ", $nextelt/data[3]/text()}<span class="nt">&lt;/NOMADJ&gt;</span> }
+<span class="nt">&lt;/corpus&gt;</span>
+</code></pre></div></label><br/><br/>
+
+
+ <div class="explication"><p><img src="images/sheet_transparent_32px.png" class="icon" alt="Sheet transparent 32px" />Vous trouverez dans ce tableau l'intégralité des résultats obtenus. Ils sont classés par patron, puis par étiqueteur afin de pouvoir comparer les résultats plus facilement.</p></div>
+
+ <div class= "tableau"><table style="float:center">
+   <tr>
+     <th colspan="2">Patrons</th>
+     <th>Rubrique 3476 (Cinéma)</th>
+     <th>Rubrique 3232 (Idées)</th>
+     <th>Rubrique 3260 (Livres)</th>
+   </tr>
+   <tr>
+   <th rowspan="2">ADJ NOM / DET ADJ NOM</th>
+   <td>Cordial</td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
+   <td></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/CORDIAL/ADJ_NOM_3260.txt" download>TXT</a></td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/ADJ_NOM/TAGGER/ZIP_ADJ_NOM_CINEMA_TAGGER.zip" download>ZIP</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/ADJ_NOM/TAGGER/DET_ADJ_NOM_3232.txt" download>TXT</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/ADJ_NOM/TAGGER/ZIP_ADJ_NOM_DET_ADJ_NOM_tagger.zip" download>TXT</a></td>
+   </tr>
+   <tr>
+   <th rowspan="2">NOM ADJ</th>
+   <td>Cordial</td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/NOM_ADJ/CORDIAL/ZIP_ADJ_NOM_CINEMA.zip" download>ZIP</a></td>
+   <td></td>
+   <td></a></td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/NOM_ADJ/TAGGER/DET_ADJ_NOM_3476_tagger.zip" download>ZIP</a> <a href="assets/ferial/RESULTATS/nom_adj_co_cine.html" download>HTML</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_ADJ/TAGGER/xq_3232_NOM_ADJ.txt" download>TXT</a> <a href="assets/ferial/RESULTATS/nom_adj_co_3232.html" download>HTML</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/NOM_ADJ/TAGGER/ZIP_NOM_ADJ_TAGGER_LIVRES" download>ZIP</a> <a href="assets/ferial/RESULTATS/nom_adj_3260co.html" download>HTML</a></td>
+   </tr>
+   <tr>
+   <th rowspan="2">NOM VER KON / VER DET NOM</th>
+   <td>Cordial</td>
+   <td></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_VER_KON-VER_DET_NOM/CORDIAL/VER3232" download>TXT</a></td>
+   <td></td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+    <td></td>
+    <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_VER_KON-VER_DET_NOM/TAGGER/NOM_VER_KON-VER_DET_NOM.zip" download>ZIP</a></td>
+    <td></td>
+   </tr>
+
+   <tr>
+   <th rowspan="2">NOM PRP NOM</th>
+   <td>Cordial</td>
+   <td><a href="assets/ferial/RESULTATS/3476_CINEMA/NOM_PRP_NOM/CORDIAL/NOM_PRP_NOM_CINEMA_CORDIAL.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/CORDIAL/NOM_PRP_NOM_IDEES_CORDIAL.zip" download>ZIP</a></td>
+   <td><a href="assets/ferial/RESULTATS/3260_LIVRES/NOM_PRP_NOM/CORDIAL/NOM-PREP-NOM3260.txt" download>TXT</a></td>
+   </tr>
+   <tr>
+     <td>Treetagger</td>
+     <td><a href="assets/ferial/RESULTATS/3476_CINEMA/NOM_PRP_NOM/TAGGER/NOM_PRP_NOM_CINEMA_TAGGER.zip" download>ZIP</a> <a href="assets/ferial/RESULTATS/nom_prp_nom_co_cine.html" download>HTML</a></td>
+     <td><a href="assets/ferial/RESULTATS/3232_IDEES/NOM_PRP_NOM/TAGGER/TAG3232_NOM_PRP_NOM.zip" download>ZIP</a> <a href="assets/ferial/RESULTATS/nom_prp_nom_co_3232.html" download>HTML</a></td>
+     <td><a href="assets/ferial/RESULTATS/3260_LIVRES/NOM_PRP_NOM/TAGGER/NOM_PRP_NOM_LIVRES_TAGGER.zip" download>TXT</a> <a href="assets/ferial/RESULTATS/nom_prp_nom_co_3260.html" download>HTML</a></td>
+   </tr>
+ </table></div><br/><br/>
+
+ <!-- titre h3 (+ raccourci) -->
+<h3 id="comp">
+  Comparaison des Résultats
+</h3>
+
+ <section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+<br/><br/>
+
+
+
+  <div class="explication"><p>	A observer nos résultats, on relève une différence en raison des outils utilisés pour tagger nos deux types de fichiers. En effet, Si Cordial est précis et annote finement les tokens, TreeTagger ne détaille pas l'annotation pour le genre et le nombre pour les "NOM" et "ADJ", par exemple. De plus, il arrive à TreeTgger de confondre les homographes et de tagger un "VER" comme un "NOM". C'est précisément ce cas auquel on s'est confronté pour le verbe: estime à la troisième personne du singulier, TreeTagger l'a annoté comme étant un nom. Cela a par conséquent provoqué un écart important dans les résultats produits par les deux outils.<br/>
+	  Cette disparité est probablement due au fait que Cordial est un correcteur orthagraphique français, tandis que TreeTagger est un outil allemand ayant été adapté à la langue française.
+
+
+  </p></div><br/><br/><br/>
+
+
+
+ <!-- titre h3 (+ raccourci) -->
+<h3 id="bao4">
+  Boîte à outils 4 : Création des graphes
+</h3>
+
+ <section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+<br/><br/>
+
+  <img src="images/schema/bao_schema_4.png" alt="Bao schema 4" /><br/><br/>
+
+ 	<p>Une fois les éléments obtenus et les résultats comparés, on utilisera les occurrences les plus pertinentes produites par la BAO3 pour en analyser les cooccurrents pour chaque rubrique et selon les thèmes choisis en visualisant les graphes générés par un programme fourni par M.Serge Fleury.
+
+ <br/>Ce programme demande plusieurs arguments: "l'encodage des fichiers" + le fichier des patrons marphosyntaxiques extraits + fichier du motif recherché sous la forme de: MOTIF=Regex avec motif recherché.
+ </p> <br/><br/>
+
+ Rubrique 3476<em> Cinéma</em>.<br/><br/>
+
+ Patron: <b>NOM_ADJ</b><br/>
+ Motif: <b>(f|F)emmes? / (h|H)ommes?</b><br/>
+
+<p>Ce choix est motivé par l'actualité qui a marqué le monde du cinéma en 2017, telle que <em>l'Affaire Weinstein</em> où des actrices américaines ont pu dénoncer publiquement les agressions sexuelles/viols dont elles ont été victimes et dont l'auteur n'est d'autre que le producteur américain Harvey Weinstein.
+Cette affaire s'est étendue partout ailleurs dans le reste du monde, permettant ainsi à des actrices de lever l'omerta sur les cas d'agression et de harcèlement sexuels commis par les hommes de leur milieu professionnel.
+On s'attend donc à avoir un environnement linguistique particulier autour des deux entités.
+</p><br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(f|F)emmes?</b><br/>
+
+<img src="images/ferial/graphes/femme.s.cinema-nom_adj.png" alt="Femme.s.cinema nom adj" /><br/><br/>
+
+Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>(h|H)ommes?</b><br/>
+
+<img src="images/ferial/graphes/homme.s.cine-adj-nom.png" alt="Homme.s.cine adj nom" /><br/><br/>
+
+ <!-- titre h3 (+ raccourci) -->
+<h3 id="analyse1">
+  Analyse 1
+</h3>
+
+ <section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+<br/><br/>
+
+ <div class="explication"><p> L'affichage des deux graphes ne reflète finalement pas exactement ce quoi on s'attendait, si ce n'est 1 occurrence pour agissements d'hommes et 1 occurrence pour viol de femmes. Toutefois, on note bien que les cooccurrents des deux entités renforcent bien l'idée des rôles du genre attribués aux deux sexes par l'imaginaire collectif. En effet, le cooccurrent le plus important pour 'femme' est 'douce' (10), tandis que pour 'homme', 'intègre' arrive en première position avec (5) occurrences. De la même façon, le nombre de cooccurrents péjoratifs est plus élevé autour de 'femme.s' (jolies, en cuisine, coquettes, excommuniée) qu'autour d''homme.s'(exentrique).
+
+
+ </p></div><br/><br/><br/>
+
+
+
+
+<br/> - Rubrique 3232 <em>Idées</em>.<br/><br/>
+
+
+ Patron: <b>NOM VER KON / VER DET NOM</b><br/>
+ Motif: <b>.*estime? / .*explique.*</b><br/>
+
+<p>Compte tenu de la spécificité de cette rubrique, on pense qu’elle comprendra un nombre important de verbes d’opinion, tels que estimer, considérer, etc. Autrement dit, une position subjective. Parallèlement, on pense qu’elle contiendra également des verbes argumentatifs, tels que: expliquer, analyser, etc. Contrairement aux premiers, ces derniers auront tendance à exprimer un avis plutôt objectif.
+
+Pour le vérifier, nous avons compté et trié les occurrences grâce aux commandes UNIX. Les résultats affichent les verbes « estime » et « explique » comme les premiers dans le classement des verbes avec le nombre suivant:<br/><br/>
+
+414 estime<br/>
+351 explique<br/><br/>
+
+La forme que prend le patron avec le verbe "estimer" est NOM VER KON, et celle avec le verbe "expliquer" est VER DET NOM. Le but derrière ce choix, est d'observer qui "estime" et qui "explique". </p>
+
+<br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*estime?</b><br/>
+
+<img src="images/ferial/graphes/estime.s-idees.png" alt="Estime.s idees" /><br/><br/>
+
+Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>.*explique.*</b><br/>
+
+<img src="images/ferial/graphes/explique.ver.idees.png" alt="Explique.ver.idees" /><br/><br/>
+
+ <!-- titre h3 (+ raccourci) -->
+<h3 id="analyse2">
+  Analyse 2
+</h3>
+
+ <section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+<br/><br/>
+
+ <div class="explication"><p>Ce que l'on observe en premier est que le nombre des cooccurrents d'expliquer est plus élevé que celui d'estimer (explique, expliquent). Par ailleurs, le rôle du verbe "estimer" semble être d'introduire des noms propres ou des noms propres avec la profession de la personne dont les propos sont rapportés. Quant au rôle du verbe "expliquer", il semble se résumer à introduire exclusivement  des locuteurs en les qualifiant par leurs professions. En effet, on ne relève aucun nom propre lié à ce verbe. <br/>
+	 Cela pourrait s'expliquer par la prise de distance, donc l'objectivité, exprimée par le verbe "expliquer", et par la prise de position, comme pour affirmer la subjectivité exprimée par le verbe "estimer".
+
+ </p></div><br/><br/><br/>
+
+
+
+ <br/> - Rubrique 3260 <em>Livres</em>.<br/><br/>
+
+
+  Patron: <b>NOM PRP NOM</b><br/>
+  Motif: <b>\bà\b</b><br/><br/>
+
+Le choix de la préposition relève du registre qu'on pense être plus soutenu dans cette rubrique tourné vers un style littéraire. Pour confirmer cela, on va examiner le comportement linguistique et syntaxique de la préposition "à".<br/><br/>
+<br/>
+
+
+ <br/><br/>Note: Clique droit sur 'Afficher l'image' pour agrandir l'image.<br/><br/><b>\bà\b</b><br/>
+
+ <img src="images/ferial/graphes/a.prep.livres.png" alt="A.prep.livres" /><br/><br/>
+
+
+
+ <!-- titre h3 (+ raccourci) -->
+<h3 id="analyse3">
+  Analyse 3
+</h3>
+
+ <section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+<br/><br/>
+
+ <div class="explication"><p> L'usage de la préposition 'à' à est codifié syntaxiqument. En effet, elle est employée pour parler d’une tâche à effectuer, d'une description d'un lieu, d'une destination à des objets, d'une conséquence, de l'expression de la manière, de l'expression temporelle et spaciale, etc. Or dans ce ce cas et comme il a été souligné plus haut, on relève un emploi non-littéral et plus abstrait au vu du registre et du thème littéraire caratérisant cette rubrique: <em>hymne à la vie, hommage à la langue, antidote à la grisaille,etc. </em>
+
+ </p></div><br/><br/><br/>
+
+ <!-- titre h3 (+ raccourci) -->
+<h3 id="conclu">
+  Conclusion
+</h3>
+
+ <section id = "onglets_bao_ferial">
+  <aside>
+    <a href="ferial.html#logo">Retour ↑</a>
+    <a href="ferial.html#bao1_2">BAO 1 et 2</a>
+    <a href="ferial.html#bao3">BAO 3</a>
+	
+    <a href="ferial.html#comp">Comparaison des Résultats</a>
+	
+	
+    <a href="ferial.html#bao4">BAO 4</a>
+
+    <a href="ferial.html#analyse1">Analyse 1</a>
+
+    <a href="ferial.html#analyse2">Analyse 2</a>
+	
+    <a href="ferial.html#analyse3">Analyse 3</a>
+    
+    <a href="ferial.html#conclu">Conclusion</a>
+  </aside>
+</section>
+<br/><br/>
+
+
+ <p>Tout d'abord, l'analyse de chaque motif en fonction de chaque rubrique a permis, d'une part, de mettre en évidence l'environnement lexical et sémantique de ceux-ci. D'autre part, elle a permis également de souligner leur comportement syntaxique dans un contexte journalistique spécifique. Si pour deux motifs l'hypothèse de départ a été invalidée, le reste des motifs a fourni des résultats plutôt satisfaisants. Cela peut s'expliquer par un mauvais choix du patron ou par un mauvais étiquetage de certains syntagmes. En effet, en dépit de la précision dont Cordial fait preuve, Il va avoir plus de difficulté à reconnaître certains syntagmes et les annotera comme NOM ADJ. Tandis que TreeTagger peut s'avérer plus précis dans son étiquetage pour certains syntagmes comme <em>"L'affaire Weinstein"</em> qui sera annotée comme une seule entité. Cela est probablement dû à la version du logiciel Cordial qui nous été fournie (datant de 1999).<br/> <br/>
+ Par ailleurs, l'observation du comportement des motifs avec les graphes ne peut être suffisante à elle seule. Il manque donc une analyse plus poussée et une exploration textométrique plus détaillée qui permettrait l'observation des contextes droit et gauche sous forme de concordancier avec iTrameur ou Lexico. <br/><br/>
+Enfin, j'ai pris beaucoup de plaisir à réaliser ce travail grâce à la manipulation des différentes boîtes à outils et grâce au travail collectif effectué en vue de la réalisation de ce site avec un nouveau langage de programmation.    </p>
+<p>Vous pouvez également lire la <a href="analyse.html">synthèse générale</a> du projet.</p>
+
+    </div>
+  </div>
+
+<!-- Footer -->
+  <!-- pied de page -->
+<div id ="footer-wrapper">
+  <footer id ="footer" class="container">
+    <div class="row">
+      <p class="footer">
+        Site réalisé par Milena Chaîne, Margaux Duhayon, Ferial Yahiaoui - Inalco.
+      </p>
+      <p class="footer">
+        
+      </p>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
